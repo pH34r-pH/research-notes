@@ -26,11 +26,15 @@ The notes reconstruct the research in the order the questions developed. The fir
 12. [Natural-source task distinctions](notebooks/012_natural_source_distinctions.ipynb)
 13. [Accessible does not imply used](notebooks/013_accessible_not_used.ipynb)
 
+For a cross-cutting, parameter-sweep view of the same ideas, use the [Visual intuition atlas](notebooks/visual_intuition_atlas.ipynb). It contains small synthetic plots intended to be rerun after changing one variable at a time.
+
 The reconstruction plan, historical anchors, disclosure decisions, and future milestone slot are recorded in [`CHRONOLOGY.md`](CHRONOLOGY.md).
 
-## Two complementary ways to read
+## Three complementary ways to read
 
 **Milestone path — learn through the research.** Read notebooks in order. Each begins with a scientific question, develops only the machinery needed to investigate it, includes runnable examples, and ends with understanding questions. Reconstructed notes label the historical research period separately from their public reconstruction date.
+
+**Visual path — build parameter intuition.** The [Visual intuition atlas](notebooks/visual_intuition_atlas.ipynb) collects plots for coordinate changes, phase similarity, training trajectories, radial/tangent normalization gain, recurrent contraction, radius-angle coupling, context-support tradeoffs, and probe signal strength. Predict what a plot should do before changing a value and rerunning it.
 
 **Reference path — follow concepts as needed.** The [`reference/`](reference/) material provides reusable definitions, mathematical foundations, methods, formal checkpoints, and a concept index. Notebook sticky notes give the local explanation; linked reference pages provide the deeper treatment.
 
@@ -65,6 +69,7 @@ Every milestone explicitly states **What this does not show**. A central goal of
 
 ## Reference map
 
+- [Visual intuition atlas](notebooks/visual_intuition_atlas.ipynb)
 - [Concept index](reference/index.md)
 - [Glossary](reference/glossary.md)
 - [Experimental reasoning](reference/experimental-reasoning.md)
