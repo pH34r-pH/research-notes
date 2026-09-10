@@ -1,10 +1,12 @@
 # Research Notes
 
-A public, educational research notebook on compact neural representations, representation geometry, information accessibility, and downstream utilization.
+Notes and experiments investigating how neural systems represent, transform, preserve, and use information.
 
-This repository is organized more like a **living textbook and research blog** than a conventional source repository. Milestone notebooks tell the chronological research story with runnable examples; the reference material supplies reusable definitions, mathematical background, formal checkpoints, and conceptual links.
+Much of this work focuses on compact learned representations: what information survives compression, how representation geometry constrains computation, and whether information that remains present in a learned state is actually accessible to — and used by — downstream computation.
 
-The active experimental laboratory is intentionally separate and private. This repository contains stable questions, methods, selected validated outcomes, synthetic demonstrations, and carefully bounded interpretations.
+The broader goal is to develop a more precise account of representation and learned computation by separating questions that are easy to conflate: **what information is present, what information is accessible, what information is used, and what information affects behavior.** Distinguishing these cases can change both how an experimental result should be interpreted and which intervention is rational to try next.
+
+The work combines empirical experiments, mathematical analysis, machine-checked results, and small reproducible examples. Results are presented with explicit boundaries between observation, formal result, assumption, and hypothesis.
 
 ## Start here
 
@@ -22,7 +24,7 @@ The first notebook develops this distinction using a runnable synthetic affine-s
 
 **Milestone path — learn through the research.** Read notebooks in order. Each begins with a scientific question, develops only the machinery needed to investigate it, includes runnable examples, and ends with understanding questions.
 
-**Reference path — follow concepts as needed.** The [`reference/`](reference/) material acts like the back matter of a textbook: definitions, mathematical foundations, methods, formal checkpoints, and a concept index. Notebook sticky notes give the local explanation; linked reference pages provide the deeper treatment.
+**Reference path — follow concepts as needed.** The [`reference/`](reference/) material provides reusable definitions, mathematical foundations, methods, formal checkpoints, and a concept index. Notebook sticky notes give the local explanation; linked reference pages provide the deeper treatment.
 
 ## Educational conventions
 
