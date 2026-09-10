@@ -2,7 +2,7 @@
 
 A public, educational research notebook on compact neural representations, representation geometry, information accessibility, and downstream utilization.
 
-This repository is organized more like a **living textbook and research blog** than a conventional source repository. Milestone notebooks tell the chronological research story with runnable examples; the reference material supplies reusable definitions, mathematical background, and conceptual links.
+This repository is organized more like a **living textbook and research blog** than a conventional source repository. Milestone notebooks tell the chronological research story with runnable examples; the reference material supplies reusable definitions, mathematical background, formal checkpoints, and conceptual links.
 
 The active experimental laboratory is intentionally separate and private. This repository contains stable questions, methods, selected validated outcomes, synthetic demonstrations, and carefully bounded interpretations.
 
@@ -22,7 +22,7 @@ The first notebook develops this distinction using a runnable synthetic affine-s
 
 **Milestone path — learn through the research.** Read notebooks in order. Each begins with a scientific question, develops only the machinery needed to investigate it, includes runnable examples, and ends with understanding questions.
 
-**Reference path — follow concepts as needed.** The [`reference/`](reference/) material acts like the back matter of a textbook: definitions, mathematical foundations, methods, and a concept index. Notebook sticky notes give the local explanation; linked reference pages provide the deeper treatment.
+**Reference path — follow concepts as needed.** The [`reference/`](reference/) material acts like the back matter of a textbook: definitions, mathematical foundations, methods, formal checkpoints, and a concept index. Notebook sticky notes give the local explanation; linked reference pages provide the deeper treatment.
 
 ## Educational conventions
 
@@ -45,6 +45,19 @@ Examples:
 - What does freezing the representation rule out?
 - What result would change the next experimental target?
 
+### Formal checkpoints and epistemic markers
+
+Where mathematics can be separated cleanly from empirical interpretation, the notes link to the public [`theorem-library`](https://github.com/pH34r-pH/theorem-library) rather than copying Lean proofs here.
+
+Four markers help make the evidence type explicit:
+
+- **✓ Formal checkpoint** — the linked mathematical statement has a public Lean proof.
+- **● Observation** — an experimental measurement under a stated protocol.
+- **◇ Assumption** — a premise not established by the present evidence.
+- **? Hypothesis** — a proposed explanation still open to testing.
+
+A formal checkpoint applies only to the encoded theorem and its assumptions. It does not automatically promote surrounding scientific interpretation to theorem status. [How the formal layer works →](reference/formal-methods/index.md)
+
 ### Result boundaries
 
 Every milestone explicitly states **What this does not show**. A central goal of this project is learning to distinguish an observation from the stronger interpretations it may suggest.
@@ -55,13 +68,22 @@ Every milestone explicitly states **What this does not show**. A central goal of
 - [Glossary](reference/glossary.md)
 - [Experimental reasoning](reference/experimental-reasoning.md)
 - [Representation and readout](reference/representation-and-readout.md)
+- [Formal methods and claim boundaries](reference/formal-methods/index.md)
+- [Public formal checkpoints](reference/formal-methods/checkpoints.md)
+- [Public Lean theorem library](https://github.com/pH34r-pH/theorem-library)
 - [Editorial and disclosure guide](notes/EDITORIAL_GUIDE.md)
+
+## Source-of-truth boundaries
+
+`research-notes` is an educational presentation layer, not the authoritative theorem ledger.
+
+The public `theorem-library` owns public Lean source and intrinsic proof/build validation. The private research laboratory owns theorem-ledger lifecycle state, scientific correspondence, provenance, active experiments, and unpublished interpretation. Stable theorem identifiers let these layers refer to the same formal object without duplicating ledger state.
 
 ## Disclosure policy
 
-**Public:** stable research questions; high-level methods; selected validated outcomes; synthetic reproductions of concepts; mathematical and methodological background; interpretation boundaries.
+**Public:** stable research questions; high-level methods; selected validated outcomes; synthetic reproductions of concepts; reusable public mathematical proofs; mathematical and methodological background; interpretation boundaries.
 
-**Private:** active experiment branches; exact private datasets/checkpoints; unfinished hypotheses; private negative-result chronology where it exposes the active frontier; and end-to-end details that would reproduce ongoing unpublished work.
+**Private:** active experiment branches; exact private datasets/checkpoints; theorem-ledger research state; unfinished hypotheses; private negative-result chronology where it exposes the active frontier; and end-to-end details that would reproduce ongoing unpublished work.
 
 ## Status
 
