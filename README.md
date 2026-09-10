@@ -10,19 +10,27 @@ The work combines empirical experiments, mathematical analysis, machine-checked 
 
 ## Start here
 
-### Milestone 001 — Accessible does not imply used
+The notes reconstruct the research in the order the questions developed. The first milestone begins with the original representation question rather than the current experimental frontier.
 
-The current research thread asks:
+1. [What if text were a signal?](notebooks/001_text_as_signal.ipynb)
+2. [Where did the spectral loss occur?](notebooks/002_locating_representation_loss.ipynb)
+3. [Coordinates matter; operations matter more](notebooks/003_coordinates_and_matched_operations.ipynb)
+4. [Isolating the phase-aware mechanism](notebooks/004_isolating_phase_attention.ipynb)
+5. [The unit-hypersphere anomaly](notebooks/005_unit_hypersphere_anomaly.ipynb)
+6. [A dramatic endpoint can still mislead](notebooks/006_endpoint_can_mislead.ipynb)
+7. [Derive before training](notebooks/007_derive_before_training.ipynb)
+8. [What does the sphere actually do?](notebooks/008_frozen_mechanism_tests.ipynb)
+9. [From hypothesis sprawl to a theorem ledger](notebooks/009_theorem_ledger_method.ipynb)
+10. [What state should a reasoner preserve?](notebooks/010_dynamic_quotient.ipynb)
+11. [Geometry should follow invariance, not aesthetics](notebooks/011_geometry_from_invariance.ipynb)
+12. [Natural-source task distinctions](notebooks/012_natural_source_distinctions.ipynb)
+13. [Accessible does not imply used](notebooks/013_accessible_not_used.ipynb)
 
-> When a compact neural state appears to lose task performance, did the representation actually destroy the relevant information, or is the downstream consumer merely failing to use information that remains accessible?
-
-The first notebook develops this distinction using a runnable synthetic affine-softmax probe and explains why probe success is evidence of **accessibility**, not automatically evidence of **causal use**.
-
-- [`notebooks/001_accessible_not_used.ipynb`](notebooks/001_accessible_not_used.ipynb)
+The reconstruction plan, historical anchors, disclosure decisions, and future milestone slot are recorded in [`CHRONOLOGY.md`](CHRONOLOGY.md).
 
 ## Two complementary ways to read
 
-**Milestone path — learn through the research.** Read notebooks in order. Each begins with a scientific question, develops only the machinery needed to investigate it, includes runnable examples, and ends with understanding questions.
+**Milestone path — learn through the research.** Read notebooks in order. Each begins with a scientific question, develops only the machinery needed to investigate it, includes runnable examples, and ends with understanding questions. Reconstructed notes label the historical research period separately from their public reconstruction date.
 
 **Reference path — follow concepts as needed.** The [`reference/`](reference/) material provides reusable definitions, mathematical foundations, methods, formal checkpoints, and a concept index. Notebook sticky notes give the local explanation; linked reference pages provide the deeper treatment.
 
@@ -40,18 +48,9 @@ Repetition is intentional: the goal is to learn concepts through repeated use ra
 
 Each milestone ends with short questions that check whether the argument can be reconstructed, rather than whether terminology has been memorized.
 
-Examples:
-
-- Why use an affine probe before a nonlinear probe?
-- Why doesn't a successful probe prove that the native model uses the information?
-- What does freezing the representation rule out?
-- What result would change the next experimental target?
-
 ### Formal checkpoints and epistemic markers
 
 Where mathematics can be separated cleanly from empirical interpretation, the notes link to the public [`theorem-library`](https://github.com/pH34r-pH/theorem-library) rather than copying Lean proofs here.
-
-Four markers help make the evidence type explicit:
 
 - **✓ Formal checkpoint** — the linked mathematical statement has a public Lean proof.
 - **● Observation** — an experimental measurement under a stated protocol.
