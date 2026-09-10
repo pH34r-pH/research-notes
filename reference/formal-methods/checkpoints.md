@@ -12,9 +12,9 @@ This page is an educational index into selected public proofs. It is **not** the
 
 **Boundary.** This is a statement about the normalization operation. It does not identify radial directions with nuisance information or tangent directions with semantics in a learned representation.
 
-- [Anisotropy proof](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/Anisotropy.lean)
-- [Underlying normalization derivative](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/Normalization.lean)
-- [Norm-derivative prerequisite](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/NormDerivative.lean)
+- [Anisotropy proof](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/Anisotropy.lean)
+- [Underlying normalization derivative](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/Normalization.lean)
+- [Norm-derivative prerequisite](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormDerivative.lean)
 
 ### LIB-SPH-003 / FRM-000021 — scale-invariant loss geometry
 
@@ -24,8 +24,8 @@ This page is an educational index into selected public proofs. It is **not** the
 
 **Boundary.** The theorem does not imply that a particular optimizer follows the idealized update, nor does it establish generalization or task behavior.
 
-- [Scale-invariant loss proof](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/ScaleInvariantLoss.lean)
-- [Normalized-loss gradient consequences](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/NormalizationGradient.lean)
+- [Scale-invariant loss proof](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean)
+- [Normalized-loss gradient consequences](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
 
 ### LIB-SPH-001/005 / FRM-000023 — positive-scale quotient and radial-memory boundary
 
@@ -35,7 +35,7 @@ This page is an educational index into selected public proofs. It is **not** the
 
 **Boundary.** An upstream producer can encode previous radial information into angular/tangent structure before normalization. The theorem does not say that all information previously associated with radius must disappear from the complete recurrence.
 
-- [Radial-memory proof](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/RadialMemory.lean)
+- [Radial-memory proof](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/RadialMemory.lean)
 
 ### FRM-000133 — kernel, range, rank, and singular values
 
@@ -43,7 +43,7 @@ This page is an educational index into selected public proofs. It is **not** the
 
 **Why it matters.** The qualitative radial/tangent distinction can be stated as an exact spectral result rather than an informal geometric picture.
 
-- [Normalization spectrum proof](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/NormalizationSpectrum.lean)
+- [Normalization spectrum proof](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean)
 
 ### FRM-000149 — composition and gradient boundaries
 
@@ -51,8 +51,8 @@ The public core also contains results about where radial annihilation does and d
 
 These are useful boundary theorems: they prevent us from taking a true statement about the normalization operator and applying it too broadly to an entire learned recurrence.
 
-- [Normalization composition](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/NormalizationComposition.lean)
-- [Normalization gradient](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/NormalizationGradient.lean)
+- [Normalization composition](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean)
+- [Normalization gradient](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
 
 ## How to use this index
 
