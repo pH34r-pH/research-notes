@@ -14,6 +14,8 @@ We deliberately keep those two kinds of evidence separate.
 
 The separation is intentional. A theorem can be perfectly proved while still being irrelevant to a scientific hypothesis because an assumption does not hold in the trained system. Conversely, an empirical result can be strong without being a theorem.
 
+The Lean namespaces mirror this boundary: reusable public mathematics lives under `TheoremLibrary.*`; research-specific private formalization remains under `DomainScaling.*`. Stable `FRM-*` / `LIB-*` identifiers preserve identity across refactors without making module paths themselves authoritative research IDs.
+
 ## The epistemic markers
 
 Research notes use four recurring markers when a distinction is useful:
@@ -38,7 +40,7 @@ The public Lean library proves an exact local statement about its derivative. Th
 
 > **✓ Formal checkpoint — LIB-SPH-002 / FRM-000020**  
 > Normalization has an anisotropic derivative: radial gain is zero and tangent gain is `1 / ||x||`.  
-> [Lean source →](https://github.com/pH34r-pH/theorem-library/blob/main/DomainScaling/Geometry/Sphere/Anisotropy.lean)
+> [Lean source →](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/Anisotropy.lean)
 
 That theorem does **not** prove that radial directions represent nuisance information or that tangent directions represent semantics in a trained model.
 
@@ -75,6 +77,9 @@ The ledger contains research-state information: interpretation, dependencies, ac
 
 **Why use stable theorem identifiers in public notes?**  
 They let different repositories refer to the same formal object without making the educational repo a second source of truth.
+
+**Why separate `TheoremLibrary.*` from `DomainScaling.*`?**  
+The namespace itself communicates architectural ownership: reusable public mathematics is upstream, while private research-specific formalization consumes it.
 
 **What does a ✓ Formal checkpoint mean?**  
 That the linked mathematical statement has a public machine-checkable proof; it does not grant theorem status to surrounding empirical interpretation.
