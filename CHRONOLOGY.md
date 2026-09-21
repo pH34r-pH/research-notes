@@ -31,3 +31,42 @@ The reconstruction rule is: **question → experiment/derivation → boundary �
 6. Runnable code is a synthetic teaching example unless a public artifact is explicitly identified as an exact replay.
 7. Private experiment artifacts, exact active queues, unpublished hypotheses, and theorem-ledger lifecycle state remain private.
 8. Literature discovered after an internal derivation is described as later convergence/prior-art context, never as evidence of novelty.
+## Current edge
+
+The immediate next question follows directly from Milestone 013: if useful information is accessible in the frozen state but the native consumer underuses it, **how small can a replacement consumer be while still converting that information into better predictions on the actual next-byte task?**
+
+That experiment is active. It will become the next numbered milestone only after the result and its interpretation are stable.
+
+Beyond that experiment, the current research sequence is dependency-driven rather than preassigned to notebook numbers:
+
+1. establish the bounded next-byte readout result;
+2. prove the shared-subspace and functional-sufficiency boundaries that can be settled mathematically before another experiment;
+3. establish a reproducible baseline for the historical hypersphere experiment using existing standards and a clean execution environment;
+4. use that baseline for controlled optimizer comparisons;
+5. return to approximate shared-subspace questions with the theorem-derived burden removed;
+6. apply the resulting representation → accessibility → utilization → causal-function framework to external methodology replications where useful.
+
+Infrastructure work can proceed in parallel when it unblocks those questions, but infrastructure completion by itself does not create a research milestone.
+
+## Planning future milestones
+
+A notebook represents a stable change in what I think the evidence supports, rather than the completion of a GitHub issue. One notebook may synthesize several issues, and many infrastructure or documentation issues should never become notebooks.
+
+The publication path is:
+
+`active question → stable result → interpretation review → public theorem promotion where applicable → notebook → portfolio publication`
+
+This keeps the public chronology tied to research conclusions while allowing the implementation plan underneath it to change.
+
+## Reconstruction rules
+
+The public notebooks follow a few simple rules:
+
+- Keep results in the order they were discovered, including results that were later reinterpreted.
+- Make later corrections visible when leaving them out would make an earlier result misleading.
+- Distinguish mathematical results from empirical observations and from the interpretations built on either.
+- Treat runnable examples as synthetic unless they're explicitly identified as reproductions of historical data.
+- When literature was found after an internal result, describe the relationship as later convergence or prior-art context rather than rewriting the paper as the original inspiration.
+- Explain enough of a referenced idea that following the link is optional for understanding the notebook.
+
+The purpose of the chronology is to preserve how the research changed, including the dead ends and corrections that determined what became worth asking next.
