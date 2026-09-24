@@ -44,3 +44,11 @@ gate succeeds. Fleet remains responsible for polling public status, verifying
 the candidate and exact source identity, and making any protected publication
 decision. This repository contains no Azure identity, private credential, Fleet
 runner label, or deployment step.
+
+
+## Fleet archive and recovery status
+
+The exact-main check above is now a required input gate for new Portfolio candidate intake. Fleet's [workflow and deployed-surface map](https://github.com/pH34r-pH/long-haul-fleet/blob/main/docs/workflow-and-surface-map.md) describes the six-hour intake poll, Portfolio's exact pinned dependency checks, and the boundary between source qualification, private receipt archival, and protected publication. Research Notes itself has no deployment surface or Azure operation.
+
+The offline verifier merged in Fleet PR [#334](https://github.com/pH34r-pH/long-haul-fleet/pull/334) validates receipt content without credentials. Durable receipt archival and exact-SHA recovery are proposed in draft Fleet PR [#361](https://github.com/pH34r-pH/long-haul-fleet/pull/361), tracked by [Fleet #331](https://github.com/pH34r-pH/long-haul-fleet/issues/331). The authenticated path is not live: Fleet's dedicated App private-key secret is absent, and the App installation still needs Research Notes Actions-read access. [Fleet #363](https://github.com/pH34r-pH/long-haul-fleet/issues/363) tracks those prerequisites and the historical no-Azure validation. Until they pass, treat public artifacts as finite-retention supporting evidence and do not claim durable Fleet recovery has been demonstrated.
+
