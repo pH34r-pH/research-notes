@@ -27,3 +27,7 @@ Public formal-source links are pinned to a reviewed theorem-library revision.
 The formal assumptions and conclusions remain in that repository. The public
 account of milestone 013 explicitly distinguishes the historical benchmark
 from its synthetic logistic-probe example; no exact replay is published here.
+
+The public structural gate and exact-SHA consumer contract are documented in
+[Fleet handoff](FLEET_HANDOFF.md). Passing that gate validates publication
+inputs and local references; it is not substantive research review.
