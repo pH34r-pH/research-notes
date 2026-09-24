@@ -1,0 +1,48 @@
+name: Research Notes publication validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  publication-integrity:
+    name: publication-integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate publication inputs
+        run: |
+          python scripts/validate_publication.py \
+            --receipt validation/research-notes-validation.json
+          python -m unittest discover -s scripts -p 'test_validate_publication.py'
+      - name: Record exact validation evidence
+        if: always()
+        run: |
+          {
+            echo '### Research Notes publication validation'
+            echo
+            echo "- Source SHA: \`${GITHUB_SHA}\`"
+            echo "- Run/attempt: \`${GITHUB_RUN_ID}/${GITHUB_RUN_ATTEMPT}\`"
+            echo '- Contract: `research-notes-publication-validation/v1`'
+            if test -f validation/research-notes-validation.json; then
+              python - <<'PY'
+          import json
+          receipt = json.load(open("validation/research-notes-validation.json", encoding="utf-8"))
+          print(f"- Coverage: `{', '.join(receipt['coverage'])}`")
+          print(f"- Source digest: `{receipt['sourceDigest']['value']}` ({receipt['sourceDigest']['algorithm']})")
+          PY
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload validation receipt
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-notes-validation-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: validation/research-notes-validation.json
+          if-no-files-found: error
+          retention-days: 30
