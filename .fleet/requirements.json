@@ -1,0 +1,17 @@
+{
+  "schemaVersion":1,
+  "repository":"pH34r-pH/research-notes",
+  "manifests":[
+    {"path":".github/workflows/publication-validation.yml","kind":"workflow"},
+    {"path":"scripts/validate_publication.py","kind":"build"}
+  ],
+  "profiles":{
+    "publication-integrity":{
+      "phases":["test"],
+      "platforms":[{"os":"linux","arch":"amd64","abi":"glibc"}],
+      "tools":{"python":{"sources":[".github/workflows/publication-validation.yml","scripts/validate_publication.py"]}},
+      "entrypoints":["python scripts/validate_publication.py --receipt validation/research-notes-validation.json","python -m unittest discover -s scripts -p test_validate_publication.py"],
+      "notes":"Current publication CI has no dependency-install step. No cloud backend or private deployment identity is part of source qualification."
+    }
+  }
+}
