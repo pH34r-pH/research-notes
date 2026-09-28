@@ -1,14 +1,17 @@
 # Research Notes
 
-This repository follows an ongoing research project investigating how neural systems represent, transform, preserve, and use information. The work began with experiments treating text as a signal, then gradually expanded into questions about representation geometry, recurrent computation, mathematical constraints on architecture, and the difference between information a model contains and information it actually uses.
+[![Publication validation](https://github.com/pH34r-pH/research-notes/actions/workflows/publication-validation.yml/badge.svg)](https://github.com/pH34r-pH/research-notes/actions/workflows/publication-validation.yml)
+[![License](https://img.shields.io/github/license/pH34r-pH/research-notes)](LICENSE)
 
-The notebooks are arranged in the order those questions developed. They include successful experiments, negative results, corrections to earlier interpretations, mathematical derivations, and experiments I decided not to run after analysis showed they wouldn't answer the intended question. Where later evidence changed my interpretation of an earlier result, I've kept both parts of the story.
+**An evolving research record on representation, geometry, information, and computation in neural systems.**
 
-The current thread running through the work is a distinction that turned out to matter repeatedly: **what information is preserved in a learned state, what can be recovered from it, what the model itself uses, and what actually affects its behavior.** Those aren't necessarily the same thing.
+This repository follows the questions in the order they developed. It includes positive results, negative results, mathematical derivations, later corrections, and experiments that were abandoned after analysis showed they would not answer the intended question.
 
-## Start here
+The current thread running through the work is a distinction that repeatedly matters:
 
-The numbered notebooks follow the research chronologically:
+> **Information preserved in a learned state, information recoverable from it, information the model itself uses, and information that causally affects behavior are not necessarily the same thing.**
+
+## Start with the notebooks
 
 1. [What if text were a signal?](notebooks/001_text_as_signal.ipynb)
 2. [Where did the spectral loss occur?](notebooks/002_locating_representation_loss.ipynb)
@@ -24,35 +27,50 @@ The numbered notebooks follow the research chronologically:
 12. [Natural-source task distinctions](notebooks/012_natural_source_distinctions.ipynb)
 13. [Accessible does not imply used](notebooks/013_accessible_not_used.ipynb)
 
-The [Visual intuition atlas](notebooks/visual_intuition_atlas.ipynb) is a companion notebook containing small synthetic examples and plots for several of the harder-to-visualize ideas. It is intentionally a work in progress.
+The [Visual Intuition Atlas](notebooks/visual_intuition_atlas.ipynb) is a companion set of synthetic examples for difficult geometric ideas.
 
-## Reading the notes
+For the larger map, use the [Wiki](https://github.com/pH34r-pH/research-notes/wiki), [research chronology](CHRONOLOGY.md), and [concept index](reference/index.md).
 
-Technical terms are explained where they first become important, usually with a short **Sticky note** and a link to the deeper [`reference/`](reference/) material. The intended audience is technically experienced, but the notebooks shouldn't require specialized background in geometry, signal processing, formal methods, or representation-learning research just to follow the argument.
+## How claims are marked
 
-I use a few markers when the kind of evidence matters:
+- **✓ Formal checkpoint** — established mathematically under explicit assumptions.
+- **● Observation** — measured under a specified protocol.
+- **◇ Assumption** — used by the argument but not established there.
+- **? Hypothesis** — still open to testing.
 
-- **✓ Formal checkpoint** — a mathematical result established under explicit assumptions, with a public machine-checkable proof where available.
-- **● Observation** — something measured under a specified experimental protocol.
-- **◇ Assumption** — a premise the current argument depends on without establishing it.
-- **? Hypothesis** — an explanation or prediction that remains open to testing.
+The distinction matters more than the symbols. A theorem does not automatically establish its empirical interpretation, and an observation does not become a theorem because its explanation is mathematically attractive.
 
-The distinction matters more than the symbols. A mathematical result doesn't automatically establish its empirical interpretation, and an experimental observation doesn't become a theorem because the explanation is mathematically appealing.
+Each mature milestone also records **What this does not show**.
 
-Each milestone also includes **What this does not show**. I use that section to record the strongest interpretation I think the evidence *doesn't* justify, especially when a result is easy to overread.
+## Research architecture
 
-## References
+```text
+private experiments / active reasoning
+            |
+      stable result
+            |
+ interpretation review
+            |
+ public theorem promotion (when applicable)
+            |
+            v
+      numbered notebook
+            |
+            +--> reusable reference pages
+            +--> Theorem Library proof links
+            +--> public reproducibility artifacts
+```
 
-- [Visual intuition atlas](notebooks/visual_intuition_atlas.ipynb)
-- [Concept index](reference/index.md)
-- [Glossary](reference/glossary.md)
-- [Experimental reasoning](reference/experimental-reasoning.md)
-- [Representation and readout](reference/representation-and-readout.md)
-- [Formal methods and claim boundaries](reference/formal-methods/index.md)
-- [Public formal checkpoints](reference/formal-methods/checkpoints.md)
-- [Theorem Library](https://github.com/pH34r-pH/theorem-library)
-- [Research chronology](CHRONOLOGY.md)
+The notebooks are the narrative layer. `reference/` is the reusable explanatory layer. [Theorem Library](https://github.com/pH34r-pH/theorem-library) is the public machine-checkable mathematics layer.
 
-## Status
+## Reproducibility and disclosure
 
-Independent research, ongoing.
+Runnable notebook code is a synthetic teaching example unless explicitly identified as an exact replay/public artifact. Research period and public reconstruction date are kept separate. Later corrections remain visible rather than rewriting the earlier result.
+
+The [chronology manifest](CHRONOLOGY.md) documents the reconstruction and disclosure rules.
+
+## Contributing and citation
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing editorial or technical changes. Research references should identify the specific notebook/artifact and may use [CITATION.cff](CITATION.cff) for repository-level metadata.
+
+Licensed under Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
