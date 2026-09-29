@@ -27,7 +27,7 @@ This kept the question narrow. If the existing model already contradicted a prop
 :label: 008-frozen-mechanism-tests-intuition
 :alt: A small per-step contraction compounds across recurrent steps; actual finite-horizon effects depend on the sequence of Jacobians.
 
-This scalar diagram illustrates compounding. The experiment used finite-horizon products of changing Jacobians, not this toy sequence.
+A toy scalar contraction compounds across steps. In a recurrent model, the full calculation uses a sequence of Jacobians.
 ```
 
 ## The mechanism campaign
@@ -52,11 +52,9 @@ The probes were similarly mixed. They didn't support a clean story in which radi
 
 > **Sticky note — finite-horizon Jacobian:** in a recurrent model, small changes pass through several successive updates. Multiplying the Jacobians of those updates tells us how a perturbation propagates across that finite sequence rather than through only one step.
 
-## A small editable teaching example
+## Try a small example
 
-These two hand-chosen matrices illustrate a finite-horizon Jacobian product. They are not Jacobians measured from the research model.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+Two hand-chosen matrices show how local Jacobians combine over a finite horizon. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 008-frozen-mechanism-tests-teaching-example
@@ -69,7 +67,7 @@ print('finite-horizon Jacobian:\n',J10)
 print('singular values:',np.linalg.svd(J10,compute_uv=False))
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 finite-horizon Jacobian:
@@ -93,21 +91,18 @@ This part of the investigation drew increasingly on dynamical-systems and sensit
 
 The literature provided tools for asking those questions, but I kept the claims tied to the finite trained system in front of me. A local normalization theorem, a finite-horizon Jacobian calculation, and a statement about asymptotic recurrent dynamics are different results; none should silently stand in for the others.
 
-## What this does not show
+## Interpretation
 
-The mixed diagnostics don't show that normalization lacks a mechanism. They show that the particular explanations I tested (especially a simple radial-shortcut story or clean selective contraction of radial information) weren't identified strongly enough to support them.
+The frozen diagnostics gave mixed support for the tested radial-shortcut and selective-contraction explanations. Local sensitivity established influence under an intervention; held-out prediction was still needed to establish usefulness.
 
-Local output sensitivity isn't enough by itself either. A variable can change an output under a small intervention while still being redundant with other information, canceled later, or useless for improving held-out predictions. Sensitivity establishes influence under the intervention; usefulness requires a different test.
-
-The larger methodological result was that frozen-model analysis could eliminate an experiment before training. Once the proposed control failed to create a new causal comparison, running it would have produced another number without answering another question.
-
+The proposed extra control collapsed to the model already tested. Rejecting that redundant comparison was the practical result: the analysis eliminated a training run that would have added a number without separating the hypotheses.
 
 ## Public formal sources
 
 - [NormalizationComposition](https://github.com/pH34r-pH/theorem-library/blob/2c90ec3d482a64a5bce5787f48c5828429c50305/TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean)
 - [RadialMemory](https://github.com/pH34r-pH/theorem-library/blob/2c90ec3d482a64a5bce5787f48c5828429c50305/TheoremLibrary/Geometry/Sphere/RadialMemory.lean)
 
-These pinned sources state the mathematical assumptions and checked conclusions. They do not establish the empirical interpretation of a model’s learned directions.
+These pinned sources state the assumptions and checked mathematical conclusions.
 
 (008-frozen-mechanism-tests-sources)=
 ## Sources and chronology

@@ -29,7 +29,7 @@ The theorem ledger grew out of a simpler rule: **before testing whether an archi
 :label: 009-theorem-ledger-method-intuition
 :alt: Four epistemic labels distinguish formal results, empirical observations, assumptions and open hypotheses.
 
-The labels are claim classes, not a ranking of evidence strength or a substitute for the public theorem sources.
+Four labels distinguish the kinds of support a claim has.
 ```
 
 ## Four kinds of evidence
@@ -63,11 +63,9 @@ The public [Theorem Library](https://github.com/pH34r-pH/theorem-library) contai
 
 > **Sticky note — counterexample:** a single valid case that violates a universal claim is enough to prove that the claim, as stated, is false. This makes counterexamples especially useful for pruning broad architecture hypotheses before implementation.
 
-## A small editable teaching example
+## Try a small example
 
-This small dictionary illustrates claim classification. It is not an export of the theorem ledger.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+A small dictionary labels three claims by the evidence supporting them. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 009-theorem-ledger-method-teaching-example
@@ -81,7 +79,7 @@ claims = {
 for claim, kind in claims.items(): print(f'{kind:11s} | {claim}')
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 formal      | normalization radial derivative is zero
@@ -98,13 +96,11 @@ As I compared the growing design space with existing work in geometric deep lear
 
 The useful role of the literature was therefore broader than supplying architectures to reproduce. Existing theory could tell me which parts of an idea were already understood, which claims were too strong, and where an empirical question actually began.
 
-## What this does not show
+## Interpretation
 
-Formalization doesn't make empirical machine learning deductive. A proof establishes a conclusion from its assumptions; whether those assumptions describe a trained model, a dataset, or a useful task remains an empirical question when the connection hasn't itself been established.
+A proof establishes its encoded conclusion under its assumptions. Connecting those assumptions to a trained model or dataset requires empirical evidence.
 
-Machine checking has the same boundary. A Lean proof can verify that a mathematical argument follows from its formal assumptions, but it doesn't verify that the surrounding scientific interpretation is correct.
-
-The practical value of the ledger is narrower and, for this project, more useful: it keeps mathematical facts, empirical observations, assumptions, and hypotheses from silently changing roles as the research evolves. That makes it possible to eliminate impossible or redundant branches before spending compute, while leaving genuinely empirical questions for experiments.
+The ledger made that connection explicit. It kept mathematical results, observations, assumptions, and hypotheses in their proper roles, so proofs and counterexamples could eliminate impossible or redundant branches before training.
 
 (009-theorem-ledger-method-sources)=
 ## Sources and chronology

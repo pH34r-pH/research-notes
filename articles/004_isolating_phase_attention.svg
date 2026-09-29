@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
-<title id="title">Phase-aware similarity</title><desc id="desc">A phase circle relates relative angle to normalized real-Hermitian similarity; the diagram is mathematical, not measured model output.</desc>
+<title id="title">Phase-aware similarity</title><desc id="desc">A phase circle relates relative angle to normalized real-Hermitian similarity.</desc>
 <rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
 <g font-family="system-ui, sans-serif" fill="#263543">
 <text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">RELATIVE PHASE AND SIMILARITY</text>

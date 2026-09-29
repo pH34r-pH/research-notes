@@ -27,7 +27,7 @@ The initial hypothesis was intentionally broad. If text contains regularities th
 :label: 001-text-as-signal-intuition
 :alt: An illustrative waveform and its frequency-coordinate view show two ways to inspect the same signal.
 
-The waveform and frequency coordinates describe the same synthetic signal; the diagram does not report language-model results.
+Toy signal: the waveform and frequency coordinates describe the same values.
 ```
 
 ## The first important negative result
@@ -38,11 +38,9 @@ That result was more interesting than a simple failure because it left several p
 
 This changed the question from “does spectral text work?” to “where does the information become unusable?” That became the focus of the next phase.
 
-## A small editable teaching example
+## Try a small example
 
-This small Fourier round trip demonstrates invertibility; it does not replay a language-model experiment.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+A toy Fourier round trip shows that the coordinate change is invertible. Try changing the input values. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 001-text-as-signal-teaching-example
@@ -57,18 +55,16 @@ x_roundtrip = np.fft.ifft(X).real
 print('max round-trip error:', np.max(np.abs(x - x_roundtrip)))
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 max round-trip error: 0.0
 ```
 
 
-## What this does not show
+## Interpretation
 
-The Fourier transform in the example above is invertible, so the coordinate change itself does not lose information. That doesn't mean a finite neural network can use the transformed representation as effectively as the original one. Information can still be difficult to access, poorly matched to the operations performed on it, or available in the representation without being used by the downstream model.
-
-This distinction became important enough that I kept the negative result rather than replacing it with a more successful experiment. Knowing that the final model performed worse narrowed the problem; the next step was to determine whether the loss came from the representation, from the way represented states were combined, or from the model trying to consume them.
+An invertible coordinate change preserves information, but the model still has to use it. The spectral model’s worse performance left three places to investigate: the representation, the operations that combined represented states, and the downstream consumer. Keeping the negative result gave the next experiment a specific job: locate the loss.
 
 (001-text-as-signal-sources)=
 ## Sources and chronology

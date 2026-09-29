@@ -14,7 +14,7 @@ The notebooks preserve the chronological record. Reviewed MyST articles are the 
 4. What experiment separated them?
 5. What did we observe?
 6. What are we justified in concluding?
-7. What does the result *not* establish?
+7. Which assumptions or limits change its interpretation?
 8. How did the result change the next question?
 
 ### Reference material
@@ -82,9 +82,9 @@ A proof validates its encoded statement and assumptions. Never let the marker si
 
 ## Result boundaries
 
-Every milestone must contain a section titled **What this does not show**.
+State material limits where they affect the interpretation. Canonical articles may use **Interpretation** or a subject-specific heading; preserved notebooks retain their historical structure. Avoid repeating generic disclaimers around every example.
 
-Separate:
+Keep the distinction clear between:
 
 - formal result;
 - observation;
@@ -109,3 +109,11 @@ This repo should never become a second theorem ledger. If a formal result change
 The public repository teaches from stable milestones. It is not a mirror of the private laboratory.
 
 Do not expose unfinished hypotheses, private artifacts, exact active experiment queues, private theorem-ledger research state, or details whose main value is enabling someone to jump directly to the current unpublished frontier.
+
+## Toy examples and public prose
+
+Label a teaching example once as toy, schematic, or hand-chosen. Explain what it demonstrates and invite a useful edit. Use **Saved output** for its static result and **Your session** for browser output. Repeating that a five-line example is not a model-training replay adds noise.
+
+Keep consequential qualifications specific: the training budget, endpoint versus trajectory, a probe’s readout family, assumptions of a theorem, or the scope of a linked experiment package. State the observation directly before discussing its interpretation.
+
+Consult `pH34r-pH/tone` when editing public prose. Its current guide is unfrozen and has insufficient corpus, so it does not yet establish a voice profile. Generated revisions here must not become baseline evidence of the author’s voice.

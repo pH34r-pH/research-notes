@@ -29,7 +29,7 @@ For a single fixed task, the answer can be straightforward. If no outcome we car
 :label: 010-dynamic-quotient-intuition
 :alt: A toy transition relation groups states by parity while preserving the equivalence class across steps.
 
-Parity is a toy equivalence relation used for teaching; it is not a claim about the unpublished dynamic-quotient program.
+A toy quotient groups states by parity; adding two preserves the equivalence classes.
 ```
 
 ## From static to dynamic sufficiency
@@ -54,11 +54,9 @@ Sequential systems add the future-behavior requirement. **Predictive State Repre
 
 I didn't begin the branch by combining those theories. The project arrived first at the need for a recurrence-compatible equivalence relation, and the subsequent literature sweep showed that the underlying idea had several mature precedents. Those precedents changed how I described the result: the interesting question wasn't whether I had invented a new notion of semantic state, but how these existing notions of predictive sufficiency could constrain the representation I was trying to build.
 
-## A small editable teaching example
+## Try a small example
 
-This six-state system illustrates a quotient under recurrence. It does not model natural-language reasoning.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+A six-state toy system groups states by parity. Adding two preserves each state’s class. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 010-dynamic-quotient-teaching-example
@@ -71,7 +69,7 @@ for x in states:
     print(x, 'class', x%2, '->', R(x), 'class', R(x)%2)
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 0 class 0 -> 2 class 0
@@ -93,13 +91,11 @@ That made “find the right semantic language” too strong a target. A candidat
 
 The deeper target is behavioral: preserve whatever distinctions are necessary for the future reasoning and observations the system is expected to support.
 
-## What this does not show
+## Interpretation
 
-The dynamic-quotient formulation doesn't tell us what equivalence relation a language model should learn. Defining the correct future behavior is itself part of the modeling problem, and different tasks can require different distinctions.
+A dynamic quotient is defined relative to a family of future observations, actions, or tasks. Choosing that family is part of the modeling problem. When future requirements are unknown, discarding information can remove capabilities the system later needs.
 
-It also doesn't imply that aggressive compression is always desirable. If future requirements are unknown, discarding information can permanently remove capabilities we later discover we needed. “Minimal sufficient state” only has meaning relative to a declared family of future observations, actions, or tasks.
-
-What the formulation does give me is a test for proposed semantic representations: instead of asking whether a representation looks structured, elegant, or linguistically appealing, ask which distinctions it merges and whether those merged states remain indistinguishable under the reasoning dynamics we care about.
+The formulation supplies a concrete test for a proposed semantic representation: which distinctions does it merge, and do those states remain indistinguishable under the relevant reasoning dynamics?
 
 (010-dynamic-quotient-sources)=
 ## Sources and chronology

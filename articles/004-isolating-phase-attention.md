@@ -25,9 +25,9 @@ I separated those components through ablation: remove or replace one part of the
 ## Visual intuition
 ```{figure} ./004_isolating_phase_attention.svg
 :label: 004-isolating-phase-attention-intuition
-:alt: A phase circle relates relative angle to normalized real-Hermitian similarity; the diagram is mathematical, not measured model output.
+:alt: A phase circle relates relative angle to normalized real-Hermitian similarity.
 
-The cosine relationship is a mathematical illustration of phase-aware similarity, not a plot of model attention weights.
+The cosine of the relative phase gives normalized real-Hermitian similarity.
 ```
 
 ## What survived
@@ -40,11 +40,9 @@ This narrowed the result considerably. I no longer needed a broadly “polar-nat
 
 > **Sticky note — Hermitian similarity:** complex vectors contain both magnitude and phase. A Hermitian inner product conjugates one of its inputs before comparing them, allowing their relative phase to contribute naturally to the result. Taking the real component and normalizing by vector magnitude produces the similarity score used here.
 
-## A small editable teaching example
+## Try a small example
 
-These hand-chosen vectors demonstrate phase-aware similarity, not the ablation experiment.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+Two hand-chosen complex vectors show how relative phase affects similarity. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 004-isolating-phase-attention-teaching-example
@@ -57,18 +55,16 @@ score = np.real(np.vdot(q, k)) / (np.linalg.norm(q)*np.linalg.norm(k))
 print('normalized real-Hermitian similarity:', score)
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 normalized real-Hermitian similarity: 0.0
 ```
 
 
-## What this does not show
+## Interpretation
 
-Hermitian and phase-aware attention already existed; this experiment doesn't claim otherwise. The result is narrower: for this spectral representation, replacing the ordinary attention similarity with a phase-aware comparison explained the improvement that survived the ablations.
-
-It also doesn't establish a general rule that every representation benefits from specially matched operations. At this point I had one representation and one surviving operator pairing. What the ablation gave me was a much cleaner mechanism to carry forward: instead of changing an entire architecture in the next experiment, I could freeze the smallest component that explained the result and ask a new question without reopening this one.
+The ablation identified phase-aware similarity as the component carrying the improvement for this spectral representation. Hermitian and phase-aware attention have established precedents; the contribution here was isolating their role in this comparison. I could now freeze that component and study recurrence without changing the whole architecture again.
 
 (004-isolating-phase-attention-sources)=
 ## Sources and chronology

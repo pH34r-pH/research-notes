@@ -27,7 +27,7 @@ There were two changes I needed to separate. Rewriting a complex value from Cart
 :label: 003-coordinates-and-matched-operations-intuition
 :alt: A conceptual complex-plane diagram separates coordinate re-expression from changing the downstream operation.
 
-The same synthetic complex values can be re-expressed in polar-related coordinates; the experimental comparison also changed the downstream operation.
+Toy complex values can be re-expressed in polar coordinates. Changing the operation is a separate choice.
 ```
 
 ## Result
@@ -38,11 +38,9 @@ Compared with the original spectral Cartesian condition, the polar-native model 
 
 That second comparison changed the interpretation of the experiment. A coordinate transformation could explain part of the original improvement, but it couldn't explain all of it. Something about the operations performed in those coordinates was contributing independently.
 
-## A small editable teaching example
+## Try a small example
 
-These three complex values demonstrate a coordinate change, not the historical model comparison.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+Three hand-chosen complex values show how Cartesian and polar coordinates describe the same information. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 003-coordinates-and-matched-operations-teaching-example
@@ -55,7 +53,7 @@ phase_features = np.c_[rho, np.cos(np.angle(z)), np.sin(np.angle(z))]
 print(phase_features)
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 [[ 0.3465736   0.70710678  0.70710678]
@@ -64,13 +62,9 @@ print(phase_features)
 ```
 
 
-## What this does not show
+## Interpretation
 
-This was evidence for a specific representation and processing architecture, not a general law that representations always work best with operations designed around their geometry. I had also changed several operations inside the polar-native block at once, so the result couldn't yet tell me which part of that block mattered.
-
-The coordinate-only control was important for exactly this reason. Without it, I could have attributed the full improvement to the new processing architecture when some of the gain actually came from expressing the same information differently.
-
-The next experiment therefore kept the source representation fixed again and took the successful processing block apart. If the improvement depended on a specific operation, removing that operation should make the advantage disappear; if several components were necessary together, the ablations should expose that interaction.
+The coordinate-only control separated the benefit of re-expression from the benefit of the polar-native block. Several operations inside that block still changed together. The next experiment therefore took the block apart while holding the source representation fixed, to find which operation carried the remaining advantage.
 
 (003-coordinates-and-matched-operations-sources)=
 ## Sources and chronology

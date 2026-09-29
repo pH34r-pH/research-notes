@@ -27,7 +27,7 @@ This notebook is therefore retrospective. The earlier measurement remains part o
 :label: 006-endpoint-can-mislead-intuition
 :alt: Schematic learning curves illustrate that the best checkpoint and a fixed late checkpoint can rank conditions differently.
 
-Schematic curves only; the historical comparison and its corrections are described in the source note below.
+Schematic learning curves show why the best checkpoint and a fixed late checkpoint can rank models differently.
 ```
 
 ## What changed
@@ -54,11 +54,9 @@ There was also a statistical correction. An audit of the historical data showed 
 
 > **Sticky note — independent sampling unit:** the unit that contributes genuinely independent evidence to an analysis. Counting correlated measurements as independent observations makes uncertainty look smaller than it really is.
 
-## A small editable teaching example
+## Try a small example
 
-These short loss sequences are invented to illustrate checkpoint selection. They are not the historical training curves.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+Two toy loss sequences show how choosing the best checkpoint can change the comparison. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 006-endpoint-can-mislead-teaching-example
@@ -71,7 +69,7 @@ print('best shared/unit:', min(shared), min(unit))
 print('late shared/unit:', shared[-1], unit[-1])
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 best shared/unit: 3.0 3.2
@@ -79,13 +77,13 @@ late shared/unit: 3.4 3.2
 ```
 
 
-## What this does not show
+## Interpretation
 
-None of this makes the original endpoint measurement wrong. A fixed endpoint, the best checkpoint observed during training, and a checkpoint selected under a predefined policy are different measurements answering different questions. The mistake would be treating one of them as interchangeable with the others.
+A fixed endpoint, the best observed checkpoint, and a checkpoint selected by a predefined policy answer different questions. The endpoint measurement remained valid; the trajectory and matched control changed its interpretation.
 
-Likewise, **REGULARIZATION-EXPLAINS** doesn't establish that hyperspherical geometry can never matter. It says that I didn't need a geometry-specific explanation for the result that originally motivated the investigation; a matched regularization control was sufficient to account for it under the frozen decision rule.
+Under the frozen decision rule, the matched regularization control accounted for the original advantage, yielding **REGULARIZATION-EXPLAINS**. That resolved the motivating anomaly while leaving other geometric hypotheses available for separate tests.
 
-For me, the more important result was methodological. A surprising measurement should create more opportunities to prove the first explanation wrong. In this case, the anomaly survived long enough to motivate better trajectory analysis, regularization controls, checkpoint-selection rules, and source-unit auditing; those controls produced a much less dramatic explanation, and a much stronger result.
+The anomaly led to better trajectory analysis, checkpoint-selection rules, regularization controls, and source-unit auditing. Those checks made the explanation less dramatic and the conclusion more useful.
 
 (006-endpoint-can-mislead-sources)=
 ## Sources and chronology
