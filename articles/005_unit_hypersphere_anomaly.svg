@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Normalization and the unit sphere</title><desc id="desc">A vector is projected onto the unit circle. This simple geometric example is not a training result.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">KEEP DIRECTION · REMOVE OVERALL SCALE</text>
+<circle cx="312" cy="220" r="120" fill="none" stroke="#82979b" stroke-width="3"/><line x1="155" y1="220" x2="470" y2="220" stroke="#b6c0c1" stroke-width="2"/><line x1="312" y1="66" x2="312" y2="374" stroke="#b6c0c1" stroke-width="2"/>
+<path d="M312 220 L426 106" stroke="#c47b4e" stroke-width="5"/><circle cx="426" cy="106" r="8" fill="#c47b4e"/><path d="M312 220 L397 135" stroke="#287f91" stroke-width="5"/><circle cx="397" cy="135" r="8" fill="#287f91"/>
+<text x="441" y="102" font-size="15">x = (3, 4)</text><text x="408" y="145" font-size="15">x / ||x|| = (0.6, 0.8)</text>
+<text x="585" y="162" font-size="16">same direction</text><text x="585" y="205" font-size="16">different magnitude</text><text x="585" y="278" font-size="18" font-weight="650">||x / ||x|||| = 1</text>
+<text x="52" y="378" font-size="15" fill="#59656c">The frozen endpoint was an anomaly to investigate, not a general claim about spherical models.</text></g>
+</svg>

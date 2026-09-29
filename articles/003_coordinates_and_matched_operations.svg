@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Coordinates and operations</title><desc id="desc">A conceptual complex-plane diagram separates coordinate re-expression from changing the downstream operation.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">TWO INTERVENTIONS TO SEPARATE</text>
+<circle cx="220" cy="208" r="102" fill="none" stroke="#c3c9c8" stroke-width="2"/><line x1="92" y1="208" x2="350" y2="208" stroke="#9ca8aa" stroke-width="2"/><line x1="220" y1="82" x2="220" y2="332" stroke="#9ca8aa" stroke-width="2"/>
+<path d="M220 208 L292 136" stroke="#287f91" stroke-width="5"/><circle cx="292" cy="136" r="7" fill="#287f91"/><text x="112" y="350" font-size="15">same complex value</text>
+<path d="M442 208h92m-11-12 12 12-12 12" fill="none" stroke="#735f92" stroke-width="4"/>
+<rect x="557" y="106" width="142" height="68" rx="10" fill="#e7eceb" stroke="#82979b"/><text x="628" y="147" font-size="15" text-anchor="middle">coordinate-only</text>
+<rect x="742" y="106" width="142" height="68" rx="10" fill="#ece6f2" stroke="#907baa"/><text x="813" y="138" font-size="14" text-anchor="middle">polar-native</text><text x="813" y="158" font-size="13" text-anchor="middle">operations</text>
+<text x="557" y="230" font-size="15">same information</text><text x="742" y="230" font-size="15">changed computation</text>
+<text x="52" y="378" font-size="15" fill="#59656c">The controlled comparison distinguishes easier coordinates from a better-matched operation.</text></g>
+</svg>

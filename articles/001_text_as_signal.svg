@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Signal and spectrum</title><desc id="desc">An illustrative waveform and its frequency-coordinate view show two ways to inspect the same signal.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="54" y="48" font-size="18" font-weight="700" letter-spacing="2">SAME SIGNAL · DIFFERENT COORDINATES</text>
+<text x="70" y="97" font-size="16">waveform</text><path d="M70 190 C110 82 150 82 190 190 S270 298 310 190 S390 82 430 190" fill="none" stroke="#287f91" stroke-width="5"/>
+<line x1="70" y1="190" x2="430" y2="190" stroke="#a5adb2" stroke-width="2"/>
+<text x="540" y="97" font-size="16">frequency coordinates</text>
+<line x1="540" y1="290" x2="850" y2="290" stroke="#a5adb2" stroke-width="2"/>
+<rect x="580" y="222" width="46" height="68" rx="5" fill="#735f92"/><rect x="657" y="165" width="46" height="125" rx="5" fill="#735f92"/><rect x="734" y="239" width="46" height="51" rx="5" fill="#735f92"/><rect x="811" y="260" width="28" height="30" rx="5" fill="#b7a9c9"/>
+<text x="70" y="340" font-size="15" fill="#59656c">Transforming coordinates can preserve information while changing what is easy to inspect.</text></g>
+</svg>

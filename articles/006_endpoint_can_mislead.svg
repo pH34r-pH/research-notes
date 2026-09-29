@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Endpoint and checkpoint selection</title><desc id="desc">Schematic learning curves illustrate that the best checkpoint and a fixed late checkpoint can rank conditions differently.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">ONE CURVE, DIFFERENT QUESTIONS</text>
+<line x1="122" y1="300" x2="814" y2="300" stroke="#82979b" stroke-width="2"/><line x1="122" y1="300" x2="122" y2="100" stroke="#82979b" stroke-width="2"/>
+<path d="M130 135 C245 245 320 270 410 255 S610 198 800 215" fill="none" stroke="#287f91" stroke-width="5"/><path d="M130 168 C248 240 330 257 425 230 S622 177 800 187" fill="none" stroke="#735f92" stroke-width="5"/>
+<circle cx="410" cy="255" r="8" fill="#287f91"/><circle cx="425" cy="230" r="8" fill="#735f92"/><circle cx="800" cy="215" r="8" fill="#287f91"/><circle cx="800" cy="187" r="8" fill="#735f92"/>
+<text x="126" y="330" font-size="14">training updates</text><text x="52" y="126" font-size="14" transform="rotate(-90 52 126)">loss (schematic)</text>
+<text x="560" y="112" font-size="15" fill="#287f91">shared recurrence</text><text x="560" y="146" font-size="15" fill="#735f92">unit constraint</text>
+<text x="490" y="345" font-size="15">best-observed checkpoint</text><text x="720" y="345" font-size="15">fixed endpoint</text>
+<text x="52" y="378" font-size="15" fill="#59656c">The curves are schematic; the notebook distinguishes endpoint, best observed and frozen-policy comparisons.</text></g>
+</svg>

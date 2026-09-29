@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Radius changes a dot product</title><desc id="desc">At fixed angle, ordinary inner product changes when either vector radius changes.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">FIX ANGLE · CHANGE RADIUS</text>
+<line x1="110" y1="290" x2="850" y2="290" stroke="#aab4b5" stroke-width="2"/><line x1="140" y1="325" x2="140" y2="78" stroke="#aab4b5" stroke-width="2"/>
+<path d="M140 290 L325 185" stroke="#287f91" stroke-width="5"/><path d="M140 290 L445 115" stroke="#735f92" stroke-width="5"/><path d="M140 290 L690 225" stroke="#c47b4e" stroke-width="5"/>
+<path d="M200 290 A60 60 0 0 0 192 260" fill="none" stroke="#263543" stroke-width="2"/><text x="204" y="253" font-size="16">θ fixed</text>
+<text x="348" y="178" font-size="15" fill="#287f91">r_q r_k = 1 → 0.5</text><text x="475" y="108" font-size="15" fill="#735f92">r_q r_k = 2 → 1.0</text><text x="700" y="221" font-size="15" fill="#c47b4e">r_q r_k = 6 → 3.0</text>
+<text x="52" y="360" font-size="15" fill="#59656c">The dot-like similarity is r_q r_k cos(θ); whether radius should matter is a task requirement.</text></g>
+</svg>

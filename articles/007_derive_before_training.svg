@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Radial and tangent directions</title><desc id="desc">At a nonzero point, normalization removes first-order radial change and rescales tangent change.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">LOCAL GEOMETRY OF NORMALIZATION</text>
+<circle cx="326" cy="220" r="120" fill="none" stroke="#82979b" stroke-width="3"/><circle cx="326" cy="220" r="5" fill="#263543"/>
+<path d="M326 220 L411 135" stroke="#263543" stroke-width="4"/><circle cx="411" cy="135" r="7" fill="#263543"/><text x="420" y="130" font-size="15">u = x / ||x||</text>
+<path d="M411 135 L463 83" stroke="#c47b4e" stroke-width="5"/><text x="474" y="82" font-size="15">radial change</text><text x="474" y="106" font-size="14" fill="#59656c">mapped to zero</text>
+<path d="M411 135 L472 196" stroke="#287f91" stroke-width="5"/><text x="492" y="203" font-size="15">tangent change</text><text x="492" y="229" font-size="14" fill="#59656c">scaled by 1 / ||x||</text>
+<text x="52" y="378" font-size="15" fill="#59656c">This is a formal local property; it does not decide which directions are useful for a task.</text></g>
+</svg>

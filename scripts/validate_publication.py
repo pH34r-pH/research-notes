@@ -22,7 +22,7 @@ FIGURE_DIRECTIVE = re.compile(r"^\s*```\{figure\}\s+(\S+)", re.MULTILINE)
 CODE_CELL = re.compile(r"^\s*```\{code-cell\}\s+([\w+-]+)(.*?)^```\s*$", re.MULTILINE | re.DOTALL)
 PUBLISHED_ROOTS = ("notebooks", "reference", "articles")
 BUILD_INPUTS = ("myst.yml", "package.json", "package-lock.json")
-CONTEXT_FILES = ("README.md", "CHRONOLOGY.md")
+CONTEXT_FILES = ("README.md", "CHRONOLOGY.md", "PUBLICATION-DISPOSITIONS.md", "index.md")
 
 
 class ValidationError(ValueError):
@@ -150,7 +150,7 @@ def validate_article(root: Path, path: Path, bibliography: set[str]) -> tuple[in
     return links_checked, cell_count
 
 
-def _validate_articles(root: Path) -> tuple[int, int, int]:
+def _validate_articles(root: Path) -> tuple[int, int, int, dict[int, Path]]:
     article_paths = sorted(root.joinpath("articles").glob("*.md"))
     if not article_paths:
         raise ValidationError("no canonical MyST articles found")
@@ -165,7 +165,89 @@ def _validate_articles(root: Path) -> tuple[int, int, int]:
         article_links, article_cells = validate_article(root, path, bibliography)
         links_checked += article_links
         code_cell_count += article_cells
-    return len(article_paths), links_checked, code_cell_count
+    toc_source = (root / "myst.yml").read_text(encoding="utf-8")
+    toc_paths = re.findall(r"^\s+- file:\s*(articles/\S+\.md)\s*$", toc_source, re.MULTILINE)
+    index_paths = re.findall(r"^\s+- file:\s*index\.md\s*$", toc_source, re.MULTILINE)
+    if len(index_paths) != 1:
+        raise ValidationError("myst.yml project.toc must list the publication index exactly once")
+    article_relatives = {path.relative_to(root).as_posix() for path in article_paths}
+    if len(toc_paths) != len(set(toc_paths)) or set(toc_paths) != article_relatives:
+        raise ValidationError("myst.yml project.toc must list every canonical article exactly once")
+    articles_by_sequence = {sequence: root / relative
+                            for sequence, relative in enumerate(toc_paths, start=1)}
+    if not articles_by_sequence:
+        raise ValidationError("myst.yml project.toc must list the canonical articles")
+    return len(article_paths), links_checked, code_cell_count, articles_by_sequence
+
+
+def _parse_notebook_dispositions(path: Path, source: str) -> dict[str, tuple[str, str]]:
+    notebook_rows: dict[str, tuple[str, str]] = {}
+    row_pattern = re.compile(
+        r"^\|\s*\[[^\]]+\]\((notebooks/[^)]+\.ipynb)\)\s*\|\s*"
+        r"(canonical article|supporting/source notebook)\s*\|\s*(.*?)\s*\|$"
+    )
+    for line in source.splitlines():
+        match = row_pattern.match(line)
+        if match:
+            target, disposition, reader_cell = match.groups()
+            if target in notebook_rows:
+                raise ValidationError(f"{path.name}: duplicate notebook disposition for {target}")
+            notebook_rows[target] = (disposition, reader_cell)
+    return notebook_rows
+
+
+def _validate_notebook_disposition(root: Path, path: Path, row: tuple[str, str] | None,
+                                   articles_by_sequence: dict[int, Path],
+                                   seen_sequences: set[int]) -> int | None:
+    notebook = load_notebook(path)
+    sequence = notebook["metadata"]["publication"].get("sequence")
+    relative = path.relative_to(root).as_posix()
+    if sequence is None:
+        if relative != "notebooks/visual_intuition_atlas.ipynb":
+            raise ValidationError(f"{relative}: public source notebook has no disposition sequence")
+        if row is None or row[0] != "supporting/source notebook":
+            raise ValidationError("PUBLICATION-DISPOSITIONS.md: Visual Intuition Atlas must remain classified as a source notebook")
+        return None
+    if sequence in seen_sequences:
+        raise ValidationError(f"{relative}: duplicate notebook sequence {sequence}")
+    if row is None or row[0] != "canonical article":
+        raise ValidationError(f"PUBLICATION-DISPOSITIONS.md: {relative} must have a canonical article disposition")
+    article_targets = [target for target in markdown_targets(row[1])
+                       if target.startswith("articles/") and target.endswith(".md")]
+    article_path = articles_by_sequence.get(sequence)
+    if article_path is None or article_targets != [article_path.relative_to(root).as_posix()]:
+        raise ValidationError(f"PUBLICATION-DISPOSITIONS.md: {relative} must point to its sequence-matched canonical article")
+    return sequence
+
+
+def _validate_disposition_coverage(path: Path, notebook_rows: dict[str, tuple[str, str]],
+                                   expected_notebooks: set[str], seen_sequences: set[int],
+                                   articles_by_sequence: dict[int, Path]) -> None:
+    if set(notebook_rows) != expected_notebooks:
+        extra = sorted(set(notebook_rows) - expected_notebooks)
+        missing = sorted(expected_notebooks - set(notebook_rows))
+        raise ValidationError(f"{path.name}: notebook dispositions differ from publication inputs; missing={missing}, extra={extra}")
+    if seen_sequences != set(articles_by_sequence):
+        raise ValidationError(f"{path.name}: every numbered source notebook must have one canonical article")
+
+
+def _validate_dispositions(root: Path, notebooks: list[Path],
+                            articles_by_sequence: dict[int, Path]) -> int:
+    path = root / "PUBLICATION-DISPOSITIONS.md"
+    source = path.read_text(encoding="utf-8")
+    links_checked = check_local_links(root, path, source)
+    notebook_rows = _parse_notebook_dispositions(path, source)
+    expected_notebooks = {notebook_path.relative_to(root).as_posix() for notebook_path in notebooks}
+    seen_sequences: set[int] = set()
+    for notebook_path in notebooks:
+        relative = notebook_path.relative_to(root).as_posix()
+        sequence = _validate_notebook_disposition(
+            root, notebook_path, notebook_rows.get(relative), articles_by_sequence, seen_sequences)
+        if sequence is not None:
+            seen_sequences.add(sequence)
+    _validate_disposition_coverage(path, notebook_rows, expected_notebooks,
+                                   seen_sequences, articles_by_sequence)
+    return links_checked
 
 
 def load_notebook(path: Path) -> dict:
@@ -241,6 +323,7 @@ def _validate_context_markdown(root: Path) -> int:
 
 def validate(root: Path) -> dict:
     paths = published_files(root) + _build_input_paths(root)
+    paths.extend(root / name for name in CONTEXT_FILES)
     paths.sort(key=lambda path: path.relative_to(root).as_posix())
     allowed = {".ipynb", ".md", ".bib", ".svg", ".yml", ".json"}
     unexpected = [path.relative_to(root).as_posix() for path in paths if path.suffix not in allowed]
@@ -249,13 +332,14 @@ def validate(root: Path) -> dict:
 
     notebooks, links_checked = _validate_notebooks(root)
     links_checked += _validate_context_markdown(root)
-    article_count, article_links, code_cell_count = _validate_articles(root)
+    article_count, article_links, code_cell_count, articles_by_sequence = _validate_articles(root)
     links_checked += article_links
+    links_checked += _validate_dispositions(root, notebooks, articles_by_sequence)
 
     return {
         "schema": SCHEMA,
         "coverage": ["articles/*.{md,bib,svg}", "notebooks/*.ipynb", "reference/**/*.md",
-                     *BUILD_INPUTS],
+                     *BUILD_INPUTS, *CONTEXT_FILES],
         "contextChecked": list(CONTEXT_FILES),
         "sourceDigest": {"algorithm": "sha256-path-content-v1", "value": digest_paths(root, paths)},
         "fileCount": len(paths),

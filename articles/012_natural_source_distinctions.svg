@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Longer contexts have less repeated support</title><desc id="desc">A branching example shows how longer exact contexts can become more specific while appearing less often in natural text.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">SPECIFICITY AND SUPPORT TRADE OFF</text>
+<g stroke="#82979b" stroke-width="4" fill="none"><path d="M160 195h120"/><path d="M280 195l125-85"/><path d="M280 195l125 85"/><path d="M405 110l125-45"/><path d="M405 110l125 45"/><path d="M405 280l125-45"/><path d="M405 280l125 45"/></g>
+<g fill="#e7eceb" stroke="#82979b" stroke-width="2"><circle cx="150" cy="195" r="24"/><circle cx="280" cy="195" r="22"/><circle cx="405" cy="110" r="20"/><circle cx="405" cy="280" r="20"/><circle cx="530" cy="65" r="17"/><circle cx="530" cy="155" r="17"/><circle cx="530" cy="235" r="17"/><circle cx="530" cy="325" r="17"/></g>
+<text x="150" y="201" text-anchor="middle" font-size="14">short</text><text x="280" y="201" text-anchor="middle" font-size="14">context</text><text x="405" y="114" text-anchor="middle" font-size="12">branch A</text><text x="405" y="284" text-anchor="middle" font-size="12">branch B</text>
+<g font-size="15"><text x="615" y="112">short context: many examples</text><rect x="615" y="128" width="220" height="14" rx="7" fill="#287f91"/><text x="615" y="204">longer context: fewer repeats</text><rect x="615" y="220" width="94" height="14" rx="7" fill="#735f92"/><text x="615" y="296">specificity rises as support thins</text><rect x="615" y="312" width="48" height="14" rx="7" fill="#c47b4e"/></g>
+<text x="52" y="372" font-size="15" fill="#59656c">Schematic only. Benchmark context length was frozen before model outcomes were inspected.</text></g>
+</svg>

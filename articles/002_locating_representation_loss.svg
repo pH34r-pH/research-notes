@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Where loss can enter</title><desc id="desc">A conceptual source-to-prediction path marks representation, composition, receiver and consumer as separately testable stages.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="46" font-size="18" font-weight="700" letter-spacing="2">A STAGED DIAGNOSTIC</text>
+<g font-size="14" text-anchor="middle">
+<rect x="48" y="100" width="140" height="74" rx="12" fill="#e7eceb" stroke="#82979b"/><text x="118" y="143">source</text>
+<rect x="223" y="100" width="140" height="74" rx="12" fill="#e7eceb" stroke="#82979b"/><text x="293" y="143">representation</text>
+<rect x="398" y="100" width="140" height="74" rx="12" fill="#ece6f2" stroke="#907baa"/><text x="468" y="143">composition</text>
+<rect x="573" y="100" width="140" height="74" rx="12" fill="#e7eceb" stroke="#82979b"/><text x="643" y="143">receiver</text>
+<rect x="748" y="100" width="124" height="74" rx="12" fill="#e7eceb" stroke="#82979b"/><text x="810" y="143">prediction</text>
+</g>
+<g stroke="#657980" stroke-width="3" fill="none"><path d="M188 137h30m-8-8 8 8-8 8"/><path d="M363 137h30m-8-8 8 8-8 8"/><path d="M538 137h30m-8-8 8 8-8 8"/><path d="M713 137h30m-8-8 8 8-8 8"/></g>
+<path d="M294 217v32h350v-32" fill="none" stroke="#735f92" stroke-width="3"/><text x="469" y="280" text-anchor="middle" font-size="16">matched interventions localize part of the deficit</text>
+<text x="70" y="335" font-size="15" fill="#59656c">Each comparison answers a narrower question; no single stage is assumed to explain everything.</text></g>
+</svg>

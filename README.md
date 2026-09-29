@@ -19,6 +19,8 @@ The current thread running through the work is a distinction that repeatedly mat
 
 The [article collection](articles/) presents reviewed findings with explicit evidence boundaries and links back to the source notebooks. The notebook files remain the chronological record and preserve the original computational history.
 
+See the [public publication dispositions](PUBLICATION-DISPOSITIONS.md) for the source-by-source article, notebook, and reference map.
+
 ### Chronological notebooks
 
 1. [What if text were a signal?](notebooks/001_text_as_signal.ipynb)
@@ -69,7 +71,7 @@ private experiments / active reasoning
             +--> public reproducibility artifacts
 ```
 
-Research articles are the reader-facing synthesis. The notebooks preserve the chronological and computational record. `reference/` is the reusable explanatory layer. [Theorem Library](https://github.com/pH34r-pH/theorem-library) is the public machine-checkable mathematics layer.
+MyST articles are the primary reader-facing synthesis. The notebooks preserve the chronological and computational record, and `reference/` remains the reusable methods layer. The [publication dispositions](PUBLICATION-DISPOSITIONS.md) map each source to its reader role. [Theorem Library](https://github.com/pH34r-pH/theorem-library) is the public machine-checkable mathematics layer.
 
 ## Reproducibility and disclosure
 

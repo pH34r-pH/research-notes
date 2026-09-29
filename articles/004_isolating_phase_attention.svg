@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Phase-aware similarity</title><desc id="desc">A phase circle relates relative angle to normalized real-Hermitian similarity; the diagram is mathematical, not measured model output.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">RELATIVE PHASE AND SIMILARITY</text>
+<circle cx="280" cy="210" r="112" fill="none" stroke="#c3c9c8" stroke-width="3"/><line x1="145" y1="210" x2="415" y2="210" stroke="#b6c0c1" stroke-width="2"/><line x1="280" y1="75" x2="280" y2="345" stroke="#b6c0c1" stroke-width="2"/>
+<path d="M280 210 L391 210" stroke="#287f91" stroke-width="5"/><path d="M280 210 L280 98" stroke="#735f92" stroke-width="5"/><path d="M280 210 L169 210" stroke="#c47b4e" stroke-width="5"/>
+<text x="425" y="215" font-size="15">Δθ = 0 → 1</text><text x="292" y="91" font-size="15">π/2 → 0</text><text x="64" y="215" font-size="15">π → −1</text>
+<path d="M327 210 A47 47 0 0 0 280 163" fill="none" stroke="#735f92" stroke-width="2"/><text x="325" y="162" font-size="15">Δθ</text>
+<text x="510" y="148" font-size="20" font-weight="650">cos(Δθ)</text><text x="510" y="190" font-size="16">aligned phase: positive</text><text x="510" y="226" font-size="16">quarter turn: near zero</text><text x="510" y="262" font-size="16">opposed phase: negative</text>
+<text x="52" y="378" font-size="15" fill="#59656c">The operator makes relative phase part of the similarity calculation.</text></g>
+</svg>

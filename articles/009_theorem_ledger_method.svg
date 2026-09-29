@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Separate evidence kinds</title><desc id="desc">Four epistemic labels distinguish formal results, empirical observations, assumptions and open hypotheses.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">A LEDGER KEEPS CLAIM TYPES VISIBLE</text>
+<g>
+<rect x="58" y="100" width="370" height="88" rx="12" fill="#e5efec" stroke="#529186" stroke-width="2"/><text x="84" y="136" font-size="18" font-weight="700">FORMAL</text><text x="84" y="162" font-size="15">proved under stated assumptions</text>
+<rect x="490" y="100" width="370" height="88" rx="12" fill="#eaf0f2" stroke="#287f91" stroke-width="2"/><text x="516" y="136" font-size="18" font-weight="700">OBSERVATION</text><text x="516" y="162" font-size="15">measured under a specified protocol</text>
+<rect x="58" y="220" width="370" height="88" rx="12" fill="#f2eee3" stroke="#b68e3c" stroke-width="2"/><text x="84" y="256" font-size="18" font-weight="700">ASSUMPTION</text><text x="84" y="282" font-size="15">adopted but not established here</text>
+<rect x="490" y="220" width="370" height="88" rx="12" fill="#f2e9ef" stroke="#9b6684" stroke-width="2"/><text x="516" y="256" font-size="18" font-weight="700">HYPOTHESIS</text><text x="516" y="282" font-size="15">still open to testing</text>
+</g>
+<text x="52" y="360" font-size="15" fill="#59656c">A formal fact can constrain an experiment without proving its empirical interpretation.</text></g>
+</svg>

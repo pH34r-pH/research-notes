@@ -1,5 +1,5 @@
 ---
-title: Accessible does not imply used
+title: "Milestone 013 — Accessible does not imply used"
 description: A frozen-representation probe found a natural-source distinction that the model's native consumer barely used.
 short_title: Accessible does not imply used
 date: 2026-09-29
@@ -11,15 +11,15 @@ tags:
   - utilization
 ---
 
-# Accessible does not imply used
-
+(milestone-013)=
+# Milestone 013 — Accessible does not imply used
 **Research period:** September 8–9, 2026  
 **Public article source revision:** September 29, 2026  
 **Historical anchor:** #328  
 **Primary source:** [Milestone notebook 013](../notebooks/013_accessible_not_used.ipynb)
 
+(accessible-used-question)=
 ## The question
-
 The revision-branch benchmark provided a task where preserving a distinction mattered. Returning to the compact, unit-hypersphere representation, the next question was whether the branch information had been erased or remained present while the model's own consumer failed to use it.
 
 Those explanations imply different interventions. If the representation has lost the distinction, changing only the final readout cannot recover it. If a simple readout can recover it from a frozen state, the bottleneck may instead lie in how the native consumer combines that state into a prediction.
@@ -134,3 +134,8 @@ Keep the representation frozen, but move closer to the actual objective: train a
 - [Visual Intuition Atlas — probe recoverability and normalization geometry](../notebooks/visual_intuition_atlas.ipynb)
 - [Representation and Readout reference](../reference/representation-and-readout.md)
 - [Research chronology](../CHRONOLOGY.md)
+
+
+(accessible-used-publication-map)=
+## Publication map
+See the [Research Notes publication dispositions](../PUBLICATION-DISPOSITIONS.md) for the complete article/source classification.

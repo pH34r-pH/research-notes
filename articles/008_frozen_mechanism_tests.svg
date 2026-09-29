@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Compounding local change</title><desc id="desc">A small per-step contraction compounds across recurrent steps; actual finite-horizon effects depend on the sequence of Jacobians.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">REPEATED STEPS ACCUMULATE</text>
+<g font-size="14" text-anchor="middle">
+<circle cx="130" cy="180" r="40" fill="#e7eceb" stroke="#82979b" stroke-width="2"/><text x="130" y="185">δ₀</text>
+<circle cx="310" cy="180" r="34" fill="#e7eceb" stroke="#82979b" stroke-width="2"/><text x="310" y="185">J₁δ₀</text>
+<circle cx="490" cy="180" r="28" fill="#ece6f2" stroke="#907baa" stroke-width="2"/><text x="490" y="185">J₂J₁δ₀</text>
+<circle cx="670" cy="180" r="22" fill="#ece6f2" stroke="#907baa" stroke-width="2"/><text x="670" y="185">…</text>
+<circle cx="820" cy="180" r="17" fill="#f1dfd5" stroke="#c47b4e" stroke-width="2"/><text x="820" y="185">Jₜ⋯J₁δ₀</text>
+</g>
+<g stroke="#657980" stroke-width="3" fill="none"><path d="M174 180h82m-10-10 10 10-10 10"/><path d="M348 180h88m-10-10 10 10-10 10"/><path d="M522 180h100m-10-10 10 10-10 10"/><path d="M700 180h85m-10-10 10 10-10 10"/></g>
+<text x="136" y="275" font-size="17">For a scalar gain g, repeated steps give gᵀ.</text>
+<text x="52" y="378" font-size="15" fill="#59656c">For a model, direction changes matter too; the finite-horizon Jacobian product is the relevant object.</text></g>
+</svg>
