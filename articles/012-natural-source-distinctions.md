@@ -29,7 +29,7 @@ I needed a benchmark where the data itself provided examples of **the same conte
 :label: 012-natural-source-distinctions-intuition
 :alt: A branching example shows how longer exact contexts can become more specific while appearing less often in natural text.
 
-Schematic branching only. The bars are not counts from the Wikipedia-revision benchmark.
+A schematic branch shows the tradeoff between context specificity and repeated observations.
 ```
 
 ## Why Wikipedia revision history?
@@ -68,11 +68,9 @@ The statistical side of the design also drew on a much older principle: predicti
 
 That matters for branch data because one realized continuation isn't the same thing as the conditional distribution of plausible continuations. The benchmark needs enough repeated or related evidence to estimate the distinction without pretending that one observed next token defines the entire predictive problem.
 
-## A small editable teaching example
+## Try a small example
 
-These five invented continuations illustrate an empirical distribution. They are not samples from the qualified natural-source benchmark.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+Five invented continuations show how to form an empirical distribution and calculate its entropy. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 012-natural-source-distinctions-teaching-example
@@ -85,20 +83,18 @@ print({k.decode():v/n for k,v in counts.items()})
 # A branch needs multiple supported continuations; one realized token is not a conditional distribution.
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 {'a': 0.6, 'b': 0.4}
 ```
 
 
-## What this does not show
+## Interpretation
 
-Qualifying this benchmark doesn't establish a universal measure of representation capacity. It establishes one bounded, natural-source predictive distinction under a frozen protocol.
+The qualified benchmark supplies a specific natural-source predictive distinction under a frozen protocol. Representation quality can now be tested against that distinction: whether the signal remains present, whether a small readout recovers it, and whether the native model uses it.
 
-A model could preserve these revision-branch distinctions while losing something important for another task. Conversely, low effective rank or strong geometric compression isn't evidence of failure if the distinctions required by the task remain accessible.
-
-The result gives the project something more useful than a generic capacity score: a specific set of naturally occurring cases where I can ask whether task-relevant information exists in the representation, whether a simple readout can recover it, and eventually whether the model itself actually uses it.
+Effective rank and compression alone cannot answer those questions. A compact representation can preserve the task’s required distinctions, while a larger one can still lose them.
 
 (012-natural-source-distinctions-sources)=
 ## Sources and chronology

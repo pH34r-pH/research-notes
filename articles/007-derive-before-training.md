@@ -33,7 +33,7 @@ That became the beginning of a proof-first layer in the research program: derive
 :label: 007-derive-before-training-intuition
 :alt: At a nonzero point, normalization removes first-order radial change and rescales tangent change.
 
-The radial/tangent behavior follows from the derivative under nonzero-input assumptions; it is separate from claims about learned semantics.
+At a nonzero input, the derivative of normalization removes radial change and rescales tangent change.
 ```
 
 ## Radial and tangent directions
@@ -48,11 +48,9 @@ This gave me an exact version of something the earlier experiments had only sugg
 
 The useful part was the boundary around that statement. The mathematics says **what normalization does to perturbations**; it doesn't say what those perturbations mean to a language model.
 
-## A small editable teaching example
+## Try a small example
 
-This two-dimensional calculation illustrates the derivative. The linked Lean sources carry the formal result; this numerical example is not a proof.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+A two-dimensional example separates radial and tangent perturbations. Try changing the point and perturbation vectors. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 007-derive-before-training-teaching-example
@@ -67,7 +65,7 @@ print('radial derivative:', DN @ radial)
 print('tangent gain:', np.linalg.norm(DN @ tangent))
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 radial derivative: [-8.39328607e-18 -1.45217172e-17]
@@ -97,21 +95,18 @@ This proof-first turn also brought the project closer to a broader body of geome
 
 The literature provided established constructions and mathematical neighborhoods to compare against; the theorem work gave me a way to separate those established facts from claims that were still specific to this representation and task.
 
-## What this does not show
+## Interpretation
 
-The derivative does **not** establish that radial directions are useless, that tangent directions encode semantics, or that normalization must improve a model. “Useful,” “nuisance,” and “semantic” are task-dependent descriptions; they don't appear anywhere in the normalization theorem.
+The derivative establishes a local, first-order effect: radial perturbations vanish, and tangent perturbations scale by inverse radius. Whether either direction carries useful task information has to be measured in the trained model.
 
-It also describes a local, first-order effect. Repeated nonlinear updates can behave very differently from one infinitesimal perturbation, so this calculation doesn't identify the long-term dynamics of a recurrent model by itself.
-
-What it does provide is a hard boundary for later explanations: any mechanism story involving normalization has to agree with the mathematics before it earns an experiment.
-
+Repeated nonlinear updates also require analysis beyond a single derivative. The calculation gives later mechanism explanations a concrete constraint and points toward finite-horizon diagnostics.
 
 ## Public formal sources
 
 - [Normalization](https://github.com/pH34r-pH/theorem-library/blob/2c90ec3d482a64a5bce5787f48c5828429c50305/TheoremLibrary/Geometry/Sphere/Normalization.lean)
 - [NormalizationSpectrum](https://github.com/pH34r-pH/theorem-library/blob/2c90ec3d482a64a5bce5787f48c5828429c50305/TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean)
 
-These pinned sources state the mathematical assumptions and checked conclusions. They do not establish the empirical interpretation of a model’s learned directions.
+These pinned sources state the assumptions and checked mathematical conclusions.
 
 (007-derive-before-training-sources)=
 ## Sources and chronology

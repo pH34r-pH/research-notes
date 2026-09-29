@@ -29,7 +29,7 @@ The question therefore changed from “which geometry should the model use?” t
 :label: 011-geometry-from-invariance-intuition
 :alt: At fixed angle, ordinary inner product changes when either vector radius changes.
 
-The plotted values follow the displayed inner-product formula with a fixed angle; the figure does not choose which invariance the task needs.
+At a fixed angle, changing either radius changes the inner product.
 ```
 
 ## A simple example: radius and direction
@@ -78,11 +78,9 @@ The literature was useful here because it turned vague geometric intuitions into
 
 That changed the role of prior work in the project. A paper using hyperbolic embeddings wasn't evidence that I should use hyperbolic embeddings; it was evidence about the conditions under which hyperbolic structure had been useful, plus a source of mathematical tools for testing whether those conditions applied here.
 
-## A small editable teaching example
+## Try a small example
 
-These radii and fixed angle illustrate an inner-product identity. They do not measure semantic similarity in a trained model.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+A toy calculation holds the angle fixed and varies the radii to show how scale changes the inner product. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 011-geometry-from-invariance-teaching-example
@@ -94,7 +92,7 @@ for rq,rk in [(1,1),(2,1),(2,3)]:
     print(rq,rk,'dot-like similarity=',rq*rk*np.cos(theta))
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 1 1 dot-like similarity= 0.5000000000000001
@@ -103,17 +101,11 @@ for rq,rk in [(1,1),(2,1),(2,3)]:
 ```
 
 
-## What this does not show
+## Interpretation
 
-None of these reductions identifies one globally correct geometry for semantics or reasoning. A system may legitimately contain several geometries because different parts of the state have different invariances, growth laws, and operations.
+Different parts of a system can require different invariances, growth laws, and operations, and therefore different geometries. Mathematical compatibility makes a candidate coherent; training determines whether it improves the model.
 
-They also don't show that a mathematically compatible geometry will improve a trained model. Compatibility is a prerequisite for some hypotheses, not a performance guarantee.
-
-The design principle that survived was therefore conditional:
-
-**derive geometry from the invariances, growth laws, task distinctions, and operations that need to be preserved.**
-
-Once those requirements are explicit, geometry becomes something we can reason about and falsify rather than an architectural aesthetic.
+The design rule is direct: **derive geometry from the invariances, growth laws, task distinctions, and operations that need to be preserved.** Those requirements make a geometric choice testable.
 
 (011-geometry-from-invariance-sources)=
 ## Sources and chronology

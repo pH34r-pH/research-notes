@@ -29,7 +29,7 @@ This gave me a way to ask more specific questions: was useful information alread
 :label: 002-locating-representation-loss-intuition
 :alt: A conceptual source-to-prediction path marks representation, composition, receiver and consumer as separately testable stages.
 
-Conceptual stage map. Any numbers in the teaching cell below are invented to explain the accounting and are not historical measurements.
+A stage map separates representation, composition, recovery, and prediction.
 ```
 
 ## Causal decomposition
@@ -40,11 +40,9 @@ The result split the original performance gap into several pieces. Some of the d
 
 That changed how I thought about the original representation problem. If some of the deficit existed before anything had been composed or recovered, then at least part of the problem could be the relationship between the representation and the model trying to use it. The information might still be present while being expressed in coordinates that make the downstream computation unnecessarily difficult.
 
-## A small editable teaching example
+## Try a small example
 
-The losses below are invented to show how a staged comparison works. They are not measurements from the historical experiment.
-
-Saved output is included so you can inspect the example without starting a kernel. Activating the code cell below runs this synthetic example only.
+A toy comparison with invented losses shows how to separate the gap at each stage. The saved output below is available without starting Python.
 
 ```{code-cell} python
 :label: 002-locating-representation-loss-teaching-example
@@ -60,7 +58,7 @@ print('composition penalty:', composite-uncomposed)
 print('receiver recovery:', composite-recovered)
 ```
 
-**Published teaching output (synthetic):** the saved notebook output below belongs only to the small code example. It is not a replay of historical model training.
+**Saved output:**
 
 ```text
 pre-composition gap: 0.3999999999999999
@@ -69,13 +67,9 @@ receiver recovery: 0.19999999999999973
 ```
 
 
-## What this does not show
+## Interpretation
 
-Giving the model access to the uncombined components is a diagnostic control, not a proposed architecture. Its purpose is to establish whether some of the performance gap already exists before composition; in these experiments, it did.
-
-The partial recovery from the learned receiver also has a limited interpretation. It shows that composition and recovery account for some of the deficit, but they don't explain the loss that was already present in the uncombined condition. Fixing any one stage in isolation therefore isn't guaranteed to fix the full model.
-
-The remaining gap gave me a more specific hypothesis to test next: the downstream computation might be poorly matched to the coordinates and operations of the spectral representation itself.
+Access to uncombined components isolated a performance gap that was already present before composition. The learned receiver recovered part of the additional loss introduced by composition. That separated two problems and made the downstream computation the next target: was it poorly matched to the spectral coordinates and operations?
 
 (002-locating-representation-loss-sources)=
 ## Sources and chronology
