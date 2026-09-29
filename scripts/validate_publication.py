@@ -180,11 +180,7 @@ def _validate_articles(root: Path) -> tuple[int, int, int, dict[int, Path]]:
     return len(article_paths), links_checked, code_cell_count, articles_by_sequence
 
 
-def _validate_dispositions(root: Path, notebooks: list[Path],
-                            articles_by_sequence: dict[int, Path]) -> int:
-    path = root / "PUBLICATION-DISPOSITIONS.md"
-    source = path.read_text(encoding="utf-8")
-    links_checked = check_local_links(root, path, source)
+def _parse_notebook_dispositions(path: Path, source: str) -> dict[str, tuple[str, str]]:
     notebook_rows: dict[str, tuple[str, str]] = {}
     row_pattern = re.compile(
         r"^\|\s*\[[^\]]+\]\((notebooks/[^)]+\.ipynb)\)\s*\|\s*"
@@ -197,40 +193,60 @@ def _validate_dispositions(root: Path, notebooks: list[Path],
             if target in notebook_rows:
                 raise ValidationError(f"{path.name}: duplicate notebook disposition for {target}")
             notebook_rows[target] = (disposition, reader_cell)
+    return notebook_rows
 
-    expected_notebooks: set[str] = set()
-    seen_sequences: set[int] = set()
-    for notebook_path in notebooks:
-        notebook = load_notebook(notebook_path)
-        sequence = notebook["metadata"]["publication"].get("sequence")
-        relative = notebook_path.relative_to(root).as_posix()
-        if sequence is None:
-            if relative != "notebooks/visual_intuition_atlas.ipynb":
-                raise ValidationError(f"{relative}: public source notebook has no disposition sequence")
-            expected_notebooks.add(relative)
-            row = notebook_rows.get(relative)
-            if row is None or row[0] != "supporting/source notebook":
-                raise ValidationError(f"{path.name}: Visual Intuition Atlas must remain classified as a source notebook")
-            continue
-        expected_notebooks.add(relative)
-        if sequence in seen_sequences:
-            raise ValidationError(f"{relative}: duplicate notebook sequence {sequence}")
-        seen_sequences.add(sequence)
-        row = notebook_rows.get(relative)
-        if row is None or row[0] != "canonical article":
-            raise ValidationError(f"{path.name}: {relative} must have a canonical article disposition")
-        targets = markdown_targets(row[1])
-        article_targets = [target for target in targets if target.startswith("articles/") and target.endswith(".md")]
-        article_path = articles_by_sequence.get(sequence)
-        if (article_path is None or article_targets != [article_path.relative_to(root).as_posix()]):
-            raise ValidationError(f"{path.name}: {relative} must point to its sequence-matched canonical article")
 
+def _validate_notebook_disposition(root: Path, path: Path, row: tuple[str, str] | None,
+                                   articles_by_sequence: dict[int, Path],
+                                   seen_sequences: set[int]) -> int | None:
+    notebook = load_notebook(path)
+    sequence = notebook["metadata"]["publication"].get("sequence")
+    relative = path.relative_to(root).as_posix()
+    if sequence is None:
+        if relative != "notebooks/visual_intuition_atlas.ipynb":
+            raise ValidationError(f"{relative}: public source notebook has no disposition sequence")
+        if row is None or row[0] != "supporting/source notebook":
+            raise ValidationError("PUBLICATION-DISPOSITIONS.md: Visual Intuition Atlas must remain classified as a source notebook")
+        return None
+    if sequence in seen_sequences:
+        raise ValidationError(f"{relative}: duplicate notebook sequence {sequence}")
+    if row is None or row[0] != "canonical article":
+        raise ValidationError(f"PUBLICATION-DISPOSITIONS.md: {relative} must have a canonical article disposition")
+    article_targets = [target for target in markdown_targets(row[1])
+                       if target.startswith("articles/") and target.endswith(".md")]
+    article_path = articles_by_sequence.get(sequence)
+    if article_path is None or article_targets != [article_path.relative_to(root).as_posix()]:
+        raise ValidationError(f"PUBLICATION-DISPOSITIONS.md: {relative} must point to its sequence-matched canonical article")
+    return sequence
+
+
+def _validate_disposition_coverage(path: Path, notebook_rows: dict[str, tuple[str, str]],
+                                   expected_notebooks: set[str], seen_sequences: set[int],
+                                   articles_by_sequence: dict[int, Path]) -> None:
     if set(notebook_rows) != expected_notebooks:
         extra = sorted(set(notebook_rows) - expected_notebooks)
         missing = sorted(expected_notebooks - set(notebook_rows))
         raise ValidationError(f"{path.name}: notebook dispositions differ from publication inputs; missing={missing}, extra={extra}")
     if seen_sequences != set(articles_by_sequence):
         raise ValidationError(f"{path.name}: every numbered source notebook must have one canonical article")
+
+
+def _validate_dispositions(root: Path, notebooks: list[Path],
+                            articles_by_sequence: dict[int, Path]) -> int:
+    path = root / "PUBLICATION-DISPOSITIONS.md"
+    source = path.read_text(encoding="utf-8")
+    links_checked = check_local_links(root, path, source)
+    notebook_rows = _parse_notebook_dispositions(path, source)
+    expected_notebooks = {notebook_path.relative_to(root).as_posix() for notebook_path in notebooks}
+    seen_sequences: set[int] = set()
+    for notebook_path in notebooks:
+        relative = notebook_path.relative_to(root).as_posix()
+        sequence = _validate_notebook_disposition(
+            root, notebook_path, notebook_rows.get(relative), articles_by_sequence, seen_sequences)
+        if sequence is not None:
+            seen_sequences.add(sequence)
+    _validate_disposition_coverage(path, notebook_rows, expected_notebooks,
+                                   seen_sequences, articles_by_sequence)
     return links_checked
 
 
