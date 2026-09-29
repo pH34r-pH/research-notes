@@ -4,9 +4,9 @@ These notes should feel like a good technical textbook that happens to follow a 
 
 ## Two layers
 
-### Milestone notebooks
+### Canonical articles and milestone notebooks
 
-The notebooks are the narrative spine. They should be readable in chronological order and answer:
+The notebooks preserve the chronological record. Reviewed MyST articles are the reader-facing synthesis and link back to the relevant notebook and references. Both should answer:
 
 1. What question were we trying to answer?
 2. Why did the answer matter?

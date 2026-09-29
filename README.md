@@ -15,7 +15,11 @@ The current thread running through the work is a distinction that repeatedly mat
 
 > **Information preserved in a learned state, information recoverable from it, information the model itself uses, and information that causally affects behavior are not necessarily the same thing.**
 
-## Start with the notebooks
+## Start with the research articles
+
+The [article collection](articles/) presents reviewed findings with explicit evidence boundaries and links back to the source notebooks. The notebook files remain the chronological record and preserve the original computational history.
+
+### Chronological notebooks
 
 1. [What if text were a signal?](notebooks/001_text_as_signal.ipynb)
 2. [Where did the spectral loss occur?](notebooks/002_locating_representation_loss.ipynb)
@@ -65,7 +69,7 @@ private experiments / active reasoning
             +--> public reproducibility artifacts
 ```
 
-The notebooks are the narrative layer. `reference/` is the reusable explanatory layer. [Theorem Library](https://github.com/pH34r-pH/theorem-library) is the public machine-checkable mathematics layer.
+Research articles are the reader-facing synthesis. The notebooks preserve the chronological and computational record. `reference/` is the reusable explanatory layer. [Theorem Library](https://github.com/pH34r-pH/theorem-library) is the public machine-checkable mathematics layer.
 
 ## Reproducibility and disclosure
 

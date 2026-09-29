@@ -52,11 +52,11 @@ Infrastructure work can proceed in parallel when it unblocks those questions, bu
 
 A notebook represents a stable change in what I think the evidence supports, rather than the completion of a GitHub issue. One notebook may synthesize several issues, and many infrastructure or documentation issues should never become notebooks.
 
-The publication path is:
+The public reading path starts from a reviewed article and keeps a direct link to its chronological source notebook. The underlying publication path is:
 
-`active question → stable result → interpretation review → public theorem promotion where applicable → notebook → portfolio publication`
+`active question → stable result → interpretation review → public theorem promotion where applicable → canonical article and/or notebook → portfolio publication`
 
-This keeps the public chronology tied to research conclusions while allowing the implementation plan underneath it to change.
+This keeps the public chronology tied to research conclusions while allowing the implementation plan underneath it to change. Canonical MyST article source lives in `articles/`; notebooks remain preserved and are not rewritten to match later editorial summaries.
 
 ## Reconstruction rules
 

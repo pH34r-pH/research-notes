@@ -1,0 +1,15 @@
+version: 1
+project:
+  title: Research Notes
+  description: A source-owned research record with canonical MyST articles and preserved chronological notebooks.
+  authors:
+    - name: Tyler J.H.G.
+  bibliography:
+    - articles/references.bib
+  toc:
+    - file: articles/accessible-does-not-imply-used.md
+site:
+  template: article-theme
+  options:
+    hide_footer_links: true
+    hide_outline: true
