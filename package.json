@@ -1,0 +1,11 @@
+{
+  "name": "research-notes-publication",
+  "private": true,
+  "scripts": {
+    "validate:articles": "myst build --html --strict --ci",
+    "clean:articles": "myst clean"
+  },
+  "devDependencies": {
+    "mystmd": "1.11.0"
+  }
+}

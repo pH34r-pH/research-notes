@@ -15,10 +15,13 @@ import re
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
 
-SCHEMA = "research-notes-publication-validation/v1"
+SCHEMA = "research-notes-publication-validation/v2"
 SHA = re.compile(r"^[0-9a-f]{40}$")
 MARKDOWN_LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
-PUBLISHED_ROOTS = ("notebooks", "reference")
+FIGURE_DIRECTIVE = re.compile(r"^\s*```\{figure\}\s+(\S+)", re.MULTILINE)
+CODE_CELL = re.compile(r"^\s*```\{code-cell\}\s+([\w+-]+)(.*?)^```\s*$", re.MULTILINE | re.DOTALL)
+PUBLISHED_ROOTS = ("notebooks", "reference", "articles")
+BUILD_INPUTS = ("myst.yml", "package.json", "package-lock.json")
 CONTEXT_FILES = ("README.md", "CHRONOLOGY.md")
 
 
@@ -85,6 +88,58 @@ def check_local_links(root: Path, source_path: Path, markdown: str) -> int:
     return checked
 
 
+def validate_article(root: Path, path: Path, bibliography: set[str]) -> tuple[int, int]:
+    relative = path.relative_to(root).as_posix()
+    source = path.read_text(encoding="utf-8")
+    frontmatter = re.match(r"\A---\s*\n(.*?)\n---\s*\n", source, re.DOTALL)
+    if not frontmatter:
+        raise ValidationError(f"{relative}: missing YAML frontmatter")
+    metadata = frontmatter.group(1)
+    for field in ("title", "description"):
+        if not re.search(rf"^{field}:\s*\S", metadata, re.MULTILINE):
+            raise ValidationError(f"{relative}: frontmatter requires a non-empty {field}")
+    body = source[frontmatter.end():]
+    if not re.search(r"^#\s+\S", body, re.MULTILINE):
+        raise ValidationError(f"{relative}: article needs a top-level heading")
+
+    links_checked = check_local_links(root, path, body)
+    figure_targets = FIGURE_DIRECTIVE.findall(body)
+    if not figure_targets:
+        raise ValidationError(f"{relative}: article needs at least one static MyST figure")
+    for raw in figure_targets:
+        parsed = urlsplit(raw)
+        if parsed.scheme or parsed.netloc or raw.startswith("#"):
+            raise ValidationError(f"{relative}: figure must use a repository-local asset: {raw}")
+        target = (path.parent / unquote(parsed.path)).resolve()
+        try:
+            target.relative_to(root.resolve())
+        except ValueError as exc:
+            raise ValidationError(f"{relative}: figure asset leaves repository: {raw}") from exc
+        if not target.is_file():
+            raise ValidationError(f"{relative}: missing figure asset: {raw}")
+        if target.suffix.lower() not in {".svg", ".png", ".jpg", ".jpeg", ".webp"}:
+            raise ValidationError(f"{relative}: unsupported figure asset type: {raw}")
+        links_checked += 1
+
+    cells = list(CODE_CELL.finditer(body))
+    for cell in cells:
+        info = cell.group(2)
+        tags = re.search(r"^:tags:\s*\[(.*?)\]\s*$", info, re.MULTILINE)
+        cell_tags = {tag.strip().strip("'\"") for tag in tags.group(1).split(",")} if tags else set()
+        if "illustrative" not in cell_tags:
+            raise ValidationError(f"{relative}: executable code cells must be tagged illustrative")
+        if "thebe" not in cell_tags:
+            raise ValidationError(f"{relative}: executable code cells must opt in to browser execution")
+    if "{code-cell}" in body and not cells:
+        raise ValidationError(f"{relative}: malformed executable code cell")
+
+    cited = set(re.findall(r"(?<![\w])@([A-Za-z][A-Za-z0-9_:-]*)", body))
+    missing = sorted(cited - bibliography)
+    if missing:
+        raise ValidationError(f"{relative}: missing bibliography key(s): {', '.join(missing)}")
+    return links_checked, len(cells)
+
+
 def load_notebook(path: Path) -> dict:
     try:
         notebook = json.loads(path.read_text(encoding="utf-8"))
@@ -118,7 +173,13 @@ def load_notebook(path: Path) -> dict:
 
 def validate(root: Path) -> dict:
     paths = published_files(root)
-    allowed = {".ipynb", ".md"}
+    for name in BUILD_INPUTS:
+        path = root / name
+        if not path.is_file() or path.is_symlink():
+            raise ValidationError(f"missing or unsafe build input: {name}")
+        paths.append(path)
+    paths.sort(key=lambda path: path.relative_to(root).as_posix())
+    allowed = {".ipynb", ".md", ".bib", ".svg", ".yml", ".json"}
     unexpected = [path.relative_to(root).as_posix() for path in paths if path.suffix not in allowed]
     if unexpected:
         raise ValidationError(f"unsupported publication input(s): {', '.join(unexpected)}")
@@ -146,13 +207,30 @@ def validate(root: Path) -> dict:
             raise ValidationError(f"missing publication context file: {path.relative_to(root)}")
         links_checked += check_local_links(root, path, path.read_text(encoding="utf-8"))
 
+    article_paths = sorted(root.joinpath("articles").glob("*.md"))
+    if not article_paths:
+        raise ValidationError("no canonical MyST articles found")
+    bibliography_paths = sorted(root.joinpath("articles").glob("*.bib"))
+    if len(bibliography_paths) != 1:
+        raise ValidationError("articles must declare exactly one local bibliography")
+    bibliography_source = bibliography_paths[0].read_text(encoding="utf-8")
+    bibliography = set(re.findall(r"@\w+\s*\{\s*([^,\s]+)", bibliography_source))
+    code_cell_count = 0
+    for path in article_paths:
+        article_links, article_cells = validate_article(root, path, bibliography)
+        links_checked += article_links
+        code_cell_count += article_cells
+
     return {
         "schema": SCHEMA,
-        "coverage": ["notebooks/*.ipynb", "reference/**/*.md"],
+        "coverage": ["articles/*.{md,bib,svg}", "notebooks/*.ipynb", "reference/**/*.md",
+                     *BUILD_INPUTS],
         "contextChecked": list(CONTEXT_FILES),
         "sourceDigest": {"algorithm": "sha256-path-content-v1", "value": digest_paths(root, paths)},
         "fileCount": len(paths),
         "notebookCount": len(notebooks),
+        "articleCount": len(article_paths),
+        "executableCellCount": code_cell_count,
         "localLinkCount": links_checked,
     }
 

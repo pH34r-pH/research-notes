@@ -22,6 +22,20 @@ class PublicationValidationTest(unittest.TestCase):
         (root / "notebooks").mkdir()
         (root / "reference").mkdir()
         (root / "reference/glossary.md").write_text("# Glossary\n", encoding="utf-8")
+        (root / "articles").mkdir()
+        (root / "articles/figure.svg").write_text("<svg xmlns=\"http://www.w3.org/2000/svg\"></svg>\n", encoding="utf-8")
+        (root / "articles/references.bib").write_text("@article{sample2026, title={A title}}\n", encoding="utf-8")
+        (root / "articles/sample.md").write_text(
+            "---\ntitle: Sample article\ndescription: A test article.\n---\n"
+            "# Sample article\n\n"
+            "```{figure} ./figure.svg\n:alt: Static figure\nCaption.\n```\n\n"
+            "```{code-cell} python\n:tags: [illustrative, thebe]\n\nprint('example')\n```\n\n"
+            "A citation [@sample2026].\n",
+            encoding="utf-8",
+        )
+        (root / "myst.yml").write_text("version: 1\n", encoding="utf-8")
+        (root / "package.json").write_text("{}\n", encoding="utf-8")
+        (root / "package-lock.json").write_text("{}\n", encoding="utf-8")
         (root / "README.md").write_text("[notes](notebooks/001.ipynb)\n", encoding="utf-8")
         (root / "CHRONOLOGY.md").write_text("[reference](reference/glossary.md)\n", encoding="utf-8")
         (root / "notebooks/001.ipynb").write_text(json.dumps(NOTEBOOK), encoding="utf-8")
@@ -33,9 +47,26 @@ class PublicationValidationTest(unittest.TestCase):
             first = validate(root)
             second = validate(root)
             self.assertEqual(first, second)
-            self.assertEqual(first["schema"], "research-notes-publication-validation/v1")
+            self.assertEqual(first["schema"], "research-notes-publication-validation/v2")
             self.assertEqual(first["notebookCount"], 1)
+            self.assertEqual(first["articleCount"], 1)
+            self.assertEqual(first["executableCellCount"], 1)
+            self.assertIn("package-lock.json", first["coverage"])
             self.assertEqual(len(first["sourceDigest"]["value"]), 64)
+
+    def test_articles_fail_closed_on_missing_figures_and_unlabeled_cells(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            source = (root / "articles/sample.md").read_text(encoding="utf-8")
+            (root / "articles/sample.md").write_text(source.replace("figure.svg", "missing.svg"), encoding="utf-8")
+            with self.assertRaises(ValidationError):
+                validate(root)
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            source = (root / "articles/sample.md").read_text(encoding="utf-8")
+            (root / "articles/sample.md").write_text(source.replace("illustrative, thebe", "thebe"), encoding="utf-8")
+            with self.assertRaises(ValidationError):
+                validate(root)
 
     def test_missing_link_and_invalid_metadata_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+  <title id="title">Synthetic signal and readout vectors on a unit-circle slice</title>
+  <desc id="desc">A blue signal vector and orange readout vector overlap and point right from the origin inside a unit circle. Their illustrative projection is 1.00. The geometry is not measured model output.</desc>
+  <rect width="720" height="300" fill="#f4f0e8" />
+  <circle cx="176" cy="150" r="112" fill="none" stroke="#77786f" stroke-opacity=".55" stroke-width="2" />
+  <line x1="64" y1="150" x2="288" y2="150" stroke="#aaa69b" stroke-width="1" />
+  <line x1="176" y1="38" x2="176" y2="262" stroke="#aaa69b" stroke-width="1" />
+  <line x1="176" y1="150" x2="270" y2="150" stroke="#3b82a0" stroke-width="8" stroke-linecap="round" />
+  <line x1="176" y1="150" x2="270" y2="150" stroke="#b04b34" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 6" />
+  <circle cx="176" cy="150" r="6" fill="#252720" />
+  <text x="336" y="115" font-family="system-ui,sans-serif" font-size="18" fill="#252720">Fixed illustrative signal direction</text>
+  <line x1="338" y1="148" x2="378" y2="148" stroke="#3b82a0" stroke-width="8" stroke-linecap="round" />
+  <text x="390" y="154" font-family="system-ui,sans-serif" font-size="15" fill="#252720">signal</text>
+  <line x1="338" y1="188" x2="378" y2="188" stroke="#b04b34" stroke-width="4" stroke-dasharray="7 6" />
+  <text x="390" y="194" font-family="system-ui,sans-serif" font-size="15" fill="#252720">readout</text>
+  <text x="338" y="244" font-family="ui-monospace,monospace" font-size="18" fill="#252720">projection: 1.00</text>
+</svg>
