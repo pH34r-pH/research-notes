@@ -1,6 +1,6 @@
 # Concept Index
 
-This is the navigable reference layer for the research notes. Think of milestone notebooks as chapters in the research story and these pages as the reusable textbook material behind them.
+This is the navigable reference layer for the research notes. Canonical MyST articles carry the reviewed narratives; milestone notebooks preserve their chronology and computational source, while these pages define shared terms and methods.
 
 ## Representation and prediction
 

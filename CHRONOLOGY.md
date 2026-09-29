@@ -56,6 +56,8 @@ The public reading path starts from a reviewed article and keeps a direct link t
 
 `active question → stable result → interpretation review → public theorem promotion where applicable → canonical article and/or notebook → portfolio publication`
 
+The [publication dispositions](PUBLICATION-DISPOSITIONS.md) identify the canonical reader page for every numbered notebook, retain the Visual Intuition Atlas as a supporting source, and classify the reusable reference layer.
+
 This keeps the public chronology tied to research conclusions while allowing the implementation plan underneath it to change. Canonical MyST article source lives in `articles/`; notebooks remain preserved and are not rewritten to match later editorial summaries.
 
 ## Reconstruction rules

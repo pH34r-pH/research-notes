@@ -7,6 +7,19 @@ project:
   bibliography:
     - articles/references.bib
   toc:
+    - file: index.md
+    - file: articles/001-text-as-signal.md
+    - file: articles/002-locating-representation-loss.md
+    - file: articles/003-coordinates-and-matched-operations.md
+    - file: articles/004-isolating-phase-attention.md
+    - file: articles/005-unit-hypersphere-anomaly.md
+    - file: articles/006-endpoint-can-mislead.md
+    - file: articles/007-derive-before-training.md
+    - file: articles/008-frozen-mechanism-tests.md
+    - file: articles/009-theorem-ledger-method.md
+    - file: articles/010-dynamic-quotient.md
+    - file: articles/011-geometry-from-invariance.md
+    - file: articles/012-natural-source-distinctions.md
     - file: articles/accessible-does-not-imply-used.md
 site:
   template: article-theme

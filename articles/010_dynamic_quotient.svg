@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 390" role="img" aria-labelledby="title desc">
+<title id="title">Dynamic state equivalence</title><desc id="desc">A toy transition relation groups states by parity while preserving the equivalence class across steps.</desc>
+<rect x="0" y="0" width="920" height="390" rx="18" fill="#f7f5f0"/>
+<g font-family="system-ui, sans-serif" fill="#263543">
+<text x="52" y="48" font-size="18" font-weight="700" letter-spacing="2">STATIC SIMILARITY IS NOT ENOUGH</text>
+<text x="100" y="110" font-size="16">original states</text><text x="634" y="110" font-size="16">quotient classes</text>
+<g fill="#e7eceb" stroke="#82979b" stroke-width="2" text-anchor="middle" font-size="14">
+<circle cx="136" cy="168" r="24"/><circle cx="250" cy="168" r="24"/><circle cx="364" cy="168" r="24"/><circle cx="478" cy="168" r="24"/>
+</g><g fill="#263543" text-anchor="middle" font-size="14"><text x="136" y="173">0</text><text x="250" y="173">2</text><text x="364" y="173">4</text><text x="478" y="173">…</text></g>
+<g stroke="#287f91" stroke-width="3" fill="none"><path d="M160 168h66m-10-10 10 10-10 10"/><path d="M274 168h66m-10-10 10 10-10 10"/><path d="M388 168h66m-10-10 10 10-10 10"/></g>
+<circle cx="700" cy="168" r="42" fill="#e5efec" stroke="#529186" stroke-width="3"/><text x="700" y="174" text-anchor="middle" font-size="18">even</text>
+<g fill="#ece6f2" stroke="#907baa" stroke-width="2" text-anchor="middle" font-size="14"><circle cx="136" cy="282" r="24"/><circle cx="250" cy="282" r="24"/><circle cx="364" cy="282" r="24"/><circle cx="478" cy="282" r="24"/></g><g fill="#263543" text-anchor="middle" font-size="14"><text x="136" y="287">1</text><text x="250" y="287">3</text><text x="364" y="287">5</text><text x="478" y="287">…</text></g>
+<g stroke="#735f92" stroke-width="3" fill="none"><path d="M160 282h66m-10-10 10 10-10 10"/><path d="M274 282h66m-10-10 10 10-10 10"/><path d="M388 282h66m-10-10 10 10-10 10"/></g>
+<circle cx="700" cy="282" r="42" fill="#ece6f2" stroke="#907baa" stroke-width="3"/><text x="700" y="288" text-anchor="middle" font-size="18">odd</text>
+<text x="52" y="360" font-size="15" fill="#59656c">A useful quotient must preserve the task and remain compatible with future state transitions.</text></g>
+</svg>
