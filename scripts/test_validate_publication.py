@@ -80,6 +80,34 @@ class PublicationValidationTest(unittest.TestCase):
             with self.assertRaises(ValidationError):
                 validate(root)
 
+    def test_model_instrument_can_replace_an_uninformative_static_figure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            source = (root / "articles/sample.md").read_text(encoding="utf-8")
+            source = source.replace(
+                "sequence: 1\n",
+                "sequence: 1\nmodel_focus: representation\nmodel_variant: baseline\n",
+            )
+            source = source.replace(
+                "```{figure} ./figure.svg\n:alt: Static figure\nCaption.\n```\n\n",
+                "",
+            )
+            (root / "articles/sample.md").write_text(source, encoding="utf-8")
+            receipt = validate(root)
+            self.assertEqual(receipt["articleCount"], 1)
+
+    def test_article_without_static_or_model_visualization_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            source = (root / "articles/sample.md").read_text(encoding="utf-8")
+            source = source.replace(
+                "```{figure} ./figure.svg\n:alt: Static figure\nCaption.\n```\n\n",
+                "",
+            )
+            (root / "articles/sample.md").write_text(source, encoding="utf-8")
+            with self.assertRaises(ValidationError):
+                validate(root)
+
     def test_missing_link_and_invalid_metadata_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.repository(directory)
