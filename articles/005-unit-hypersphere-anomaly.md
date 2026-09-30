@@ -4,6 +4,7 @@ description: "What happens when recurrent state keeps direction but discards mag
 short_title: "The unit-hypersphere anomaly"
 date: 2026-09-29
 model_focus: recurrent-state
+model_variant: hypersphere
 depends_on: [004-isolating-phase-attention]
 authors:
   - name: Tyler J.H.G.
