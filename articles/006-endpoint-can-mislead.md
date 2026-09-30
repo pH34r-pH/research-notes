@@ -3,6 +3,7 @@ title: "Milestone 006 — A dramatic endpoint can still mislead"
 description: "Does an apparent advantage survive fair checkpoint selection?"
 short_title: "A dramatic endpoint can still mislead"
 date: 2026-09-29
+model_focus: output
 depends_on: [005-unit-hypersphere-anomaly]
 authors:
   - name: Tyler J.H.G.
