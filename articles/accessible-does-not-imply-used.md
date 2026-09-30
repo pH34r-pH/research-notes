@@ -4,6 +4,7 @@ description: A frozen-representation probe found a natural-source distinction th
 short_title: Accessible does not imply used
 date: 2026-09-29
 model_focus: consumer
+model_variant: consumer-probe
 frontier_observed_json: ["A small affine-softmax probe recovers the tested revision-branch distinction from the frozen state.", "The native consumer barely uses that distinction on the same benchmark."]
 frontier_open_json: ["Does changing the consumer turn recoverable signal into better next-byte prediction?"]
 frontier_next_json: ["Intervene on the consumer while holding the representation and evaluation protocol fixed."]
