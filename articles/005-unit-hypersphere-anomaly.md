@@ -3,6 +3,8 @@ title: "Milestone 005 — The unit-hypersphere anomaly"
 description: "What happens when recurrent state keeps direction but discards magnitude?"
 short_title: "The unit-hypersphere anomaly"
 date: 2026-09-29
+model_focus: recurrent-state
+model_variant: hypersphere
 depends_on: [004-isolating-phase-attention]
 compiled_experiment:
   ref: muon-unit-hypersphere-depth3-multiseed-v1-final-87409154

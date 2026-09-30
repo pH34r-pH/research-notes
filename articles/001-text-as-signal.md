@@ -3,6 +3,8 @@ title: "Milestone 001 — What if text were a signal?"
 description: "Could a signal-like representation preserve useful structure in text?"
 short_title: "What if text were a signal?"
 date: 2026-09-29
+model_focus: tokenization
+model_variant: spectral
 authors:
   - name: Tyler J.H.G.
 tags:

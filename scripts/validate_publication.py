@@ -88,10 +88,16 @@ def check_local_links(root: Path, source_path: Path, markdown: str) -> int:
     return checked
 
 
-def _validate_article_figures(root: Path, path: Path, relative: str, body: str) -> int:
+def _validate_article_figures(root: Path, path: Path, relative: str, body: str, metadata: str) -> int:
     figure_targets = FIGURE_DIRECTIVE.findall(body)
-    if not figure_targets:
-        raise ValidationError(f"{relative}: article needs at least one static MyST figure")
+    has_instrument = (
+        re.search(r"^model_focus:\s*\S", metadata, re.MULTILINE)
+        and re.search(r"^model_variant:\s*\S", metadata, re.MULTILINE)
+    )
+    if not figure_targets and not has_instrument:
+        raise ValidationError(
+            f"{relative}: article needs a static MyST figure or explicit model-instrument metadata"
+        )
     for raw in figure_targets:
         parsed = urlsplit(raw)
         if parsed.scheme or parsed.netloc or raw.startswith("#"):
@@ -144,7 +150,7 @@ def validate_article(root: Path, path: Path, bibliography: set[str]) -> tuple[in
     if not re.search(r"^#\s+\S", body, re.MULTILINE):
         raise ValidationError(f"{relative}: article needs a top-level heading")
     links_checked = check_local_links(root, path, body)
-    links_checked += _validate_article_figures(root, path, relative, body)
+    links_checked += _validate_article_figures(root, path, relative, body, metadata)
     cell_count = _validate_article_cells(relative, body)
     _validate_article_citations(relative, body, bibliography)
     return links_checked, cell_count
