@@ -3,6 +3,7 @@ title: "Milestone 003 — Coordinates matter; operations matter more"
 description: "Does changing coordinates help, or do the operations need to change too?"
 short_title: "Coordinates matter; operations matter more"
 date: 2026-09-29
+model_focus: architecture
 depends_on: [002-locating-representation-loss]
 authors:
   - name: Tyler J.H.G.
