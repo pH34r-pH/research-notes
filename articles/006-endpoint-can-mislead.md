@@ -4,6 +4,7 @@ description: "Does an apparent advantage survive fair checkpoint selection?"
 short_title: "A dramatic endpoint can still mislead"
 date: 2026-09-29
 model_focus: output
+model_variant: hypersphere
 depends_on: [005-unit-hypersphere-anomaly]
 authors:
   - name: Tyler J.H.G.
