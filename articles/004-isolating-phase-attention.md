@@ -4,6 +4,7 @@ description: "Which part of phase-aware attention accounts for the improvement?"
 short_title: "Isolating the phase-aware mechanism"
 date: 2026-09-29
 model_focus: architecture
+model_variant: phase-aware
 depends_on: [003-coordinates-and-matched-operations]
 authors:
   - name: Tyler J.H.G.
