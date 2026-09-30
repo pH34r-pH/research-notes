@@ -3,6 +3,7 @@ title: "Milestone 012 — Natural-source task distinctions"
 description: "Can compact states distinguish the same context leading to different futures?"
 short_title: "Natural-source task distinctions"
 date: 2026-09-29
+model_focus: representation
 depends_on: [010-dynamic-quotient]
 authors:
   - name: Tyler J.H.G.
