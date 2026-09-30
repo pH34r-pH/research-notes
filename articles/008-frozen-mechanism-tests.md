@@ -3,6 +3,7 @@ title: "Milestone 008 — What does the sphere actually do?"
 description: "Which proposed mechanisms survive frozen tests of the model’s dynamics?"
 short_title: "What does the sphere actually do?"
 date: 2026-09-29
+depends_on: [007-derive-before-training]
 authors:
   - name: Tyler J.H.G.
 tags:
