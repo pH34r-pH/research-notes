@@ -58,4 +58,4 @@ jobs:
           name: research-notes-validation-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: validation/research-notes-validation.json
           if-no-files-found: error
-          retention-days: 30
+          retention-days: 7
