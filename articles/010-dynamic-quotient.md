@@ -4,6 +4,7 @@ description: "When is it safe for a recurrent reasoner to treat two states as eq
 short_title: "What state should a reasoner preserve?"
 date: 2026-09-29
 model_focus: representation
+model_variant: dynamic-quotient
 authors:
   - name: Tyler J.H.G.
 tags:
