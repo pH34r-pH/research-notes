@@ -3,6 +3,7 @@ title: "Milestone 002 — Where did the spectral loss occur?"
 description: "Where between representation and prediction does useful information become hard to recover?"
 short_title: "Where did the spectral loss occur?"
 date: 2026-09-29
+model_focus: architecture
 authors:
   - name: Tyler J.H.G.
 tags:
@@ -23,14 +24,6 @@ Suppose the consumer receives the original represented components separately. If
 
 > **Sticky note — control:** a comparison that isolates one possible explanation by keeping the other relevant conditions as similar as possible. [Reference →](../reference/glossary.md#control)
 
-(002-locating-representation-loss-visual-intuition)=
-## Visual intuition
-```{figure} ./002_locating_representation_loss.svg
-:label: 002-locating-representation-loss-intuition
-:alt: A conceptual source-to-prediction path marks representation, composition, receiver and consumer as separately testable stages.
-
-A stage map separates representation, composition, recovery, and prediction.
-```
 
 ## Causal decomposition
 
