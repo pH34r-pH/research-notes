@@ -4,6 +4,7 @@ description: "Which geometry preserves the invariances a task actually needs?"
 short_title: "Geometry should follow invariance, not aesthetics"
 date: 2026-09-29
 model_focus: representation
+model_variant: geometry
 depends_on: [010-dynamic-quotient]
 authors:
   - name: Tyler J.H.G.
