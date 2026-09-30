@@ -4,6 +4,7 @@ description: "Can compact states distinguish the same context leading to differe
 short_title: "Natural-source task distinctions"
 date: 2026-09-29
 model_focus: representation
+model_variant: hypersphere
 depends_on: [010-dynamic-quotient]
 authors:
   - name: Tyler J.H.G.
