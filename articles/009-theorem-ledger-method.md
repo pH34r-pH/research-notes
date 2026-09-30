@@ -3,6 +3,7 @@ title: "Milestone 009 — From hypothesis sprawl to a theorem ledger"
 description: "How can checked mathematics constrain the next architecture experiment?"
 short_title: "From hypothesis sprawl to a theorem ledger"
 date: 2026-09-29
+model_focus: full
 depends_on: [007-derive-before-training]
 authors:
   - name: Tyler J.H.G.
@@ -22,14 +23,6 @@ I could turn each question into an architecture and start training. Before doing
 
 The theorem ledger records that earlier reasoning: what can be established about the claim, what it assumes, and which empirical question remains once those parts are settled.
 
-(009-theorem-ledger-method-visual-intuition)=
-## Visual intuition
-```{figure} ./009_theorem_ledger_method.svg
-:label: 009-theorem-ledger-method-intuition
-:alt: Four epistemic labels distinguish formal results, empirical observations, assumptions and open hypotheses.
-
-Four labels distinguish the kinds of support a claim has.
-```
 
 ## Four kinds of evidence
 
