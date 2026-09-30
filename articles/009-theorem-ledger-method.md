@@ -4,6 +4,7 @@ description: "How can checked mathematics constrain the next architecture experi
 short_title: "From hypothesis sprawl to a theorem ledger"
 date: 2026-09-29
 model_focus: full
+model_variant: baseline
 depends_on: [007-derive-before-training]
 authors:
   - name: Tyler J.H.G.
