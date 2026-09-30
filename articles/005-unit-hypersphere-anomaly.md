@@ -3,6 +3,7 @@ title: "Milestone 005 — The unit-hypersphere anomaly"
 description: "What happens when recurrent state keeps direction but discards magnitude?"
 short_title: "The unit-hypersphere anomaly"
 date: 2026-09-29
+depends_on: [004-isolating-phase-attention]
 authors:
   - name: Tyler J.H.G.
 tags:

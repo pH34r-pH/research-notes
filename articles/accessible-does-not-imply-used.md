@@ -3,6 +3,7 @@ title: "Milestone 013 — Accessible does not imply used"
 description: A frozen-representation probe found a natural-source distinction that the model's native consumer barely used.
 short_title: Accessible does not imply used
 date: 2026-09-29
+depends_on: [012-natural-source-distinctions]
 authors:
   - name: Tyler J.H.G.
 tags:

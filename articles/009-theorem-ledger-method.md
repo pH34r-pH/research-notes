@@ -3,6 +3,7 @@ title: "Milestone 009 — From hypothesis sprawl to a theorem ledger"
 description: "How can checked mathematics constrain the next architecture experiment?"
 short_title: "From hypothesis sprawl to a theorem ledger"
 date: 2026-09-29
+depends_on: [007-derive-before-training]
 authors:
   - name: Tyler J.H.G.
 tags:
