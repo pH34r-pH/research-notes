@@ -4,6 +4,7 @@ description: "Does changing coordinates help, or do the operations need to chang
 short_title: "Coordinates matter; operations matter more"
 date: 2026-09-29
 model_focus: architecture
+model_variant: phase-aware
 depends_on: [002-locating-representation-loss]
 authors:
   - name: Tyler J.H.G.
