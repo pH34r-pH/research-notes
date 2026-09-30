@@ -4,6 +4,7 @@ description: "Where between representation and prediction does useful informatio
 short_title: "Where did the spectral loss occur?"
 date: 2026-09-29
 model_focus: architecture
+model_variant: spectral
 authors:
   - name: Tyler J.H.G.
 tags:
