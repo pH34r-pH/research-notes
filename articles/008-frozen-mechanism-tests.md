@@ -4,6 +4,7 @@ description: "Which proposed mechanisms survive frozen tests of the model’s dy
 short_title: "What does the sphere actually do?"
 date: 2026-09-29
 model_focus: recurrent-state
+model_variant: hypersphere
 depends_on: [007-derive-before-training]
 authors:
   - name: Tyler J.H.G.
