@@ -15,11 +15,11 @@ tags:
 **Research period:** September 3–5, 2026  
 **Historical anchors:** #201–#206
 
-The normalization derivative gave me an exact local fact, but several empirical explanations were still compatible with it. The unit constraint might be removing a harmful magnitude channel, suppressing an easy shortcut, selectively preserving useful tangent directions, or changing how perturbations accumulate through recurrent depth.
+The normalization derivative constrained the local behavior, but several explanations remained possible. The unit constraint could remove an unhelpful magnitude channel, suppress a shortcut, preserve useful tangent directions, or change how perturbations accumulate through recurrent depth.
 
-I could test much of this without training anything new. Instead, I treated the frozen model as an object to intervene on: change its radius, measure radial and tangent sensitivity, follow perturbations through several recurrent steps, test whether those perturbations reach the output, and probe what information is accessible in different parts of the state.
+I could test those explanations on the model I already had. Change its radius, compare radial and tangent sensitivity, propagate perturbations through recurrent steps, and measure which changes reach the output. Information probes could then test what was recoverable from different parts of the state.
 
-This kept the question narrow. If the existing model already contradicted a proposed mechanism, there was no reason to build another model around it.
+If the frozen model contradicted a proposed mechanism, that would give me a reason to reject the mechanism before training another model around it.
 
 (008-frozen-mechanism-tests-visual-intuition)=
 ## Visual intuition
@@ -32,7 +32,7 @@ A toy scalar contraction compounds across steps. In a recurrent model, the full 
 
 ## The mechanism campaign
 
-The tests produced a deliberately untidy result:
+The tests returned:
 
 - radius interventions: **MIXED**
 - radial/tangent Jacobian analysis: **RADIAL-WEAK**
@@ -40,21 +40,19 @@ The tests produced a deliberately untidy result:
 - output sensitivity: **RADIAL-LOCALLY-ACTIVE**
 - information probes: **MIXED**
 
-The labels summarize different questions, so they aren't supposed to collapse into one vote.
+Each label answers a different question. They need to be interpreted together, with their interventions kept explicit.
 
-Changing radius affected some measurements but didn't reveal a simple monotonic mechanism. Local derivatives showed weaker radial response than tangent response, which was consistent with the normalization theorem. Across several recurrent steps, however, the accumulated Jacobians didn't produce the clean spectral separation I would have expected from a strong selective-contraction story.
+Changing radius affected some measurements without producing a simple monotonic effect. The local derivatives showed weaker radial response than tangent response, consistent with the normalization theorem. Across recurrent steps, the accumulated Jacobians lacked the clean spectral separation expected from a strong selective-contraction explanation.
 
-At the output, radial perturbations could still matter locally. That was an important boundary: normalization suppressing radial variation at one point in the computation didn't imply that every radius-related degree of freedom elsewhere in the model was irrelevant.
+Radial perturbations could still affect the output locally. Removing radial variation at one normalization step therefore did not make every radius-related degree of freedom elsewhere in the computation irrelevant. The probes likewise supplied mixed evidence about radius as useful signal or harmful shortcut.
 
-The probes were similarly mixed. They didn't support a clean story in which radius was either a uniquely useful signal or an obvious harmful shortcut.
+> **Sticky note — Jacobian:** a matrix describing how small changes at an input or internal state affect the output locally. Comparing directions reveals which perturbations have the strongest local effect.
 
-> **Sticky note — Jacobian:** a Jacobian describes how small changes in a model's input or internal state change its output locally. Looking at different input directions lets us ask whether the model is more sensitive to some perturbations than others.
-
-> **Sticky note — finite-horizon Jacobian:** in a recurrent model, small changes pass through several successive updates. Multiplying the Jacobians of those updates tells us how a perturbation propagates across that finite sequence rather than through only one step.
+> **Sticky note — finite-horizon Jacobian:** the product of local Jacobians along a finite sequence of recurrent updates. It describes how a small perturbation propagates through that sequence.
 
 ## Try a small example
 
-Two hand-chosen matrices show how local Jacobians combine over a finite horizon. The saved output below is available without starting Python.
+Two hand-chosen matrices show how local Jacobians combine over a finite horizon.
 
 ```{code-cell} python
 :label: 008-frozen-mechanism-tests-teaching-example
@@ -79,23 +77,23 @@ singular values: [0.83792489 0.47736976]
 
 ## Why there wasn't a sixth experiment
 
-The original mechanism plan allowed another training experiment if the frozen diagnostics identified a question that required one. After reviewing the results, I didn't run it.
+The mechanism plan allowed another training experiment if the diagnostics exposed a question that required one. The proposed control would ignore radius while remaining meaningfully different from the existing unit model.
 
-The proposed control was supposed to create a model that ignored radius while remaining meaningfully different from the existing unit-hypersphere model. Once specified carefully enough to be a faithful control, it collapsed to essentially the model I had already tested. Training it again wouldn't separate the competing explanations.
+Once I specified how it would ignore radius, the construction reduced to essentially the model already tested. Another training run would produce another measurement of that construction, without separating the competing explanations.
 
-That made **not running the experiment** the correct result of the analysis. Compute wasn't the main concern; causal identifiability was. A new training run is only useful if its outcomes can distinguish the hypotheses we care about.
+I rejected the experiment for that reason. A control needs to create a comparison whose possible outcomes distinguish the hypotheses; specifying this one exposed that it could not.
 
 ## Research context
 
-This part of the investigation drew increasingly on dynamical-systems and sensitivity-analysis ideas. A one-step derivative describes local behavior, while products of derivatives along a trajectory describe how those local effects accumulate through recurrent computation. That distinction matters because a recurrent network can amplify, rotate, cancel, or redistribute a perturbation even when the first local response looks simple.
+Dynamical systems and sensitivity analysis supplied the tools for this pass. A one-step derivative describes a local response; products of derivatives describe how the response accumulates along a trajectory. Recurrence can amplify, rotate, cancel, or redistribute a perturbation after its first step.
 
-The literature provided tools for asking those questions, but I kept the claims tied to the finite trained system in front of me. A local normalization theorem, a finite-horizon Jacobian calculation, and a statement about asymptotic recurrent dynamics are different results; none should silently stand in for the others.
+The distinction matters when interpreting the result. The normalization theorem, a finite sequence of trained Jacobians, and an asymptotic claim about recurrence each concern a different object and require their own assumptions.
 
 ## Interpretation
 
-The frozen diagnostics gave mixed support for the tested radial-shortcut and selective-contraction explanations. Local sensitivity established influence under an intervention; held-out prediction was still needed to establish usefulness.
+The diagnostics gave mixed support for the radial-shortcut and selective-contraction explanations. An intervention could establish local influence, while held-out prediction was still needed to establish whether that influence was useful for the task.
 
-The proposed extra control collapsed to the model already tested. Rejecting that redundant comparison was the practical result: the analysis eliminated a training run that would have added a number without separating the hypotheses.
+The proposed extra control reduced to a comparison I had already made. Recognizing that equivalence eliminated a training run and left the unresolved mechanisms stated more precisely.
 
 ## Public formal sources
 
@@ -110,6 +108,6 @@ These pinned sources state the assumptions and checked mathematical conclusions.
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Finite-horizon Jacobian products**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Finite-horizon Jacobian products**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 009 — From hypothesis sprawl to a theorem ledger**](./009-theorem-ledger-method.md).

@@ -15,13 +15,11 @@ tags:
 **Research period:** September 2026  
 **Historical anchors:** #178–#180, #316, #318, #323, #325
 
-The unit-hypersphere models produced very compact internal states. Effective rank fell, vectors became more similar to one another, and several geometric diagnostics suggested that the representation was occupying a much smaller region of its available space.
+The unit models occupied a compact region of their available state space. Effective rank fell, vectors became more similar, and the geometric diagnostics looked like compression. I still needed to know what had been compressed away.
 
-That looked like compression, but compression alone wasn't enough to tell me whether anything useful had been lost.
+Consider two representations. One discards most variation while retaining every distinction needed for a task. The other retains many dimensions but merges two cases that require different predictions. Rank and variance can describe both states, yet they cannot tell us which one supports the task.
 
-A representation can discard enormous amounts of variation while preserving everything a particular task needs. It can also retain plenty of geometric variation while losing one distinction that matters. Effective rank, variance, cosine similarity, and similar summaries describe the state; they don't tell us whether two situations that require different predictions are still distinguishable.
-
-I needed a benchmark where the data itself provided examples of **the same context leading to meaningfully different futures**.
+I needed data that exposed a predictive distinction directly: **the same context leading to different futures**. Then I could test whether the compact state retained information about that distinction.
 
 (012-natural-source-distinctions-visual-intuition)=
 ## Visual intuition
@@ -34,43 +32,37 @@ A schematic branch shows the tradeoff between context specificity and repeated o
 
 ## Why Wikipedia revision history?
 
-Wikipedia revisions provide naturally occurring branch points. Two versions of an article can share a prefix and then diverge because an editor changed what came next. That gives us real text, written for reasons unrelated to the experiment, where closely related contexts can lead to different continuations.
+Two versions of a Wikipedia article can share a prefix and diverge where an editor changes the continuation. That gives us natural text with closely controlled context and different observed futures.
 
-The revision history also preserves provenance. I can identify which page and revision produced an example, detect reverts and duplicates, and keep related revisions together when splitting or evaluating the data.
+The revision history also preserves the source of each case. I can identify the page and revision, detect duplicates and reverts, and group related revisions when splitting or evaluating the data.
 
-That made revision branches useful for a task-aligned question:
-
-**given a shared or closely controlled context, does the representation preserve enough information to distinguish futures that the source data shows are genuinely different?**
-
-This is different from measuring how many dimensions the representation occupies. The benchmark only cares about distinctions that affect the predictive task.
+This supports a specific question: given the shared or closely controlled context, can the representation distinguish the continuations that branch in the source? We can test that prediction instead of using geometric spread as a proxy for usefulness.
 
 ## Building a benchmark that can fail
 
-A benchmark like this needs a negative control. If a representation that maps every input to the same constant state can satisfy the criterion, then the criterion isn't measuring preserved distinctions at all.
+The first check is whether a constant representation fails. If every input can map to the same state and still satisfy the criterion, the benchmark has no basis for claiming that input distinctions were preserved.
 
-The protocol therefore required constant and mean-state controls to fail on held-out branch cases. It also compared against established sparse-context baselines, froze the context lengths before qualifying evaluation, collapsed duplicates and reverts, and grouped related examples by page and revision lineage.
+I required constant and mean-state controls to fail on held-out branch cases. The protocol also compared against established sparse-context baselines, froze context lengths before qualifying evaluation, collapsed duplicates and reverts, and grouped related cases by page and revision lineage.
 
-Those grouping rules became especially important after the earlier source-unit audit. Thousands of tokens extracted from closely related revisions don't become thousands of independent pieces of evidence just because they occupy different rows in a dataset.
+The grouping follows the earlier source-unit correction. Thousands of tokens from related revisions provide many measurements, but their independence still depends on the sources that produced them.
 
-> **Sticky note — experimental unit:** the independent unit that contributes evidence to a statistical comparison. Multiple measurements from the same underlying source can be useful, but treating them as independent makes the evidence appear stronger than it is.
+> **Sticky note — experimental unit:** the independent unit contributing evidence to a comparison. Several measurements from one source can be useful while remaining correlated.
 
-The bounded natural-source benchmark eventually qualified at a context length of **32 bytes**. That became the frozen task-distinction dataset used in the next stage of the investigation.
+The bounded benchmark qualified at a context length of **32 bytes**. I froze that task-distinction dataset for the next stage.
 
 ## Research context
 
-This benchmark design followed directly from the dynamic-sufficiency question in Notebook 010. If a useful representation is defined by the distinctions it preserves for future behavior, then evaluating representation quality requires examples where those future distinctions are observable.
+The dynamic-sufficiency question in Milestone 010 defines a useful representation by the future distinctions it preserves. Revision branches made one such distinction observable in natural data, giving the representation an empirical target.
 
-Revision histories offered a practical natural-source approximation to that idea. Instead of inventing synthetic labels for “semantic difference,” I could use real branch points and ask whether a representation retained information relevant to their different continuations.
+There is a second requirement: a prediction concerns possible outcomes, while a single recorded continuation is only one outcome. The evaluation needs to respect that difference.
 
-The statistical side of the design also drew on a much older principle: predictions should be evaluated against the distribution of possible outcomes rather than only the one outcome that happened to be observed in a particular sample.
+> **Sticky note — proper scoring rule:** a rule for evaluating predicted probabilities whose expected score is best when we report the probabilities we actually believe. Log loss is one example.
 
-> **Sticky note — proper scoring rule:** a scoring rule evaluates predicted probabilities. A *proper* scoring rule is designed so that, on average, the best strategy is to report the probabilities you actually believe. Log loss, which this project uses extensively, is one example.
-
-That matters for branch data because one realized continuation isn't the same thing as the conditional distribution of plausible continuations. The benchmark needs enough repeated or related evidence to estimate the distinction without pretending that one observed next token defines the entire predictive problem.
+Repeated or related branch evidence can help estimate the predictive distinction. One next token, on its own, cannot define the conditional distribution of plausible continuations.
 
 ## Try a small example
 
-Five invented continuations show how to form an empirical distribution and calculate its entropy. The saved output below is available without starting Python.
+Five invented continuations show how counts become an empirical probability distribution. Change the continuations and compare the resulting probabilities.
 
 ```{code-cell} python
 :label: 012-natural-source-distinctions-teaching-example
@@ -92,9 +84,9 @@ print({k.decode():v/n for k,v in counts.items()})
 
 ## Interpretation
 
-The qualified benchmark supplies a specific natural-source predictive distinction under a frozen protocol. Representation quality can now be tested against that distinction: whether the signal remains present, whether a small readout recovers it, and whether the native model uses it.
+The qualified benchmark provides a specific predictive distinction under a frozen natural-source protocol. I can now ask three separate questions about it: does the state retain the signal, can a small consumer recover it, and does the model's own consumer use it?
 
-Effective rank and compression alone cannot answer those questions. A compact representation can preserve the task’s required distinctions, while a larger one can still lose them.
+A compact state may preserve that distinction, and a larger state may lose it. Testing the distinction directly makes either outcome observable.
 
 (012-natural-source-distinctions-sources)=
 ## Sources and chronology
@@ -102,6 +94,6 @@ Effective rank and compression alone cannot answer those questions. A compact re
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Natural-source context support**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Natural-source context support**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 013 — Accessible does not imply used**](./accessible-does-not-imply-used.md).

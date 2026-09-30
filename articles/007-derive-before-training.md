@@ -15,11 +15,9 @@ tags:
 **Research period:** September 2–3, 2026 and later formal hardening  
 **Historical anchors:** #196, #199, #200, #252
 
-The hypersphere experiments generated several possible explanations for what normalization might be doing: removing an unnecessary magnitude channel, changing optimization, suppressing shortcuts, preserving some directions while contracting others, or changing the long-term dynamics of recurrence. At this point, simply training another model for every plausible explanation was becoming a bad research strategy.
+The unit constraint left several possible mechanisms open. It could remove an unhelpful magnitude channel, change optimization, suppress a shortcut, preserve some directions while contracting others, or alter recurrent dynamics. Training a new model for each possibility would be an expensive way to discover which premises were already mathematically false.
 
-Some of these questions had mathematical answers that could be established before running another experiment. If a proposed mechanism depended on normalization behaving a particular way, I could derive that behavior first and use the result to decide which empirical questions were still meaningful.
-
-That became the beginning of a proof-first layer in the research program: derive what can be derived, keep the assumptions and boundaries explicit, then spend compute on the parts the mathematics cannot decide.
+I started deriving the mechanisms first. If an explanation requires normalization to behave a particular way, we can establish that behavior before asking what the trained model does with it. The remaining experiment then has a more precise job.
 
 > **Formal checkpoint:** for a nonzero vector `x`, normalization is `N(x) = x / ||x||`. If `u = x / ||x||`, its derivative is
 >
@@ -38,19 +36,17 @@ At a nonzero input, the derivative of normalization removes radial change and re
 
 ## Radial and tangent directions
 
-The expression `I - uuᵀ` is a projection: it removes the part of a small change that points in the same direction as `u`.
+The matrix `I - uuᵀ` projects away the component parallel to `u`. That gives us two local cases.
 
-That gives normalization two different local behaviors. If I perturb `x` only by changing its magnitude, the normalized direction doesn't change to first order, so the derivative of that radial perturbation is zero. If I perturb `x` perpendicular to its radius, the change lies along the surface of the sphere and survives, scaled by `1 / ||x||`. At unit radius, that tangent perturbation is preserved to first order.
+Change only the magnitude of `x`, and the normalized direction stays fixed to first order: the radial derivative is zero. Change `x` perpendicular to its radius, and the perturbation survives with scale `1 / ||x||`. At unit radius, its tangent component is preserved to first order.
 
-> **Sticky note — tangent direction:** at a point on a sphere, a tangent direction is perpendicular to the radius through that point. Locally, these are the directions in which you can move along the surface rather than toward or away from its center.
+> **Sticky note — tangent direction:** at a point on a sphere, a tangent direction is perpendicular to the radius. It describes local movement along the surface.
 
-This gave me an exact version of something the earlier experiments had only suggested. Normalization really does remove infinitesimal changes that affect only overall scale while allowing changes in direction to survive locally.
-
-The useful part was the boundary around that statement. The mathematics says **what normalization does to perturbations**; it doesn't say what those perturbations mean to a language model.
+This establishes exactly how normalization acts on small perturbations. We still have to identify what those perturbations carry in the model: a geometric direction acquires a task-specific meaning through the representation and data.
 
 ## Try a small example
 
-A two-dimensional example separates radial and tangent perturbations. Try changing the point and perturbation vectors. The saved output below is available without starting Python.
+A two-dimensional example separates radial and tangent perturbations. Try changing the point and perturbation vectors.
 
 ```{code-cell} python
 :label: 007-derive-before-training-teaching-example
@@ -75,31 +71,27 @@ tangent gain: 0.2
 
 ## What this changed
 
-That distinction became a template for the next stage of the project.
+Suppose our explanation is that magnitude carries nuisance variation while direction carries useful information. The derivative establishes the local removal of radial variation. To complete the explanation, we also need to measure whether radial variation is nuisance and whether tangent variation carries the relevant task distinctions.
 
-Suppose an experiment suggests that normalization helps because magnitude contains nuisance variation while direction carries useful information. The derivative above can prove that normalization removes radial variation locally. It cannot prove that radial variation is nuisance information, or that tangent variation contains semantics. Those are properties of the task, representation, and trained model, so they still require measurement.
+Writing the argument this way separates its premises. Some can be derived, some need an experiment, and some may turn out to be inconsistent with the construction. A proof or counterexample can then remove a branch before we build a model for it.
 
-Separating those two kinds of claims prevents an appealing geometric interpretation from quietly turning into an empirical conclusion.
-
-This also changed how I thought about experiment design. A proposed architecture can depend on assumptions that are already mathematically true, mathematically false, or true only under specific conditions. Deriving those boundaries first can eliminate experiments whose premises are impossible, simplify experiments whose mechanisms are already known, and leave training for questions that genuinely depend on learned behavior.
-
-The resulting workflow became:
+The workflow became:
 
 `hypothesis → derivation / theorem boundary → surviving empirical question → experiment`
 
-rather than treating training as the default way to answer every question.
+Each step tells us what the next one still needs to establish.
 
 ## Research context
 
-This proof-first turn also brought the project closer to a broader body of geometric machine-learning research. Work such as **nGPT** had already shown that Transformer computation could be formulated around normalized states on a hypersphere, so normalization and hyperspherical optimization themselves weren't new ideas. The useful question for this project was narrower: what could the exact mathematics tell me about the mechanism behind the behavior I had already measured?
+Normalized Transformer states and hyperspherical optimization already appear in work such as **nGPT**. That literature provided constructions to compare against and helped locate the mathematical questions in this project.
 
-The literature provided established constructions and mathematical neighborhoods to compare against; the theorem work gave me a way to separate those established facts from claims that were still specific to this representation and task.
+My immediate question concerned the mechanism behind the measurements I already had: which effects follow from normalization itself, and which depend on this trained representation? Existing work supplies part of the first answer; the formal calculation makes the local constraint explicit, leaving the task-dependent premises for measurement.
 
 ## Interpretation
 
-The derivative establishes a local, first-order effect: radial perturbations vanish, and tangent perturbations scale by inverse radius. Whether either direction carries useful task information has to be measured in the trained model.
+The derivative establishes a local, first-order effect: radial perturbations vanish, and tangent perturbations scale by inverse radius. Whether either direction carries useful task information depends on the trained model.
 
-Repeated nonlinear updates also require analysis beyond a single derivative. The calculation gives later mechanism explanations a concrete constraint and points toward finite-horizon diagnostics.
+Recurrence adds another question. After several nonlinear updates, what survives from a perturbation introduced at the beginning? That required finite-horizon diagnostics on the frozen model.
 
 ## Public formal sources
 
@@ -114,6 +106,6 @@ These pinned sources state the assumptions and checked mathematical conclusions.
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Normalization derivative**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Normalization derivative**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 008 — What does the sphere actually do?**](./008-frozen-mechanism-tests.md).

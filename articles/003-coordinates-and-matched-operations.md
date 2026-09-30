@@ -15,11 +15,13 @@ tags:
 **Research period:** September 1, 2026  
 **Historical anchors:** #161–#162
 
-The previous experiment left open the possibility that the spectral representation wasn't inherently deficient; the downstream model might simply have been doing the wrong kind of computation on it. I tested that by holding the uncombined spectral state fixed and changing only how the downstream model represented and processed the same information.
+The stage comparison suggested that the consumer was struggling with the spectral state even before composition. I held that uncombined state fixed and changed how the downstream model represented and processed it.
 
-There were two changes I needed to separate. Rewriting a complex value from Cartesian coordinates into `[rho, cos(theta), sin(theta)]` might make the information easier for a model to use even if the computation itself stayed essentially the same. Alternatively, operations designed around magnitude and phase might provide an additional advantage. A coordinate-only control let me measure those effects separately.
+There were two effects to separate. We can rewrite a complex value as `[rho, cos(theta), sin(theta)]` and still apply roughly the same computation. We can also change the computation to operate directly on magnitude and relative phase. The first is a change of coordinates; the second gives the model different operations on the same underlying information.
 
-> **Sticky note — log-polar:** a complex value can be described by its magnitude and phase. `rho = log(|z| + eps)` represents magnitude on a logarithmic scale, while `theta` represents its angle.
+A coordinate-only control let me measure how much each change contributed.
+
+> **Sticky note — log-polar:** describe a complex value using its magnitude and angle. Here, `rho = log(|z| + eps)` puts magnitude on a logarithmic scale, and `theta` is its phase.
 
 (003-coordinates-and-matched-operations-visual-intuition)=
 ## Visual intuition
@@ -32,15 +34,15 @@ Toy complex values can be re-expressed in polar coordinates. Changing the operat
 
 ## Result
 
-Both changes helped, but by different amounts. Rewriting the spectral state into the coordinate-only representation improved the result, showing that coordinates alone affected how easily the downstream model could use the information. The polar-native processing path improved loss substantially further.
+Both changes improved loss. The coordinate-only representation helped, and the polar-native processing path improved it further.
 
-Compared with the original spectral Cartesian condition, the polar-native model improved loss by about **0.5825 nat per original byte**. More importantly, it improved loss by about **0.3923 nat per original byte** compared with the coordinate-only control containing the same underlying information. All three experimental seeds cleared the predefined materiality threshold.
+Relative to spectral Cartesian processing, the polar-native model improved loss by about **0.5825 nat per original byte**. Relative to the coordinate-only control, which contained the same underlying information, it improved loss by about **0.3923 nat per original byte**. All three experimental seeds cleared the predefined materiality threshold.
 
-That second comparison changed the interpretation of the experiment. A coordinate transformation could explain part of the original improvement, but it couldn't explain all of it. Something about the operations performed in those coordinates was contributing independently.
+The second comparison is the one that matters for the mechanism. Re-expressing the state accounts for part of the improvement; changing the operations accounts for an additional part. I could now investigate the polar-native block itself.
 
 ## Try a small example
 
-Three hand-chosen complex values show how Cartesian and polar coordinates describe the same information. The saved output below is available without starting Python.
+Three hand-chosen complex values show how Cartesian and polar coordinates describe the same information.
 
 ```{code-cell} python
 :label: 003-coordinates-and-matched-operations-teaching-example
@@ -64,7 +66,9 @@ print(phase_features)
 
 ## Interpretation
 
-The coordinate-only control separated the benefit of re-expression from the benefit of the polar-native block. Several operations inside that block still changed together. The next experiment therefore took the block apart while holding the source representation fixed, to find which operation carried the remaining advantage.
+The coordinate-only control gave me a baseline for the benefit of re-expression. The polar-native block beat that baseline, but several operations inside it had changed together.
+
+The next step was to remove those changes one at a time, keeping the source representation fixed. Which operation would preserve the additional gain?
 
 (003-coordinates-and-matched-operations-sources)=
 ## Sources and chronology
@@ -72,6 +76,6 @@ The coordinate-only control separated the benefit of re-expression from the bene
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Phase-aware coordinates**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Phase-aware coordinates**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 004 — Isolating the phase-aware mechanism**](./004-isolating-phase-attention.md).

@@ -15,13 +15,13 @@ tags:
 **Research period:** earlier program  
 **Historical anchor:** #123
 
-The first experiments told me that the spectral approach was losing performance somewhere, but an end-to-end result couldn't tell me where. To separate the possible causes, I broke the path from text to prediction into stages and tested what happened when individual stages were removed or bypassed.
+The spectral model had a performance gap, and I needed to know where it came from. I split the computation into stages, then removed or bypassed individual stages while keeping the rest of the comparison matched.
 
 `source → representation → composition → receiver → consumer → prediction`
 
-This gave me a way to ask more specific questions: was useful information already difficult to recover from the representation itself? Did combining represented states make the problem worse? Could a learned receiver recover what composition had damaged? Or was the final language model still poorly matched to information that remained available?
+Suppose the consumer receives the original represented components separately. If performance is already worse at that point, composition cannot explain the whole gap. If combining those components makes performance worse again, composition introduces an additional problem. A learned receiver then gives us a third comparison: how much of that additional loss can it recover?
 
-> **Sticky note — control:** a comparison designed to isolate one possible explanation while keeping the other relevant conditions as similar as possible. [Reference →](../reference/glossary.md#control)
+> **Sticky note — control:** a comparison that isolates one possible explanation by keeping the other relevant conditions as similar as possible. [Reference →](../reference/glossary.md#control)
 
 (002-locating-representation-loss-visual-intuition)=
 ## Visual intuition
@@ -34,15 +34,15 @@ A stage map separates representation, composition, recovery, and prediction.
 
 ## Causal decomposition
 
-The most useful comparison gave the downstream model the same source information in two forms: once as separate, uncombined components, and once after those components had been composed together. I kept the downstream model capacity matched so that differences between the two conditions would be easier to attribute to the representation pipeline itself.
+I gave models with matched downstream capacity the same source information in two forms: separate components, and the state produced by composing those components. This made the representation pipeline the main difference between the conditions.
 
-The result split the original performance gap into several pieces. Some of the deficit was already present before composition, combining the components made it worse, and a learned receiver recovered part of that additional loss. No single stage explained the whole result.
+Some of the performance deficit was present before composition. Composing the components added more loss, and a learned receiver recovered part of that addition. The original gap therefore contained several problems, with different places to intervene.
 
-That changed how I thought about the original representation problem. If some of the deficit existed before anything had been composed or recovered, then at least part of the problem could be the relationship between the representation and the model trying to use it. The information might still be present while being expressed in coordinates that make the downstream computation unnecessarily difficult.
+The pre-composition deficit was particularly useful. It meant that changing composition alone would leave part of the problem in place. I needed to examine how the consumer operated on the spectral state: were its coordinates and operations making available information unnecessarily difficult to use?
 
 ## Try a small example
 
-A toy comparison with invented losses shows how to separate the gap at each stage. The saved output below is available without starting Python.
+A toy comparison with invented losses shows how to separate the gap at each stage.
 
 ```{code-cell} python
 :label: 002-locating-representation-loss-teaching-example
@@ -69,7 +69,9 @@ receiver recovery: 0.19999999999999973
 
 ## Interpretation
 
-Access to uncombined components isolated a performance gap that was already present before composition. The learned receiver recovered part of the additional loss introduced by composition. That separated two problems and made the downstream computation the next target: was it poorly matched to the spectral coordinates and operations?
+The separate-component control exposed a gap before composition, while the receiver recovered part of the extra loss after composition. Those comparisons gave me two effects to investigate independently.
+
+I started with the first: hold the spectral information fixed and change the computation that consumes it. That would test whether the mismatch lay in the representation itself or in how the model processed it.
 
 (002-locating-representation-loss-sources)=
 ## Sources and chronology
@@ -77,6 +79,6 @@ Access to uncombined components isolated a performance gap that was already pres
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Stage-by-stage information loss**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Stage-by-stage information loss**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 003 — Coordinates matter; operations matter more**](./003-coordinates-and-matched-operations.md).
