@@ -4,6 +4,14 @@ description: "What happens when recurrent state keeps direction but discards mag
 short_title: "The unit-hypersphere anomaly"
 date: 2026-09-29
 depends_on: [004-isolating-phase-attention]
+compiled_experiment:
+  ref: muon-unit-hypersphere-depth3-multiseed-v1-final-87409154
+  expected:
+    sha256: 28d2d6c6dba2ff2370b9536c4428f40dd23de4ea42a26c98f3e8225b4dd9a8c4
+    profile: compiled-experiment-lifecycle-v1
+    source:
+      repository: pH34r-pH/domain-scaling-lab
+      commit: 82a96cbc5d3da5bd5dfe76e3b1b877be996e5df6
 authors:
   - name: Tyler J.H.G.
 tags:
