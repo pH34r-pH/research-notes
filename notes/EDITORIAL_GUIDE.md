@@ -116,4 +116,8 @@ Label a teaching example once as toy, schematic, or hand-chosen. Explain what it
 
 Keep consequential qualifications specific: the training budget, endpoint versus trajectory, a probe’s readout family, assumptions of a theorem, or the scope of a linked experiment package. State the observation directly before discussing its interpretation.
 
-Consult `pH34r-pH/tone` when editing public prose. Its current guide is unfrozen and has insufficient corpus, so it does not yet establish a voice profile. Generated revisions here must not become baseline evidence of the author’s voice.
+Consult `pH34r-pH/tone` when editing public prose. Its browser skeleton now contains 370 usable entries; the style guide remains unfrozen. Use baseline-eligible authored text and prefer recent explanatory and technical discussion when editing the current public register. Historical arguments supply evidence about reasoning and syntax, not current beliefs.
+
+The September 2026 article pass used tone revision `96ba26a0b8dbda7a00222a334d429b1aac0cfa8a`, including samples `t1_j20p5ea`, `t1_kg89zsg`, `t1_iikaspv`, and `t1_iioz2oh`. Working choices for this pass were to define the question, expose its premises, develop a concrete comparison, and show how the result changes the next decision. Use first-person explanation where the author describes an actual research choice; use parentheticals for local clarification and keep qualifications attached to the claims they affect. These are provisional editing choices, not a frozen or statistically validated voice profile.
+
+Adapt the explanatory register to a research article. Do not import debate hostility, historical political positions, typos, or borrowed quotations as voice traits. Generated revisions here must not become baseline evidence of the author’s voice.

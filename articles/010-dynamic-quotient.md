@@ -15,13 +15,13 @@ tags:
 **Research period:** September 2–3, 2026  
 **Historical anchors:** #193, #198, #223
 
-One branch of the project began with a deliberately provocative question: could translating ordinary language into something more structurally explicit, such as Lojban, provide a better intermediate representation for reasoning?
+This branch started with a question about intermediate language: would translating text into something more structurally explicit, such as Lojban, help a model reason about it?
 
-That question needed an immediate correction. Tokenization, translation, and semantic normalization solve different problems. Replacing English with another serialization doesn't by itself tell us whether the representation preserves the information a reasoner will need.
+To evaluate that idea, I first needed to specify what the translation was supposed to preserve. Tokenization, translation, and semantic normalization perform different operations; changing the serialization gives us no automatic guarantee about the information a later reasoning step will need.
 
-The more useful question became: **when is it safe for a reasoning system to treat two internal states as equivalent?**
+Suppose two situations have different descriptions but produce the same outcomes for every task we care about. We might represent them as the same state and save the cost of preserving their differences. Now let the reasoner update both states. If their future behavior diverges, that initial merger has discarded something the recurrence needed.
 
-For a single fixed task, the answer can be straightforward. If no outcome we care about can distinguish two states, then the representation doesn't necessarily need to preserve the distinction between them. Recurrent reasoning makes that harder because today's indistinguishable states can evolve into different futures.
+The question became: **when can a reasoner safely treat two states as equivalent?**
 
 (010-dynamic-quotient-visual-intuition)=
 ## Visual intuition
@@ -34,29 +34,27 @@ A toy quotient groups states by parity; adding two preserves the equivalence cla
 
 ## From static to dynamic sufficiency
 
-Suppose two internal states are equivalent for the current task. If the reasoning process updates both states and they remain equivalent, then the system can continue treating them as the same. If one update sends them into states with different future behavior, the original equivalence discarded something the recurrence needed.
+A compressed recurrent state needs to satisfy two requirements. It must preserve the distinctions required by the task, and its updates must continue to respect those distinctions.
 
-This means a useful compressed state for recurrent reasoning has to satisfy two requirements: it must preserve the distinctions needed for the task, and the reasoning dynamics must respect those distinctions as the state evolves.
+Consider two states that look equivalent now. If updating both keeps them equivalent under every relevant future observation, we can continue treating them as the same. If an update exposes a difference that matters later, the original equivalence was too coarse.
 
-> **Sticky note — quotient:** a quotient groups objects according to an equivalence relation and treats everything within one equivalence class as the same object for the purpose being studied. The important question is therefore not simply what gets discarded, but which distinctions we have declared irrelevant.
+> **Sticky note — quotient:** group objects by an equivalence relation, then treat each group as one object for the purpose being studied. Defining the relation specifies which distinctions we are prepared to discard.
 
-That shifted the target away from a particular intermediate language. I was now looking for a **dynamic or predictive quotient**: the smallest state that preserves the distinctions required for relevant future behavior.
-
-The word *smallest* matters here conceptually, rather than as a claim that fewer dimensions are always better. Preserving every available detail is safe in one sense, but it can also make the state unnecessarily expensive and leave irrelevant variables available as shortcuts. The goal is sufficient information, rather than maximal information.
+This gave me a target for the representation: a **dynamic or predictive quotient**, retaining enough state to preserve the distinctions required for relevant future behavior. Keeping every detail can be expensive and can leave irrelevant variables available as shortcuts. Compression becomes useful when we can specify why the discarded differences will remain irrelevant.
 
 ## Research context
 
-This reframing connected the project to several older ideas that had reached similar answers from different directions.
+Several established theories address versions of this question.
 
-In statistics, a **sufficient statistic** preserves the information needed for a specified inference while allowing other details of the original data to be discarded. The information bottleneck develops a related tradeoff: retain information useful for a target while compressing information that isn't useful for that target.
+A **sufficient statistic** preserves the information needed for a specified inference. The information bottleneck studies a related tradeoff between information retained about an input and information useful for a target.
 
-Sequential systems add the future-behavior requirement. **Predictive State Representations** describe state through predictions about future observable behavior rather than requiring a particular hidden-state interpretation. **Causal-state** constructions in computational mechanics similarly group histories that imply the same distribution over futures. Myhill–Nerode equivalence in automata theory and bisimulation in state-transition systems use closely related logic: two states can be merged only when the relevant future behavior cannot distinguish them.
+Sequential systems add the requirement about future behavior. **Predictive State Representations** describe state through predictions of observable futures. **Causal-state** constructions in computational mechanics group histories that imply the same distribution over futures. Myhill–Nerode equivalence and bisimulation likewise specify when states can be merged while preserving the future behavior under consideration.
 
-I didn't begin the branch by combining those theories. The project arrived first at the need for a recurrence-compatible equivalence relation, and the subsequent literature sweep showed that the underlying idea had several mature precedents. Those precedents changed how I described the result: the interesting question wasn't whether I had invented a new notion of semantic state, but how these existing notions of predictive sufficiency could constrain the representation I was trying to build.
+I arrived at the recurrence-compatible equivalence question before doing this literature sweep. The sweep gave it a more precise vocabulary and several mature constructions to work with. The next task was to use those existing notions of predictive sufficiency to constrain a practical representation.
 
 ## Try a small example
 
-A six-state toy system groups states by parity. Adding two preserves each state’s class. The saved output below is available without starting Python.
+A six-state toy system groups states by parity. Adding two preserves each state’s class.
 
 ```{code-cell} python
 :label: 010-dynamic-quotient-teaching-example
@@ -83,19 +81,17 @@ for x in states:
 
 ## Why Lojban stopped being the main question
 
-A constrained language can still be useful. Lojban, AMR, DRS, UCCA, or another structured representation might provide a convenient serialization or expose relationships that ordinary text leaves implicit.
+Lojban, AMR, DRS, UCCA, or another structured representation could expose relationships that ordinary text leaves implicit. Their usefulness depends on which distinctions the system needs and which the compiler preserves.
 
-But any fixed semantic compiler has a hard boundary: if it throws away a distinction, no downstream reasoner can recover that distinction from the compiled representation alone. A representation sufficient for one declared task may therefore be insufficient for a future task that depends on something it discarded.
+If a compiler maps two inputs to the same state, a downstream reasoner receiving only that state has no way to distinguish them. That is acceptable for a task whose outcomes treat them as equivalent. A later task that depends on the discarded difference changes the requirement.
 
-That made “find the right semantic language” too strong a target. A candidate language is better treated as one possible coordinate system or approximation to the state we actually care about.
-
-The deeper target is behavioral: preserve whatever distinctions are necessary for the future reasoning and observations the system is expected to support.
+I therefore treated each candidate language as a possible serialization or approximation of the desired state. Its evaluation needed a behavioral test: which inputs does it merge, and can any relevant future operation distinguish them?
 
 ## Interpretation
 
-A dynamic quotient is defined relative to a family of future observations, actions, or tasks. Choosing that family is part of the modeling problem. When future requirements are unknown, discarding information can remove capabilities the system later needs.
+The quotient is defined relative to a family of future observations, actions, or tasks. Choosing that family is part of the modeling problem; unknown future requirements limit how confidently we can discard information.
 
-The formulation supplies a concrete test for a proposed semantic representation: which distinctions does it merge, and do those states remain indistinguishable under the relevant reasoning dynamics?
+The formulation gives a proposed semantic representation a concrete test. Identify the distinctions it merges, then check whether the relevant reasoning dynamics preserve that equivalence.
 
 (010-dynamic-quotient-sources)=
 ## Sources and chronology
@@ -103,6 +99,6 @@ The formulation supplies a concrete test for a proposed semantic representation:
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Dynamic state equivalence**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Dynamic state equivalence**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 011 — Geometry should follow invariance, not aesthetics**](./011-geometry-from-invariance.md).

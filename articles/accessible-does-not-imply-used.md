@@ -20,11 +20,12 @@ tags:
 
 (accessible-used-question)=
 ## The question
-The revision-branch benchmark provided a task where preserving a distinction mattered. Returning to the compact, unit-hypersphere representation, the next question was whether the branch information had been erased or remained present while the model's own consumer failed to use it.
 
-Those explanations imply different interventions. If the representation has lost the distinction, changing only the final readout cannot recover it. If a simple readout can recover it from a frozen state, the bottleneck may instead lie in how the native consumer combines that state into a prediction.
+I had a compact unit-hypersphere state and a revision-branch task that required a specific distinction. The next question was where the predictive failure occurred: had the state lost the distinction, or did the model's own consumer fail to use information still present in it?
 
-The experiment froze the representation and compared a deliberately small affine-softmax probe with the model's frozen native consumer. The separately trained probe tested recoverability from frozen states under a bounded readout family.
+Those cases require different changes. If the distinction has been erased, changing the final readout alone cannot recover it. If a small readout can recover it from a frozen state, we have a reason to investigate how the native consumer turns that state into a prediction.
+
+I froze the representation and compared the frozen native consumer with a separately trained affine-softmax probe. Keeping the representation fixed made the external readout a test of recoverability under a deliberately small consumer family.
 
 ## What the probe measured
 
@@ -79,15 +80,17 @@ This projects onto directions tangent to the sphere at $h$. The frozen-model ana
 
 ## Why a successful probe is not enough
 
-A flexible diagnostic can exploit quirks of a dataset, memorize labels, or discover a signal that the native model ignores. Probe accuracy by itself cannot distinguish those cases. The probing literature treats that capacity problem in different ways: control-task selectivity asks whether a probe succeeds on the intended structure while failing when it is destroyed; information-theoretic and minimum-description-length approaches ask related but different questions about recoverable information and the cost of encoding the probe's solution [@hewitt2019designing; @pimentel2020information; @voita2020mdl].
+A probe needs controls because several procedures can produce an impressive score. It might recover the intended distinction, memorize labels, exploit source leakage, or succeed on accidental structure. The score alone leaves those explanations open.
 
-The original analysis used label shuffles, representation shuffles, matched random features, random rotations, fixed page groups, and learning-efficiency checks as controls. Each challenged a different alternative explanation, including accidental label structure, memorization, coordinate artifacts, source leakage, and a procedure that would find apparent signal almost anywhere. The tangent-coordinate analysis specifically addressed radial-versus-tangent confounding raised by the earlier unit-hypersphere work.
+Control-task selectivity asks whether the probe succeeds on the intended structure and fails when that structure is destroyed. Information-theoretic and minimum-description-length approaches address related questions about recoverable information and the cost of encoding the probe's solution [@hewitt2019designing; @pimentel2020information; @voita2020mdl].
 
-Together, these controls support recoverability of the tested branch distinction through a small external readout.
+The analysis used label shuffles, representation shuffles, matched random features, random rotations, fixed page groups, and learning-efficiency checks. These challenged accidental label structure, memorization, coordinate artifacts, source leakage, and a procedure that would find apparent signal almost anywhere. The tangent-coordinate comparison addressed the radial-versus-tangent explanation raised by the earlier sphere work.
+
+Together, the controls support recovery of the tested branch distinction through the small external readout.
 
 ## Try a small example
 
-A toy set of six states carries a class signal along the first coordinate. Change `probe_degrees` to rotate the readout and see how classification changes. The saved output below is available without starting Python.
+A toy set of six states carries a class signal along the first coordinate. Change `probe_degrees` to rotate the readout and see how classification changes.
 
 ```{code-cell} python
 :label: synthetic-readout
@@ -116,15 +119,15 @@ Run the cell in your browser to try other angles. New output appears under **You
 
 ## Interpretation
 
-The probe recovered the tested branch distinction from frozen states, while the native consumer barely used it. The controls support that comparison for this task and probe family. Recoverability through an external readout leaves causal use by the native model as a separate question.
+The probe recovered the tested branch distinction from frozen states, while the native consumer barely used it. That gives the investigation a concrete place to intervene: keep the state fixed and change the consumer.
 
-A binary revision-branch task is also easier than 256-way next-byte prediction. The next experiment has to test whether the recovered signal improves that full distribution.
+The comparison is specific to this task and probe family. A binary revision-branch decision is easier than 256-way next-byte prediction, and external recoverability leaves causal use by the native model unresolved. I need to test whether the recovered signal improves the full predictive distribution.
 
 The public notebook records the benchmark analysis. An exact frozen-model replay package is not currently published.
 
 ## The next experiment
 
-Keep the representation frozen, but move closer to the actual objective: train a ladder of very small consumers on the 256-way next-byte task. The open question is how much of the signal accessible to a small probe can be converted into useful full-distribution prediction.
+Keep the representation frozen and train a ladder of very small consumers on the 256-way next-byte task. How much of the signal recovered by the probe can those consumers turn into useful full-distribution prediction?
 
 ## Sources and chronology
 

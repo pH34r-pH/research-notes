@@ -15,11 +15,11 @@ tags:
 **Research period:** September 1, 2026  
 **Historical anchor:** #163
 
-The previous experiment showed that changing the downstream computation could make the same spectral representation substantially more useful, but I had changed several things at once. The model handled magnitude explicitly, preserved phase through residual connections, and used phase-aware similarity in attention. Any one of those changes (or an interaction between them) could have been responsible for the improvement.
+The polar-native block improved the result, but it bundled several changes together: explicit magnitude handling, phase-preserving residual connections, and phase-aware attention. I needed to separate them before building further work around the block.
 
-I separated those components through ablation: remove or replace one part of the architecture, rerun the comparison, and see which gains survive.
+I used ablations: remove or replace one component, rerun the matched comparison, and check which gains survive. If a component can be removed without losing the improvement, the explanation has to work without it.
 
-> **Sticky note — ablation:** an experiment that removes or replaces one component while leaving the rest of the system as unchanged as possible. If the effect disappears, that component becomes a candidate explanation for the original result. [Reference →](../reference/glossary.md#ablation)
+> **Sticky note — ablation:** remove or replace one component while keeping the rest of the system as unchanged as possible. The comparison tests how much the result depends on that component. [Reference →](../reference/glossary.md#ablation)
 
 (004-isolating-phase-attention-visual-intuition)=
 ## Visual intuition
@@ -32,17 +32,17 @@ The cosine of the relative phase gives normalized real-Hermitian similarity.
 
 ## What survived
 
-The phase-aware attention mechanism survived the ablation. Compared with the coordinate-only control, phase/Hermitian attention improved loss by about **0.3923 nat per original byte**.
+Phase/Hermitian attention retained the approximately **0.3923 nat per original byte** improvement over the coordinate-only control.
 
-The other candidate explanations didn't survive in the same way. A phase-preserving residual connection by itself didn't clear the predefined statistical and materiality requirements, while explicit log-radius handling produced results that were bit-identical to its matched manual control.
+The phase-preserving residual connection alone failed to clear the predefined statistical and materiality requirements. Explicit log-radius handling produced results bit-identical to its matched manual control. Neither supplied an independent explanation for the improvement.
 
-This narrowed the result considerably. I no longer needed a broadly “polar-native” architecture to explain the improvement; the smallest surviving change was an otherwise mostly Cartesian processing block using normalized real-Hermitian similarity for the attention query/key comparison.
+That left a much smaller construction: an otherwise mostly Cartesian block using normalized real-Hermitian similarity to compare attention queries and keys. Relative phase entered the attention score directly; the rest of the polar-native machinery could be removed.
 
-> **Sticky note — Hermitian similarity:** complex vectors contain both magnitude and phase. A Hermitian inner product conjugates one of its inputs before comparing them, allowing their relative phase to contribute naturally to the result. Taking the real component and normalizing by vector magnitude produces the similarity score used here.
+> **Sticky note — Hermitian similarity:** a Hermitian inner product conjugates one complex vector before comparing it with the other, so relative phase contributes to the result. Here, I take its real component and normalize by the vector magnitudes to obtain the attention similarity score.
 
 ## Try a small example
 
-Two hand-chosen complex vectors show how relative phase affects similarity. The saved output below is available without starting Python.
+Two hand-chosen complex vectors show how relative phase affects similarity.
 
 ```{code-cell} python
 :label: 004-isolating-phase-attention-teaching-example
@@ -64,7 +64,9 @@ normalized real-Hermitian similarity: 0.0
 
 ## Interpretation
 
-The ablation identified phase-aware similarity as the component carrying the improvement for this spectral representation. Hermitian and phase-aware attention have established precedents; the contribution here was isolating their role in this comparison. I could now freeze that component and study recurrence without changing the whole architecture again.
+The ablation isolated phase-aware similarity as the component carrying the improvement in this spectral comparison. Hermitian and phase-aware attention already have precedents; this experiment identified which part was useful in the system I was testing.
+
+I could freeze that component and move on to recurrence. Further comparisons would then change the recurrent state without also changing the attention mechanism.
 
 (004-isolating-phase-attention-sources)=
 ## Sources and chronology
@@ -72,6 +74,6 @@ The ablation identified phase-aware similarity as the component carrying the imp
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Phase-aware similarity**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Phase-aware similarity**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 005 — The unit-hypersphere anomaly**](./005-unit-hypersphere-anomaly.md).

@@ -15,11 +15,9 @@ tags:
 **Research period:** September 2–5, 2026  
 **Historical anchors:** #176, #177, #211
 
-The unit-hypersphere result in the previous notebook was real: at the frozen 128-update endpoint, that model performed dramatically better than the alternatives. What changed afterward was the explanation.
+The unit model had a large advantage at the frozen 128-update endpoint. I kept investigating because an endpoint tells us where a model finished at a particular budget; it leaves open how it got there, whether the alternatives reached better checkpoints earlier, and what caused the gap.
 
-I kept investigating the anomaly instead of treating the endpoint as confirmation of a hyperspherical advantage. Longer training, stronger controls, and a fair checkpoint-selection policy eventually showed that the original result could be explained without requiring a geometry-specific effect.
-
-This notebook is therefore retrospective. The earlier measurement remains part of the record; the conclusions I was willing to draw from it changed as better evidence became available.
+Longer training, a matched regularization control, and a common checkpoint-selection policy changed the comparison. The original measurement stayed in the record, while the explanation became more specific.
 
 (006-endpoint-can-mislead-visual-intuition)=
 ## Visual intuition
@@ -32,11 +30,11 @@ Schematic learning curves show why the best checkpoint and a fixed late checkpoi
 
 ## What changed
 
-The first problem was the **training trajectory**. Extending the experiments showed that the models were following different learning curves and reaching their strongest observed results at different times. The shared and retained-radius models reached much better losses earlier, while the unit model's apparent advantage emerged later. Comparing all of them at one late checkpoint had therefore emphasized one particular part of those trajectories.
+First, I extended the **training trajectory**. The shared and retained-radius models reached much better losses earlier; the unit model's advantage appeared later. The frozen endpoint had compared models at different places in their learning curves.
 
-The second problem was **regularization**. A Cartesian control designed to reproduce the unit model's effects on vector norms and rank came close enough to the original improvement that the frozen decision rule returned **REGULARIZATION-EXPLAINS**. This didn't prove that geometry was irrelevant, but it removed the need for geometry to explain the original endpoint anomaly: an ordinary representation with comparable regularization could reproduce the effect.
+Second, I tested **regularization**. A Cartesian control matched the unit model's effects on vector norms and rank closely enough that the frozen decision rule returned **REGULARIZATION-EXPLAINS**. Comparable regularization could reproduce the original endpoint effect, so that effect no longer required a geometry-specific explanation.
 
-The third problem was **checkpoint selection**. I froze a common selection policy before comparing the models so that each architecture would be judged by the same rule rather than by whichever checkpoint happened to make it look best.
+Third, I froze a common **checkpoint-selection policy** before comparing the models. Each architecture would be judged by the same rule, with the selection cost included in the budget.
 
 Under that policy, selected validation NLL per byte was:
 
@@ -44,19 +42,19 @@ Under that policy, selected validation NLL per byte was:
 - retained-radius recurrence: **3.3768**
 - unit-hypersphere recurrence: **3.6205**
 
-Lower is better. The unit model was therefore about **0.2445 nat per byte worse** than the shared model, with the simultaneous 95% interval entirely above zero. It also consumed about **3.44×** the mean training-plus-selection dense-operation budget.
+The unit model was about **0.2445 nat per byte worse** than shared recurrence (lower is better), with the simultaneous 95% interval entirely above zero. It also used about **3.44×** the mean training-plus-selection dense-operation budget.
 
-The comparison had reversed. The same model that looked dramatically better at the original frozen endpoint was worse under the later fair-selection comparison, and substantially more expensive to reach that comparison.
+The comparison had reversed. Once checkpoint selection followed the same rule, the unit model performed worse and cost substantially more.
 
-> **Sticky note — checkpoint selection:** training produces many intermediate versions of a model. A selection policy specifies which checkpoint will be used for comparison. If that rule is chosen after looking at the results, checkpoint choice can quietly become another tuned hyperparameter.
+> **Sticky note — checkpoint selection:** training produces many intermediate model states. A selection policy specifies which one is compared. Choosing that rule after inspecting the outcomes gives us another opportunity to tune the comparison around a favored result.
 
-There was also a statistical correction. An audit of the historical data showed that some rows I had previously treated as separate observations did not correspond to independent source articles. That matters because repeated measurements from the same underlying source don't provide as much independent evidence as measurements from genuinely separate sources.
+The historical data also needed a statistical correction. Some rows I had counted as separate observations came from the same underlying source article. Several measurements from one source can be useful, but they do not supply the independence of several different sources.
 
-> **Sticky note — independent sampling unit:** the unit that contributes genuinely independent evidence to an analysis. Counting correlated measurements as independent observations makes uncertainty look smaller than it really is.
+> **Sticky note — independent sampling unit:** the unit that contributes independent evidence to an analysis. Treating correlated measurements as independent makes the uncertainty look smaller than it is.
 
 ## Try a small example
 
-Two toy loss sequences show how choosing the best checkpoint can change the comparison. The saved output below is available without starting Python.
+Two toy loss sequences show how choosing the best checkpoint can change the comparison.
 
 ```{code-cell} python
 :label: 006-endpoint-can-mislead-teaching-example
@@ -79,11 +77,9 @@ late shared/unit: 3.4 3.2
 
 ## Interpretation
 
-A fixed endpoint, the best observed checkpoint, and a checkpoint selected by a predefined policy answer different questions. The endpoint measurement remained valid; the trajectory and matched control changed its interpretation.
+A fixed endpoint, the best observed checkpoint, and a checkpoint selected by a predefined policy answer different questions. The #164 endpoint was a valid measurement of the first; the later comparison answered the third.
 
-Under the frozen decision rule, the matched regularization control accounted for the original advantage, yielding **REGULARIZATION-EXPLAINS**. That resolved the motivating anomaly while leaving other geometric hypotheses available for separate tests.
-
-The anomaly led to better trajectory analysis, checkpoint-selection rules, regularization controls, and source-unit auditing. Those checks made the explanation less dramatic and the conclusion more useful.
+The matched control accounted for the motivating anomaly under the frozen rule, producing **REGULARIZATION-EXPLAINS**. Further geometric hypotheses need their own discriminating tests. The practical outcome here was a better comparison: trajectory analysis, common selection rules, matched regularization, and corrected source units.
 
 (006-endpoint-can-mislead-sources)=
 ## Sources and chronology
@@ -91,6 +87,6 @@ The anomaly led to better trajectory analysis, checkpoint-selection rules, regul
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Checkpoint trajectories**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Checkpoint trajectories**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 007 — Derive before training**](./007-derive-before-training.md).

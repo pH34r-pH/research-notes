@@ -15,13 +15,11 @@ tags:
 **Research period:** September 3, 2026 onward  
 **Historical anchors:** #196, #198–#200, later #257
 
-The hypersphere work opened a much larger design space. If direction could matter independently from magnitude, should hierarchy use hyperbolic geometry? Could a concept be represented by a subspace instead of a vector? Should relationships be transformations rather than coordinates? Would product spaces, graph structure, or sheaf-like transport preserve distinctions that ordinary vector representations collapse?
+The hypersphere work opened a much larger design space. Should hierarchy use hyperbolic geometry? Could a concept be a subspace rather than a vector? Should relationships be transformations? Would product spaces, graphs, or sheaf-like transport preserve distinctions that an ordinary vector collapses?
 
-Each idea was plausible enough to turn into an experiment. That was exactly the problem.
+I could turn each question into an architecture and start training. Before doing that, though, I wanted to know whether the proposed construction actually had the property motivating it. A failed training run would be a poor way to learn that the mathematical premise was impossible.
 
-Building all of them would have converted mathematical uncertainty into architecture search: implement a model, train it, measure the result, then try to infer whether the underlying idea had ever made sense in the first place. I wanted to reverse that order.
-
-The theorem ledger grew out of a simpler rule: **before testing whether an architecture works, ask what can already be proved about the claim that motivates it.**
+The theorem ledger records that earlier reasoning: what can be established about the claim, what it assumes, and which empirical question remains once those parts are settled.
 
 (009-theorem-ledger-method-visual-intuition)=
 ## Visual intuition
@@ -34,16 +32,14 @@ Four labels distinguish the kinds of support a claim has.
 
 ## Four kinds of evidence
 
-The research started separating claims by the kind of evidence supporting them:
+I separated the claims into four categories:
 
 - ✓ **Formal checkpoint** — a mathematical statement established under explicit assumptions.
-- ● **Observation** — something measured under a specified empirical protocol.
-- ◇ **Assumption** — a premise the argument currently depends on without establishing it.
-- ? **Hypothesis** — an explanation or prediction that remains open to testing.
+- ● **Observation** — a measurement under a specified empirical protocol.
+- ◇ **Assumption** — a premise the argument uses without establishing it.
+- ? **Hypothesis** — an explanation or prediction still open to testing.
 
-These categories prevent several easy mistakes. An observation can motivate a theorem without proving it. A theorem can constrain an experiment without predicting its result. An assumption can be useful without quietly becoming a fact, and a hypothesis can survive several experiments without becoming mathematically necessary.
-
-For example:
+Consider three statements from the sphere investigation:
 
 `normalization removes infinitesimal radial perturbations → formal checkpoint`
 
@@ -51,21 +47,21 @@ For example:
 
 `radial variation is nuisance information → hypothesis`
 
-Those statements are related, but they aren't interchangeable.
+The first describes the map, the second describes a measured model, and the third proposes a task-dependent explanation. Connecting them requires an argument that establishes the missing premises. Recording their categories makes those premises visible.
 
 ## The ledger
 
-The ledger records the relationships between claims: what each statement assumes, what supports it, what it rules out, what remains unresolved, and which proposed experiments depend on it.
+The ledger connects claims to their assumptions, evidence, consequences, and dependent experiments. If a premise changes, I can see which later claims need to be reconsidered.
 
-That last part made the system practically useful. A proof can sometimes eliminate an experiment entirely. A counterexample can kill a proposed universal architecture claim. A theorem may also narrow an experiment from “does this whole architecture work?” to one empirical premise that mathematics can't settle.
+A proof can sometimes eliminate a proposed experiment. A counterexample can rule out a universal architecture claim. In other cases, the mathematics reduces a broad architecture question to one remaining empirical premise, giving the experiment a more specific target.
 
-The public [Theorem Library](https://github.com/pH34r-pH/theorem-library) contains the reusable formal mathematics that emerged from this process, including machine-checked Lean proofs where appropriate. The ledger itself serves a different purpose: it tracks how mathematical results change the research program.
+The public [Theorem Library](https://github.com/pH34r-pH/theorem-library) contains the reusable formal results, including machine-checked Lean proofs where appropriate. The ledger tracks how those results affect the investigation and its next decisions.
 
-> **Sticky note — counterexample:** a single valid case that violates a universal claim is enough to prove that the claim, as stated, is false. This makes counterexamples especially useful for pruning broad architecture hypotheses before implementation.
+> **Sticky note — counterexample:** one valid case that violates a universal claim disproves that claim as stated. Finding it before implementation can remove an entire branch of architecture search.
 
 ## Try a small example
 
-A small dictionary labels three claims by the evidence supporting them. The saved output below is available without starting Python.
+A small dictionary labels three claims by the evidence supporting them.
 
 ```{code-cell} python
 :label: 009-theorem-ledger-method-teaching-example
@@ -90,17 +86,15 @@ hypothesis  | radial direction is nuisance
 
 ## Research context
 
-This approach wasn't based on the idea that machine learning can be reduced to theorem proving. It came from the opposite observation: the project was mixing questions that require experiments with questions that mathematics could already answer.
+The growing design space crossed geometric deep learning, information theory, dynamical systems, representation learning, and formal methods. Many architecture proposals contained subproblems that those fields had already studied.
 
-As I compared the growing design space with existing work in geometric deep learning, information theory, dynamical systems, representation learning, and formal methods, many apparently novel architecture questions turned out to contain established mathematical subproblems. In other cases, a short derivation or counterexample was enough to expose a missing assumption.
-
-The useful role of the literature was therefore broader than supplying architectures to reproduce. Existing theory could tell me which parts of an idea were already understood, which claims were too strong, and where an empirical question actually began.
+Reading that work helped separate established mathematics from unresolved behavior in the model. A short derivation or counterexample could also expose an assumption I had omitted. The literature became a way to identify where the experimental question begins, as well as a source of constructions to test.
 
 ## Interpretation
 
-A proof establishes its encoded conclusion under its assumptions. Connecting those assumptions to a trained model or dataset requires empirical evidence.
+A proof establishes its conclusion under its encoded assumptions. Applying it to a trained model requires evidence that the relevant assumptions describe that model.
 
-The ledger made that connection explicit. It kept mathematical results, observations, assumptions, and hypotheses in their proper roles, so proofs and counterexamples could eliminate impossible or redundant branches before training.
+The ledger makes this chain explicit. Mathematical results and observations can then constrain the next experiment without silently promoting a proposed explanation into an established result.
 
 (009-theorem-ledger-method-sources)=
 ## Sources and chronology
@@ -108,6 +102,6 @@ The ledger made that connection explicit. It kept mathematical results, observat
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Claim-type distinctions**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Claim-type distinctions**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 010 — What state should a reasoner preserve?**](./010-dynamic-quotient.md).

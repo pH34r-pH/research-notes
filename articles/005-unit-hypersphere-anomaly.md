@@ -15,13 +15,13 @@ tags:
 **Research period:** September 1–2, 2026  
 **Historical anchor:** #164
 
-With the phase-aware attention mechanism isolated, I could freeze it and move on to a different question: what should happen to the representation as it passes repeatedly through the model?
+Once phase-aware attention was isolated, I kept it fixed and asked what should happen to the state as it passes repeatedly through the model.
 
-I compared ordinary independent depth, shared recurrent computation, recurrence constrained to the unit hypersphere, and a related version that retained radius as an additional degree of freedom. I initially expected retaining radius to help; magnitude seemed like potentially useful information, and forcing every state onto the unit hypersphere deliberately throws that information away.
+I compared independent depth, shared recurrent computation, recurrence on a unit hypersphere, and a related construction that retained radius. My expectation was that retaining radius would help: magnitude is another quantity the model could use, and normalization explicitly discards it.
 
-Instead, the direction-only model produced the strongest endpoint by a large margin.
+The direction-only model finished far ahead. That made the unit constraint worth investigating, particularly because the outcome contradicted the reason I had expected the retained-radius version to work.
 
-> **Sticky note — unit hypersphere:** a vector is constrained to have length 1, so its direction can change while its overall magnitude cannot. In d dimensions, these unit-length vectors form the surface of a hypersphere.
+> **Sticky note — unit hypersphere:** the set of vectors with length 1. A state on that surface can change direction while its overall magnitude stays fixed.
 
 (005-unit-hypersphere-anomaly-visual-intuition)=
 ## Visual intuition
@@ -42,17 +42,17 @@ After 128 training updates, validation negative log-likelihood (NLL) per origina
 - unit-hypersphere depth-3: **3.6584**
 - retained-radius depth-3: **5.1225**
 
-Lower NLL is better, so the unit-hypersphere model beat the otherwise comparable shared recurrent model by about **1.50 nats per byte** at this endpoint. Retaining radius didn't reproduce the improvement.
+Lower NLL is better. At this endpoint, the unit model beat the comparable shared recurrent model by about **1.50 nats per byte**. Keeping radius failed to reproduce that improvement.
 
-This was surprising enough to change the direction of the investigation. The result contradicted my original expectation that magnitude would provide a useful additional degree of freedom, and the size of the gap made the unit constraint worth investigating directly.
+There was also a complication in the trajectory. The unit model learned more slowly and had worse area under the learning curve (AULC). It finished ahead after spending much of training behind.
 
-The learning trajectory told a different story: the unit model learned more slowly and had worse area under the learning curve (AULC), despite its better endpoint.
+That gives us two observations to explain together: a large endpoint advantage, and a worse learning trajectory. A useful account of the unit constraint has to accommodate both.
 
-> **Sticky note — AULC:** area under the learning curve summarizes performance across the training trajectory rather than at one selected endpoint. A model can finish ahead while having performed worse for much of training.
+> **Sticky note — AULC:** area under the learning curve summarizes loss across training. A model can have a better final checkpoint while accumulating worse loss over the trajectory.
 
 ## Try a small example
 
-The toy vector `[3, 4]` makes normalization easy to inspect: its length is 5, and its unit direction is `[0.6, 0.8]`. The saved output below is available without starting Python.
+The toy vector `[3, 4]` makes normalization easy to inspect: its length is 5, and its unit direction is `[0.6, 0.8]`.
 
 ```{code-cell} python
 :label: 005-unit-hypersphere-anomaly-teaching-example
@@ -74,15 +74,16 @@ unit state: [0.6 0.8] norm= 1.0
 
 ## Interpretation
 
-The unit constraint produced a large endpoint advantage while learning more slowly. It also changed capacity, conditioning, rank dynamics, and optimization together, leaving several explanations open.
+The unit constraint changed several things at once: capacity, conditioning, rank dynamics, and optimization. The endpoint gap gave me a reason to study those changes, but it did not select a mechanism among them.
 
-The retained-radius control weakened the explanation I had expected: preserving explicit magnitude failed to preserve the effect. The next question was whether strict normalization supplied a useful geometric constraint or simply acted as strong regularization. Answering it required trajectory analysis and a matched regularization control.
+The retained-radius control weakened my initial explanation. Adding magnitude back failed to preserve the effect. I next needed to check the full learning trajectories and compare against a Cartesian model with matched regularization: could those account for the advantage?
 
 (005-later-muon-package)=
 ## Later Muon comparison
-A later three-seed comparison tested Muon on the `unit_hypersphere_depth3` condition against **frozen historical AdamW** results. Learning-curve area favored AdamW; final NLL favored Muon. The reviewed outcome was **mixed/inconclusive**.
 
-[Inspect the finalized Muon multi-seed package](https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/). It addresses optimizer behavior on this model condition; the #164 topology-selection experiment above remains a separate comparison.
+A later three-seed comparison tested Muon on `unit_hypersphere_depth3`, using **frozen historical AdamW** results as the reference. Learning-curve area favored AdamW; final NLL favored Muon. The reviewed outcome was **mixed/inconclusive**, with the two measures favoring different optimizers.
+
+[Inspect the finalized Muon multi-seed package](https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/). That package tests optimizer behavior on this model condition. The #164 comparison above tests the choice of recurrent topology.
 
 (005-unit-hypersphere-anomaly-sources)=
 ## Sources and chronology
@@ -90,6 +91,6 @@ A later three-seed comparison tested Muon on the `unit_hypersphere_depth3` condi
 - [Research chronology](../CHRONOLOGY.md)
 - [Publication dispositions and Atlas-to-article map](../PUBLICATION-DISPOSITIONS.md)
 
-The matching Atlas theme is **Unit-sphere normalization**. The original [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) remains available as a source record; this article carries the relevant static explanation inline.
+The matching Atlas theme is **Unit-sphere normalization**. The earlier [Visual Intuition Atlas notebook](../notebooks/visual_intuition_atlas.ipynb) preserves the source visualization.
 
 The next chronological article is [**Milestone 006 — A dramatic endpoint can still mislead**](./006-endpoint-can-mislead.md).
