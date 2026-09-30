@@ -3,6 +3,7 @@ title: "Milestone 007 — Derive before training"
 description: "What can we prove about normalization before spending compute?"
 short_title: "Derive before training"
 date: 2026-09-29
+depends_on: [005-unit-hypersphere-anomaly]
 authors:
   - name: Tyler J.H.G.
 tags:
