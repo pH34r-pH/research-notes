@@ -79,6 +79,8 @@ Runnable notebook code is a synthetic teaching example unless explicitly identif
 
 The [chronology manifest](CHRONOLOGY.md) documents the reconstruction and disclosure rules.
 
+Scoped maintainer maps and focused validation commands live in [`AGENTS.md`](AGENTS.md) and the directory-level maps linked there.
+
 ## Contributing and citation
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing editorial or technical changes. Research references should identify the specific notebook/artifact and may use [CITATION.cff](CITATION.cff) for repository-level metadata.

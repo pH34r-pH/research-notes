@@ -35,7 +35,8 @@ def published_files(root: Path) -> list[Path]:
         base = root / folder
         if not base.is_dir():
             raise ValidationError(f"missing publication directory: {folder}")
-        paths.extend(path for path in base.rglob("*") if path.is_file())
+        paths.extend(path for path in base.rglob("*")
+                     if path.is_file() and path.name != "AGENTS.md")
     if any(path.is_symlink() for folder in PUBLISHED_ROOTS for path in (root / folder).rglob("*")):
         raise ValidationError("publication inputs must not contain symlinks")
     return sorted(paths, key=lambda path: path.relative_to(root).as_posix())
@@ -157,7 +158,8 @@ def validate_article(root: Path, path: Path, bibliography: set[str]) -> tuple[in
 
 
 def _validate_articles(root: Path) -> tuple[int, int, int, dict[int, Path]]:
-    article_paths = sorted(root.joinpath("articles").glob("*.md"))
+    article_paths = sorted(path for path in root.joinpath("articles").glob("*.md")
+                          if path.name != "AGENTS.md")
     if not article_paths:
         raise ValidationError("no canonical MyST articles found")
     bibliography_paths = sorted(root.joinpath("articles").glob("*.bib"))
@@ -319,7 +321,8 @@ def _validate_notebooks(root: Path) -> tuple[list[Path], int]:
 
 def _validate_context_markdown(root: Path) -> int:
     links_checked = 0
-    markdown_paths = sorted(root.joinpath("reference").rglob("*.md")) + [root / name for name in CONTEXT_FILES]
+    markdown_paths = sorted(path for path in root.joinpath("reference").rglob("*.md")
+                            if path.name != "AGENTS.md") + [root / name for name in CONTEXT_FILES]
     for path in markdown_paths:
         if not path.is_file():
             raise ValidationError(f"missing publication context file: {path.relative_to(root)}")
