@@ -20,4 +20,4 @@ python scripts/validate_publication.py
 npm run validate:articles
 ```
 
-The existing wiki-sync workflow publishes these pages; `documentation-hygiene.yml` is the single changed-Markdown/artifact check. Do not add a second wiki or link-check workflow.
+The existing wiki-sync workflow publishes these pages; `structural-quality-audit.yml` contains the single changed-Markdown/artifact check. Do not add a second wiki or link-check workflow.

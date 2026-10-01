@@ -48,6 +48,6 @@ npm run validate:articles
 python scripts/test_docs_hygiene.py
 ```
 
-Use the validator and unittest for `articles/`, `notebooks/`, `reference/`, `CHRONOLOGY.md`, and dispositions changes; use MyST for rendered article or wiki-facing changes. The existing workflow entrypoints are [`publication-validation.yml`](.github/workflows/publication-validation.yml), [`structural-quality-audit.yml`](.github/workflows/structural-quality-audit.yml), [`documentation-hygiene.yml`](.github/workflows/documentation-hygiene.yml), and [`wiki-sync.yml`](.github/workflows/wiki-sync.yml). Keep `documentation-hygiene.yml` as the single changed-Markdown/artifact guard.
+Use the validator and unittest for `articles/`, `notebooks/`, `reference/`, `CHRONOLOGY.md`, and dispositions changes; use MyST for rendered article or wiki-facing changes. The existing workflow entrypoints are [`publication-validation.yml`](.github/workflows/publication-validation.yml), [`structural-quality-audit.yml`](.github/workflows/structural-quality-audit.yml), and [`wiki-sync.yml`](.github/workflows/wiki-sync.yml). Keep `structural-quality-audit.yml` as the single changed-Markdown/artifact guard.
 
 The publication workflow adds `--receipt validation/research-notes-validation.json` with its CI source/run identity; local validation intentionally omits that CI-only receipt metadata.
