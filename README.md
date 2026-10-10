@@ -3,9 +3,7 @@
 [![Publication validation](https://github.com/pH34r-pH/research-notes/actions/workflows/publication-validation.yml/badge.svg)](https://github.com/pH34r-pH/research-notes/actions/workflows/publication-validation.yml)
 [![License](https://img.shields.io/github/license/pH34r-pH/research-notes)](LICENSE)
 
-<p align="center">
-  <img src="docs/assets/hero.webp" alt="Research Notes — cyberpunk orbital research workspace and connected knowledge surfaces" width="100%">
-</p>
+![Research Notes — cyberpunk orbital research workspace and connected knowledge surfaces](docs/assets/hero.png)
 
 **An evolving research record on representation, geometry, information, and computation in neural systems.**
 
