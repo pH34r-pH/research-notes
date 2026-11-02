@@ -22,6 +22,9 @@ project:
     - file: articles/011-geometry-from-invariance.md
     - file: articles/012-natural-source-distinctions.md
     - file: articles/accessible-does-not-imply-used.md
+    - file: articles/packaging-an-experiment.md
+    - file: articles/can-a-small-consumer-use-the-state.md
+    - file: articles/when-a-run-is-interrupted.md
 site:
   template: article-theme
   options:

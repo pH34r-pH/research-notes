@@ -179,8 +179,23 @@ def _validate_articles(root: Path) -> tuple[int, int, int, dict[int, Path]]:
     article_relatives = {path.relative_to(root).as_posix() for path in article_paths}
     if len(toc_paths) != len(set(toc_paths)) or set(toc_paths) != article_relatives:
         raise ValidationError("myst.yml project.toc must list every canonical article exactly once")
-    articles_by_sequence = {sequence: root / relative
-                            for sequence, relative in enumerate(toc_paths, start=1)}
+    articles_by_sequence = {}
+    standalone_seen = False
+    disposition_source = (root / "PUBLICATION-DISPOSITIONS.md").read_text(encoding="utf-8")
+    for sequence, relative in enumerate(toc_paths, start=1):
+        article_source = (root / relative).read_text(encoding="utf-8")
+        frontmatter = re.match(r"\A---\s*\n(.*?)\n---\s*\n", article_source, re.DOTALL).group(1)
+        kind = re.search(r"^article_kind:\s*(\S+)\s*$", frontmatter, re.MULTILINE)
+        if kind:
+            if kind.group(1) not in {"essay", "work-in-progress"}:
+                raise ValidationError(f"{relative}: unsupported article_kind")
+            standalone_seen = True
+            if not re.search(rf"^\|\s*\[[^]]+\]\({re.escape(relative)}\)\s*\|\s*{re.escape(kind.group(1))}\s*\|", disposition_source, re.MULTILINE):
+                raise ValidationError(f"{relative}: standalone article requires a matching public disposition")
+        else:
+            if standalone_seen:
+                raise ValidationError("numbered milestone articles must precede standalone articles")
+            articles_by_sequence[sequence] = root / relative
     if not articles_by_sequence:
         raise ValidationError("myst.yml project.toc must list the canonical articles")
     return len(article_paths), links_checked, code_cell_count, articles_by_sequence
