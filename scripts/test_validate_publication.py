@@ -132,6 +132,20 @@ class PublicationValidationTest(unittest.TestCase):
             with self.assertRaises(ValidationError):
                 validate(root)
 
+    def test_standalone_article_requires_explicit_matching_disposition(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            (root / "articles/essay.md").write_text(
+                "---\ntitle: Essay\ndescription: A standalone essay.\narticle_kind: essay\n---\n"
+                "# Essay\n\n```{figure} ./figure.svg\n:alt: Example.\nCaption.\n```\n", encoding="utf-8")
+            with (root / "myst.yml").open("a", encoding="utf-8") as handle:
+                handle.write("    - file: articles/essay.md\n")
+            with self.assertRaisesRegex(ValidationError, "matching public disposition"):
+                validate(root)
+            with (root / "PUBLICATION-DISPOSITIONS.md").open("a", encoding="utf-8") as handle:
+                handle.write("| [Essay](articles/essay.md) | essay | Standalone article |\n")
+            self.assertEqual(validate(root)["articleCount"], 2)
+
 
 if __name__ == "__main__":
     unittest.main()
