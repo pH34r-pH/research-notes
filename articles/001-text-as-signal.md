@@ -2,6 +2,8 @@
 title: "Milestone 001 — What if text were a signal?"
 description: "Could a signal-like representation preserve useful structure in text?"
 short_title: "What if text were a signal?"
+milestone: "001"
+source_notebook: 001_text_as_signal
 date: 2026-09-29
 model_focus: tokenization
 model_variant: spectral
@@ -14,6 +16,15 @@ tags:
 
 (milestone-001)=
 # Milestone 001 — What if text were a signal?
+
+**In brief.** Can a signal-like encoding of text help a language model? The tested spectral models performed worse even though much of the original information remained recoverable. Preserving information and making it easy for a model to use are different requirements.
+
+**Why this matters.** A disappointing result can identify where to investigate next: the representation, the operation that combines states, or the final prediction step.
+
+**Background.** No earlier article is required. The terms are introduced below.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** earlier program, before September 1, 2026  
 **Public reconstruction:** September 2026
 

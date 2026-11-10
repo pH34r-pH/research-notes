@@ -4,6 +4,7 @@ description: "An open question about turning information in a frozen model state
 short_title: "Can a small consumer use what the state knows?"
 date: 2026-11-01
 article_kind: work-in-progress
+depends_on: [accessible-does-not-imply-used]
 authors:
   - name: Tyler J.H.G.
 tags:

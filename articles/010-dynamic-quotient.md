@@ -2,6 +2,8 @@
 title: "Milestone 010 — What state should a reasoner preserve?"
 description: "When is it safe for a recurrent reasoner to treat two states as equivalent?"
 short_title: "What state should a reasoner preserve?"
+milestone: "010"
+source_notebook: 010_dynamic_quotient
 date: 2026-09-29
 model_focus: representation
 model_variant: dynamic-quotient
@@ -14,6 +16,15 @@ tags:
 
 (milestone-010)=
 # Milestone 010 — What state should a reasoner preserve?
+
+**In brief.** When can a recurrent system safely merge two states? They must agree on the future distinctions relevant to the task, and the updates must preserve that equivalence. This is a task-relative criterion for compression, not a claim that a particular language or architecture has achieved it.
+
+**Why this matters.** Saving state is useful only if the discarded distinctions stay irrelevant after subsequent computation. A “quotient” groups states that the chosen task can treat as equivalent.
+
+**Background.** No earlier article is required. The terms are introduced below.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 2–3, 2026  
 **Historical anchors:** #193, #198, #223
 
@@ -48,9 +59,9 @@ This gave me a target for the representation: a **dynamic or predictive quotient
 
 Several established theories address versions of this question.
 
-A **sufficient statistic** preserves the information needed for a specified inference. The information bottleneck studies a related tradeoff between information retained about an input and information useful for a target.
+A **sufficient statistic** preserves the information needed for a specified inference. [The information bottleneck method](https://arxiv.org/abs/physics/0004057) (Tishby, Pereira, and Bialek, arXiv version 2000) studies a related tradeoff between information retained about an input and information useful for a target.
 
-Sequential systems add the requirement about future behavior. **Predictive State Representations** describe state through predictions of observable futures. **Causal-state** constructions in computational mechanics group histories that imply the same distribution over futures. Myhill–Nerode equivalence and bisimulation likewise specify when states can be merged while preserving the future behavior under consideration.
+Sequential systems add the requirement about future behavior. [**Predictive Representations of State**](https://papers.neurips.cc/paper_files/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf) (Littman, Sutton, and Singh, NeurIPS 2001) describes state through predictions of observable futures. **Causal-state** constructions in [Computational Mechanics: Pattern and Prediction, Structure and Simplicity](https://arxiv.org/abs/cond-mat/9907176) (Shalizi and Crutchfield, 2001) group histories that imply the same distribution over futures. Myhill–Nerode equivalence ([Nerode, *Linear automaton transformations*, 1958](https://doi.org/10.1090/S0002-9939-1958-0135681-9)) and bisimulation ([Park, *Concurrency and automata on infinite sequences*, 1981](https://doi.org/10.1007/BFb0017309)) likewise specify when states can be merged while preserving the future behavior under consideration.
 
 I arrived at the recurrence-compatible equivalence question before doing this literature sweep. The sweep gave it a more precise vocabulary and several mature constructions to work with. The next task was to use those existing notions of predictive sufficiency to constrain a practical representation.
 

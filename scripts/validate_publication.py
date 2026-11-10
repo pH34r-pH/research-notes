@@ -156,6 +156,58 @@ def validate_article(root: Path, path: Path, bibliography: set[str]) -> tuple[in
     return links_checked, cell_count
 
 
+def _validate_article_relations(root: Path, article_paths: list[Path]) -> None:
+    """Check source-owned navigation without modifying preserved notebooks."""
+    graph = {}
+    for path in article_paths:
+        source = path.read_text(encoding='utf-8')
+        match = re.match(r'\A---\s*\n(.*?)\n---\s*\n', source, re.DOTALL)
+        if not match:
+            raise ValidationError(f'{path.name}: missing YAML frontmatter')
+        metadata = match.group(1)
+        dependency = re.search(r'^depends_on:\s*(.*?)\s*$', metadata, re.MULTILINE)
+        deps = []
+        if dependency:
+            value = dependency.group(1)
+            if not re.fullmatch(r'\[(?:[a-z0-9-]+(?:,\s*[a-z0-9-]+)*)?\]', value):
+                raise ValidationError(f'{path.name}: depends_on must be an inline list of article slugs')
+            deps = [item.strip() for item in value[1:-1].split(',') if item.strip()]
+            if len(set(deps)) != len(deps):
+                raise ValidationError(f'{path.name}: duplicate prerequisite')
+        graph[path.stem] = deps
+        notebook = re.search(r'^source_notebook:\s*(\S+)\s*$', metadata, re.MULTILINE)
+        milestone = re.search(r'^milestone:\s*[\"\']?([0-9]{3})[\"\']?\s*$', metadata, re.MULTILINE)
+        if re.search(r'^milestone:', metadata, re.MULTILINE) and not milestone:
+            raise ValidationError(f'{path.name}: milestone must be a three-digit identity')
+        if notebook:
+            slug = notebook.group(1)
+            if not re.fullmatch(r'[a-z0-9_]+', slug):
+                raise ValidationError(f'{path.name}: invalid source_notebook basename')
+            target = root / 'notebooks' / (slug + '.ipynb')
+            if not target.is_file():
+                raise ValidationError(f'{path.name}: source_notebook is missing')
+            sequence = load_notebook(target).get('metadata', {}).get('publication', {}).get('sequence')
+            if not milestone or sequence != int(milestone.group(1)):
+                raise ValidationError(f'{path.name}: milestone and source notebook identity disagree')
+        elif milestone:
+            raise ValidationError(f'{path.name}: milestone requires its source_notebook')
+    complete, visiting = set(), set()
+    def visit(slug):
+        if slug not in graph:
+            raise ValidationError(f'unknown article prerequisite: {slug}')
+        if slug in visiting:
+            raise ValidationError(f'article prerequisite cycle at {slug}')
+        if slug in complete:
+            return
+        visiting.add(slug)
+        for dependency in graph[slug]:
+            visit(dependency)
+        visiting.remove(slug)
+        complete.add(slug)
+    for slug in graph:
+        visit(slug)
+
+
 def _validate_articles(root: Path) -> tuple[int, int, int, dict[int, Path]]:
     article_paths = sorted(root.joinpath("articles").glob("*.md"))
     if not article_paths:
@@ -171,6 +223,7 @@ def _validate_articles(root: Path) -> tuple[int, int, int, dict[int, Path]]:
         article_links, article_cells = validate_article(root, path, bibliography)
         links_checked += article_links
         code_cell_count += article_cells
+    _validate_article_relations(root, article_paths)
     toc_source = (root / "myst.yml").read_text(encoding="utf-8")
     toc_paths = re.findall(r"^\s+- file:\s*(articles/\S+\.md)\s*$", toc_source, re.MULTILINE)
     index_paths = re.findall(r"^\s+- file:\s*index\.md\s*$", toc_source, re.MULTILINE)
