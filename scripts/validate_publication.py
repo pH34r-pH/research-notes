@@ -156,6 +156,25 @@ def validate_article(root: Path, path: Path, bibliography: set[str]) -> tuple[in
     return links_checked, cell_count
 
 
+def _validate_article_identity(root: Path, path: Path, metadata: str) -> None:
+    notebook = re.search(r'^source_notebook:\s*(\S+)\s*$', metadata, re.MULTILINE)
+    milestone = re.search(r'^milestone:\s*[\"\']?([0-9]{3})[\"\']?\s*$', metadata, re.MULTILINE)
+    if re.search(r'^milestone:', metadata, re.MULTILINE) and not milestone:
+        raise ValidationError(f'{path.name}: milestone must be a three-digit identity')
+    if notebook:
+        slug = notebook.group(1)
+        if not re.fullmatch(r'[a-z0-9_]+', slug):
+            raise ValidationError(f'{path.name}: invalid source_notebook basename')
+        target = root / 'notebooks' / (slug + '.ipynb')
+        if not target.is_file():
+            raise ValidationError(f'{path.name}: source_notebook is missing')
+        sequence = load_notebook(target).get('metadata', {}).get('publication', {}).get('sequence')
+        if not milestone or sequence != int(milestone.group(1)):
+            raise ValidationError(f'{path.name}: milestone and source notebook identity disagree')
+    elif milestone:
+        raise ValidationError(f'{path.name}: milestone requires its source_notebook')
+
+
 def _validate_article_relations(root: Path, article_paths: list[Path]) -> None:
     """Check source-owned navigation without modifying preserved notebooks."""
     graph = {}
@@ -175,22 +194,7 @@ def _validate_article_relations(root: Path, article_paths: list[Path]) -> None:
             if len(set(deps)) != len(deps):
                 raise ValidationError(f'{path.name}: duplicate prerequisite')
         graph[path.stem] = deps
-        notebook = re.search(r'^source_notebook:\s*(\S+)\s*$', metadata, re.MULTILINE)
-        milestone = re.search(r'^milestone:\s*[\"\']?([0-9]{3})[\"\']?\s*$', metadata, re.MULTILINE)
-        if re.search(r'^milestone:', metadata, re.MULTILINE) and not milestone:
-            raise ValidationError(f'{path.name}: milestone must be a three-digit identity')
-        if notebook:
-            slug = notebook.group(1)
-            if not re.fullmatch(r'[a-z0-9_]+', slug):
-                raise ValidationError(f'{path.name}: invalid source_notebook basename')
-            target = root / 'notebooks' / (slug + '.ipynb')
-            if not target.is_file():
-                raise ValidationError(f'{path.name}: source_notebook is missing')
-            sequence = load_notebook(target).get('metadata', {}).get('publication', {}).get('sequence')
-            if not milestone or sequence != int(milestone.group(1)):
-                raise ValidationError(f'{path.name}: milestone and source notebook identity disagree')
-        elif milestone:
-            raise ValidationError(f'{path.name}: milestone requires its source_notebook')
+        _validate_article_identity(root, path, metadata)
     complete, visiting = set(), set()
     def visit(slug):
         if slug not in graph:
