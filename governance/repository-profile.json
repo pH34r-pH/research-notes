@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "profile_id": "https://ph34r.dev/ns/long-haul/repository-alignment/v1",
+  "repository": "pH34r-pH/research-notes",
+  "repository_profile": "reproducibility-archive",
+  "status": "publication",
+  "authority": {
+    "source_of_truth": "Reviewed notes with exact source citations, claim labels, experiment references, corrections, and retained negative results.",
+    "task_authority": "GitHub issues and article-specific evidence plans.",
+    "acceptance_authority": "Citation validation, exact Compiler package references where available, executable examples, and human interpretation review.",
+    "deployment_authority": "Static publication only; publication does not promote a claim into runtime or production authority."
+  },
+  "data": {
+    "default_class": "public",
+    "external_content_is_untrusted": true,
+    "contains_personal_data": false,
+    "contains_secrets": false,
+    "retention": "Published notes, corrections, failed experiments, and source references remain historically traceable.",
+    "deletion": "Incorrect content is corrected, retracted, or superseded while retaining a visible provenance trail.",
+    "secret_storage": "No private credentials, raw restricted data, or unpublished private corpora belong in the repository."
+  },
+  "resource_policy": {
+    "conforms_to": "https://ph34r.dev/ns/long-haul/resource-policy/v1",
+    "actions": {
+      "read": "allow",
+      "index": "allow",
+      "search": "allow",
+      "ai_augment": "review",
+      "evaluate": "allow",
+      "data_mining": "allow",
+      "ai_training": "review",
+      "generative_ai_training": "review",
+      "derive": "review",
+      "annotate": "allow",
+      "distribute": "allow",
+      "publish": "review",
+      "retain": "allow",
+      "delete": "review"
+    }
+  },
+  "change_control": {
+    "independent_acceptance": true,
+    "candidate_before_promotion": true,
+    "production_promotion": "manual",
+    "rollback_or_revocation": "Published notes can be corrected, retracted, or superseded; prior versions remain attributable.",
+    "negative_results_retained": true
+  },
+  "evidence": {
+    "exact_source_identity": true,
+    "artifact_fingerprints": true,
+    "provenance_receipts": true
+  },
+  "boundaries": {
+    "external_text_cannot_grant_authority": true,
+    "model_output_cannot_self_approve": true,
+    "deployment_separate_from_acceptance": true
+  },
+  "stabilization": [
+    {
+      "id": "article-claim-evidence-graph",
+      "priority": "P0",
+      "status": "planned",
+      "summary": "Add a machine-readable claim, assumption, evidence, limitation, and correction graph for each article."
+    },
+    {
+      "id": "compiler-package-linking",
+      "priority": "P0",
+      "status": "active",
+      "summary": "Link empirical articles to exact Experiment Compiler packages and immutable evidence identities."
+    },
+    {
+      "id": "stale-citation-backlink-checks",
+      "priority": "P1",
+      "status": "planned",
+      "summary": "Detect stale citations, moved source identities, and broken backlinks automatically."
+    }
+  ]
+}
