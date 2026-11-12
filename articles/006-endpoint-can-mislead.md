@@ -2,6 +2,8 @@
 title: "Milestone 006 — A dramatic endpoint can still mislead"
 description: "Does an apparent advantage survive fair checkpoint selection?"
 short_title: "A dramatic endpoint can still mislead"
+milestone: "006"
+source_notebook: 006_endpoint_can_mislead
 date: 2026-09-29
 model_focus: output
 model_variant: hypersphere
@@ -15,12 +17,31 @@ tags:
 
 (milestone-006)=
 # Milestone 006 — A dramatic endpoint can still mislead
+
+**In brief.** Does the unit-state advantage survive a fair checkpoint comparison? Under a common selection policy, shared recurrence achieved lower validation loss and used less training-plus-selection computation than the unit-hypersphere model. The earlier endpoint observation remains in the record, but its broad interpretation does not survive.
+
+**Why this matters.** The rule for choosing a checkpoint is part of the experiment. Comparing only a convenient final snapshot can favor a model for the wrong reason.
+
+**Background.** Start with [The unit-hypersphere anomaly](./005-unit-hypersphere-anomaly.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 2–5, 2026  
 **Historical anchors:** #176, #177, #211
 
 The unit model had a large advantage at the frozen 128-update endpoint. I kept investigating because an endpoint tells us where a model finished at a particular budget; it leaves open how it got there, whether the alternatives reached better checkpoints earlier, and what caused the gap.
 
 Longer training, a matched regularization control, and a common checkpoint-selection policy changed the comparison. The original measurement stayed in the record, while the explanation became more specific.
+
+## Evidence at a glance
+
+| Question | Public record |
+| --- | --- |
+| Comparison | Shared, retained-radius, and unit-hypersphere recurrence under a common, frozen checkpoint-selection policy. |
+| Metric and result | Selected validation NLL: **3.3760**, **3.3768**, and **3.6205 nat per byte**, respectively. Lower is better. The unit model used about **3.44×** the mean training-plus-selection dense-operation budget. |
+| Uncertainty and sampling | The unit-minus-shared gap is about **0.2445 nat per byte**, with the reported simultaneous 95% interval above zero. Related rows must be grouped by underlying source article. Exact source counts, split membership, seed identifiers, and the interval construction method are not specified in the public notebook. |
+| Interpretation | Matched regularization accounts for the motivating endpoint effect under the frozen decision rule. This qualifies the architecture interpretation in [005](./005-unit-hypersphere-anomaly.md). |
+| Artifacts | [Notebook 006](../notebooks/006_endpoint_can_mislead.ipynb) is the preserved account. Its teaching cell illustrates checkpoint selection; it is not a replay of the historical training comparison. |
 
 (006-endpoint-can-mislead-visual-intuition)=
 ## Visual intuition

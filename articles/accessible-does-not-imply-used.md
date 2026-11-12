@@ -2,6 +2,8 @@
 title: "Milestone 013 — Accessible does not imply used"
 description: A frozen-representation probe found a natural-source distinction that the model's native consumer barely used.
 short_title: Accessible does not imply used
+milestone: "013"
+source_notebook: 013_accessible_not_used
 date: 2026-09-29
 model_focus: consumer
 model_variant: consumer-probe
@@ -19,10 +21,30 @@ tags:
 
 (milestone-013)=
 # Milestone 013 — Accessible does not imply used
+
+**In brief.** Can information remain inside a model while its prediction step barely uses it? On one frozen Wikipedia revision-branch task, a small external readout recovered a distinction that the model’s original readout barely used. The result supports recoverability on this task; it does not yet show an improvement in general next-byte prediction.
+
+**Why this matters.** The “state” is the model’s internal vector; the “consumer” reads that vector to make a prediction. A “revision branch” is a shared context followed by different continuations in related article versions. Separating stored information from its use tells us whether to investigate the representation or the readout.
+
+**Background.** Start with [Natural-source task distinctions](./012-natural-source-distinctions.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 8–9, 2026  
-**Public article source revision:** September 29, 2026  
 **Historical anchor:** #328  
 **Primary source:** [Milestone notebook 013](../notebooks/013_accessible_not_used.ipynb)
+
+## Evidence at a glance
+
+| Question | Public record |
+| --- | --- |
+| Comparison | Separately trained affine-softmax probe versus the frozen model’s native consumer, on the same bounded revision-branch task; both gains use a constant baseline. |
+| Metric and result | Evaluation log-loss gain: probe **0.737664 nat**, native consumer **0.006446 nat**. These are branch-task gains, not next-byte NLL gains. |
+| Uncertainty | The notebook reports a one-sided lower confidence bound of about **0.678 nat**. Its confidence level and construction method are not specified in the public record; do not interpret it as a declared 95% interval. |
+| Sampling and splits | Held-out branch cases with fixed page groups; related revisions are not independent sources. Exact case/page counts, split membership, the independent unit used for the bound, and seed identifiers are not published here. |
+| Controls | Label and representation shuffles, matched random features, random rotations, fixed page groups, learning-efficiency checks, and tangent-coordinate analysis. The notebook records the conclusions, not a complete machine-readable protocol. |
+| Artifacts and replay | [Notebook 013](../notebooks/013_accessible_not_used.ipynb) preserves the account and reported values. **An exact frozen-model benchmark replay package is not currently published.** The toy cell and shared browser model do not reproduce this result. |
+| Scope | Recoverability by this probe on this task; causal use and improved 256-way next-byte prediction remain open. |
 
 (accessible-used-question)=
 ## The question

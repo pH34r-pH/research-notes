@@ -2,6 +2,8 @@
 title: "Milestone 007 — Derive before training"
 description: "What can we prove about normalization before spending compute?"
 short_title: "Derive before training"
+milestone: "007"
+source_notebook: 007_derive_before_training
 date: 2026-09-29
 model_focus: normalization
 model_variant: hypersphere
@@ -15,6 +17,15 @@ tags:
 
 (milestone-007)=
 # Milestone 007 — Derive before training
+
+**In brief.** What can be established before another training run? For a nonzero vector, normalization removes a small radial perturbation to first order and scales tangent perturbations by inverse radius. This is a local mathematical statement, not evidence that those directions contain useful or useless task information.
+
+**Why this matters.** Deriving the constraint separates a proven property of the operation from an empirical explanation of the trained model.
+
+**Background.** Start with [The unit-hypersphere anomaly](./005-unit-hypersphere-anomaly.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 2–3, 2026 and later formal hardening  
 **Historical anchors:** #196, #199, #200, #252
 
@@ -86,7 +97,7 @@ Each step tells us what the next one still needs to establish.
 
 ## Research context
 
-Normalized Transformer states and hyperspherical optimization already appear in work such as **nGPT**. That literature provided constructions to compare against and helped locate the mathematical questions in this project.
+Normalized Transformer states and hyperspherical optimization already appear in work such as [**nGPT: Normalized Transformer with Representation Learning on the Hypersphere**](https://arxiv.org/abs/2410.01131) (Loshchilov, Hsieh, Sun, and Ginsburg, 2024; revised 2025). That literature provided constructions to compare against and helped locate the mathematical questions in this project.
 
 My immediate question concerned the mechanism behind the measurements I already had: which effects follow from normalization itself, and which depend on this trained representation? Existing work supplies part of the first answer; the formal calculation makes the local constraint explicit, leaving the task-dependent premises for measurement.
 
