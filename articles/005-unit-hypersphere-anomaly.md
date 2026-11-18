@@ -2,6 +2,8 @@
 title: "Milestone 005 — The unit-hypersphere anomaly"
 description: "What happens when recurrent state keeps direction but discards magnitude?"
 short_title: "The unit-hypersphere anomaly"
+milestone: "005"
+source_notebook: 005_unit_hypersphere_anomaly
 date: 2026-09-29
 model_focus: recurrent-state
 model_variant: hypersphere
@@ -23,6 +25,17 @@ tags:
 
 (milestone-005)=
 # Milestone 005 — The unit-hypersphere anomaly
+
+**In brief.** What happens when recurrent state keeps direction while its magnitude is fixed? A unit-length state had much lower loss at one frozen training endpoint, but a worse learning trajectory. This historical observation motivated a mechanism investigation; it does not establish that the geometry is generally better.
+
+**Why this matters.** An endpoint can hide the cost and path of learning. Later checkpoint-controlled comparisons changed the ranking; read the qualification below before treating this as an architecture recommendation.
+
+**Background.** Start with [Isolating the phase-aware mechanism](./004-isolating-phase-attention.md) for the conceptual prerequisite.
+
+**Later qualification:** [Milestone 006](./006-endpoint-can-mislead.md) applies a common checkpoint-selection policy. Shared recurrence then has lower validation NLL (3.3760 versus 3.6205 for the unit model), and the unit model uses about 3.44× the training-plus-selection dense-operation budget. The endpoint advantage below is a historical observation, not the final comparison.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 1–2, 2026  
 **Historical anchor:** #164
 
@@ -33,6 +46,15 @@ I compared independent depth, shared recurrent computation, recurrence on a unit
 The direction-only model finished far ahead. That made the unit constraint worth investigating, particularly because the outcome contradicted the reason I had expected the retained-radius version to work.
 
 > **Sticky note — unit hypersphere:** the set of vectors with length 1. A state on that surface can change direction while its overall magnitude stays fixed.
+
+## Evidence at a glance
+
+| Question | Public record |
+| --- | --- |
+| Comparison and metric | Five architecture variants at the frozen **128-update** endpoint; validation NLL per original byte, lower is better. The exact values are listed below. |
+| Result and limit | Unit recurrence has a better endpoint and worse learning-curve area. [006](./006-endpoint-can-mislead.md) reverses the ranking under common checkpoint selection; this endpoint is not a general architecture recommendation. |
+| Protocol availability | The public account does not enumerate the original endpoint experiment’s independent source counts, split membership, seed identifiers, or uncertainty procedure. The later Muon package is a separate three-seed optimizer comparison and does not fill those gaps. |
+| Artifacts | [Notebook 005](../notebooks/005_unit_hypersphere_anomaly.ipynb) preserves the original account. The exact later Muon package is linked below with its separate source identity and mixed conclusion. The vector-normalization example is illustrative. |
 
 (005-unit-hypersphere-anomaly-visual-intuition)=
 ## Visual intuition

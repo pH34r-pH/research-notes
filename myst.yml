@@ -26,7 +26,8 @@ project:
     - file: articles/can-a-small-consumer-use-the-state.md
     - file: articles/when-a-run-is-interrupted.md
 site:
-  template: article-theme
+  # MyST 1.11 uses the v1 theme interface. Keep the renderer reproducible.
+  template: https://github.com/myst-templates/article-theme/archive/4acce1eba558b301c2aadca99a7804aa6e294e1e.zip
   options:
     hide_footer_links: true
     hide_outline: true

@@ -2,6 +2,8 @@
 title: "Milestone 004 — Isolating the phase-aware mechanism"
 description: "Which part of phase-aware attention accounts for the improvement?"
 short_title: "Isolating the phase-aware mechanism"
+milestone: "004"
+source_notebook: 004_isolating_phase_attention
 date: 2026-09-29
 model_focus: architecture
 model_variant: phase-aware
@@ -15,6 +17,15 @@ tags:
 
 (milestone-004)=
 # Milestone 004 — Isolating the phase-aware mechanism
+
+**In brief.** Which part of a phase-aware block explains its gain? Removing components left phase-aware attention as the useful mechanism in the matched comparison. The other tested additions did not independently account for the improvement.
+
+**Why this matters.** A smaller explanation gives the next experiment fewer moving parts. An ablation removes or replaces one component while holding the rest of the comparison fixed.
+
+**Background.** Start with [Coordinates matter; operations matter more](./003-coordinates-and-matched-operations.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 1, 2026  
 **Historical anchor:** #163
 

@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from validate_publication import ValidationError, validate
+from validate_publication import ValidationError, validate, _validate_article_relations
 
 
 NOTEBOOK = {
@@ -17,6 +17,28 @@ NOTEBOOK = {
 
 
 class PublicationValidationTest(unittest.TestCase):
+    def test_article_relationships_and_preserved_notebook_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            article = root / 'articles/sample.md'
+            original = article.read_text(encoding='utf-8')
+            for metadata, error in [
+                ('depends_on: [missing]', 'unknown article prerequisite'),
+                ('depends_on: [sample]', 'cycle'),
+                ('depends_on: [sample, sample]', 'duplicate prerequisite'),
+                ('source_notebook: ../001', 'invalid source_notebook'),
+                ('milestone: "002"\nsource_notebook: 001', 'identity disagree'),
+                ('milestone: "001"\nsource_notebook: absent', 'source_notebook is missing'),
+            ]:
+                article.write_text(original.replace('title:', metadata + '\ntitle:', 1), encoding='utf-8')
+                with self.subTest(metadata=metadata), self.assertRaisesRegex(ValidationError, error):
+                    _validate_article_relations(root, [article])
+            notebook = root / 'notebooks/001.ipynb'
+            before = notebook.read_bytes()
+            article.write_text(original.replace('title:', 'milestone: "001"\nsource_notebook: 001\ntitle:', 1), encoding='utf-8')
+            _validate_article_relations(root, [article])
+            self.assertEqual(before, notebook.read_bytes())
+
     def repository(self, directory: str) -> Path:
         root = Path(directory)
         (root / "notebooks").mkdir()

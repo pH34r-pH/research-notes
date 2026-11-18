@@ -2,6 +2,8 @@
 title: "Milestone 011 — Geometry should follow invariance, not aesthetics"
 description: "Which geometry preserves the invariances a task actually needs?"
 short_title: "Geometry should follow invariance, not aesthetics"
+milestone: "011"
+source_notebook: 011_geometry_from_invariance
 date: 2026-09-29
 model_focus: representation
 model_variant: geometry
@@ -15,6 +17,15 @@ tags:
 
 (milestone-011)=
 # Milestone 011 — Geometry should follow invariance, not aesthetics
+
+**In brief.** Which geometry should a representation use? Start with the changes that should preserve meaning and the operations the task needs. For example, ordinary radius-and-direction coordinates couple angular distances to radius, so they do not automatically keep two intended meanings independent.
+
+**Why this matters.** A familiar or attractive shape is not enough to justify an architecture. The construction must express the invariances and distinctions that motivated it.
+
+**Background.** Start with [What state should a reasoner preserve?](./010-dynamic-quotient.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 2–3, 2026  
 **Historical anchors:** #194–#198
 
@@ -65,7 +76,9 @@ Each case supplies a condition to check before training. The architecture has to
 
 ## Research context
 
-Hyperbolic representation learning already connects negative curvature with hierarchy. Grassmann and subspace methods supply machinery for objects whose identity is a subspace. Geometric deep learning more broadly uses symmetry and invariance to constrain a model's mathematical structure.
+[Poincaré Embeddings for Learning Hierarchical Representations](https://arxiv.org/abs/1705.08039) (Nickel and Kiela, 2017) connects hyperbolic representation learning with hierarchy. [The Geometry of Algorithms with Orthogonality Constraints](https://arxiv.org/abs/physics/9806030) (Edelman, Arias, and Smith, 1998) develops algorithms on Grassmann and Stiefel manifolds. [Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges](https://arxiv.org/abs/2104.13478) (Bronstein, Bruna, Cohen, and Veličković, 2021) organizes model design around geometric structure and symmetry.
+
+These are established foundations. This article contributes a task-specific design argument about which invariances to require; it does not claim to originate those geometries or demonstrate a new trained-model improvement.
 
 Those connections made the literature useful for design. For an existing construction, I could ask which property made it appropriate for its task and whether my task had the same requirement. The answer determines which tools transfer and what still needs to be tested.
 

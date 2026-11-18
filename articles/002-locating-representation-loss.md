@@ -2,9 +2,12 @@
 title: "Milestone 002 — Where did the spectral loss occur?"
 description: "Where between representation and prediction does useful information become hard to recover?"
 short_title: "Where did the spectral loss occur?"
+milestone: "002"
+source_notebook: 002_locating_representation_loss
 date: 2026-09-29
 model_focus: architecture
 model_variant: spectral
+depends_on: [001-text-as-signal]
 authors:
   - name: Tyler J.H.G.
 tags:
@@ -14,6 +17,15 @@ tags:
 
 (milestone-002)=
 # Milestone 002 — Where did the spectral loss occur?
+
+**In brief.** Where does a spectral text model lose predictive performance? Separating the computation into stages exposed a deficit before composition, an additional composition penalty, and partial recovery by a learned receiver. There was no single loss mechanism to repair.
+
+**Why this matters.** A stage-by-stage comparison helps choose an intervention without attributing the entire gap to the most visible component.
+
+**Background.** Start with [What if text were a signal?](./001-text-as-signal.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** earlier program  
 **Historical anchor:** #123
 
