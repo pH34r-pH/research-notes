@@ -34,6 +34,16 @@ The Atlas-to-article crosswalk preserves its eight original topics without keepi
 
 The phase/coordinate experiment in [Milestone 003](articles/003-coordinates-and-matched-operations.md), the stage-localization narrative in [Milestone 002](articles/002-locating-representation-loss.md), and the method/theory narratives in [Milestones 009](articles/009-theorem-ledger-method.md) and [010](articles/010-dynamic-quotient.md) remain separate because combining them would blur distinct questions and chronology.
 
+## Standalone articles
+
+These articles explain infrastructure and an open research question; they do not add numbered research milestones or imply a new completed experiment.
+
+| Article | Disposition | Role |
+| --- | --- | --- |
+| [What does it mean to package an experiment?](articles/packaging-an-experiment.md) | essay | Experiment packaging and the boundaries of the published Muon comparison. |
+| [Can a small consumer use what the state knows?](articles/can-a-small-consumer-use-the-state.md) | work-in-progress | The open question following Milestone 013; no new result is reported. |
+| [When a run is interrupted, what can the record still tell us?](articles/when-a-run-is-interrupted.md) | essay | Receipts and recovery for interrupted experiment attempts. |
+
 ## Reusable reference and formal sources
 
 | Public source | Disposition | Role |

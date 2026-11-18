@@ -2,6 +2,8 @@
 title: "Milestone 008 — What does the sphere actually do?"
 description: "Which proposed mechanisms survive frozen tests of the model’s dynamics?"
 short_title: "What does the sphere actually do?"
+milestone: "008"
+source_notebook: 008_frozen_mechanism_tests
 date: 2026-09-29
 model_focus: recurrent-state
 model_variant: hypersphere
@@ -15,6 +17,15 @@ tags:
 
 (milestone-008)=
 # Milestone 008 — What does the sphere actually do?
+
+**In brief.** What does the unit-state model actually do with radius and direction? Frozen-model interventions and derivative measurements gave mixed mechanism evidence. They did not support a simple story in which all radial information is irrelevant or recurrent dynamics cleanly separate useful directions.
+
+**Why this matters.** Testing an existing model can reject a proposed explanation before paying to train a new architecture. Each diagnostic has its own intervention and scope.
+
+**Background.** Start with [Derive before training](./007-derive-before-training.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 3–5, 2026  
 **Historical anchors:** #201–#206
 

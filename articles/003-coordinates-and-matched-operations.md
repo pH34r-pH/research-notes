@@ -2,6 +2,8 @@
 title: "Milestone 003 — Coordinates matter; operations matter more"
 description: "Does changing coordinates help, or do the operations need to change too?"
 short_title: "Coordinates matter; operations matter more"
+milestone: "003"
+source_notebook: 003_coordinates_and_matched_operations
 date: 2026-09-29
 model_focus: architecture
 model_variant: phase-aware
@@ -15,6 +17,15 @@ tags:
 
 (milestone-003)=
 # Milestone 003 — Coordinates matter; operations matter more
+
+**In brief.** Does a model need better coordinates, better operations, or both? Rewriting the same spectral state helped, and operations designed for magnitude and relative phase helped further. The matched comparison isolates an operational gain beyond the coordinate change.
+
+**Why this matters.** Information can stay the same while the computation required to use it changes. The result concerns the tested models and controls, not every signal representation.
+
+**Background.** Start with [Where did the spectral loss occur?](./002-locating-representation-loss.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 1, 2026  
 **Historical anchors:** #161–#162
 

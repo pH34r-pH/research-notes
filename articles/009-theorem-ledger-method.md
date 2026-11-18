@@ -2,6 +2,8 @@
 title: "Milestone 009 — From hypothesis sprawl to a theorem ledger"
 description: "How can checked mathematics constrain the next architecture experiment?"
 short_title: "From hypothesis sprawl to a theorem ledger"
+milestone: "009"
+source_notebook: 009_theorem_ledger_method
 date: 2026-09-29
 model_focus: full
 model_variant: baseline
@@ -15,6 +17,15 @@ tags:
 
 (milestone-009)=
 # Milestone 009 — From hypothesis sprawl to a theorem ledger
+
+**In brief.** How can mathematics narrow architecture search? A theorem ledger separates checked statements, observations, assumptions, and open hypotheses, then records which later decisions depend on them. This article presents a working method rather than a new benchmark result.
+
+**Why this matters.** A theorem can remove a false premise from an experiment without establishing the task-dependent explanation that remains.
+
+**Background.** Start with [Derive before training](./007-derive-before-training.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 3, 2026 onward  
 **Historical anchors:** #196, #198–#200, later #257
 

@@ -3,9 +3,7 @@
 [![Publication validation](https://github.com/pH34r-pH/research-notes/actions/workflows/publication-validation.yml/badge.svg)](https://github.com/pH34r-pH/research-notes/actions/workflows/publication-validation.yml)
 [![License](https://img.shields.io/github/license/pH34r-pH/research-notes)](LICENSE)
 
-<p align="center">
-  <img src="docs/assets/hero.webp" alt="Research Notes — cyberpunk orbital research workspace and connected knowledge surfaces" width="100%">
-</p>
+![Research Notes — cyberpunk orbital research workspace and connected knowledge surfaces](docs/assets/hero.png)
 
 **An evolving research record on representation, geometry, information, and computation in neural systems.**
 
@@ -17,7 +15,7 @@ The current thread running through the work is a distinction that repeatedly mat
 
 ## Start with the research articles
 
-The [article collection](articles/) presents reviewed findings with explicit evidence boundaries and links back to the source notebooks. The notebook files remain the chronological record and preserve the original computational history.
+The [article collection](articles/) presents the author’s research accounts with explicit evidence boundaries and links back to the source notebooks. The notebook files remain the chronological record and preserve the original computational history.
 
 See the [public publication dispositions](PUBLICATION-DISPOSITIONS.md) for the source-by-source article, notebook, and reference map.
 
@@ -91,3 +89,8 @@ Licensed under Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 Mature public narratives link to exact Experiment Compiler identities rather than copying experiment metadata. `experiments.tyharbin.com` is the live reproduction/inspection surface. When a finalized artifact is deliberately published for long-term citation, `pH34r-pH/compiled-experiments` preserves the exact reviewed bytes and release lineage; a human-reviewed GitHub Release can then be archived by Zenodo for a DOI.
 
 Research Notes remains the chronological/expository source. It may link the immutable DOI/release after publication, but does not rebuild the package or infer scientific status from archival metadata.
+## Article reading and reproducible rendering
+
+See [Reading the research evidence](reference/reading-evidence.md) for review status, dates, qualifications, and replay boundaries, and [Article dependencies](docs/article-dependencies.md) for the conceptual reading map.
+
+The locked MyST 1.11 renderer uses the article-theme v1 interface. `myst.yml` pins the v1.4.1 theme archive to commit `4acce1eba558b301c2aadca99a7804aa6e294e1e`; the mutable theme default moved to v2 and is incompatible with this renderer. Upgrade the renderer and theme together and validate static HTML plus all publication exports.

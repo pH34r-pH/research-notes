@@ -2,6 +2,8 @@
 title: "Milestone 012 — Natural-source task distinctions"
 description: "Can compact states distinguish the same context leading to different futures?"
 short_title: "Natural-source task distinctions"
+milestone: "012"
+source_notebook: 012_natural_source_distinctions
 date: 2026-09-29
 model_focus: representation
 model_variant: hypersphere
@@ -15,6 +17,15 @@ tags:
 
 (milestone-012)=
 # Milestone 012 — Natural-source task distinctions
+
+**In brief.** Can a compact model state distinguish similar contexts that lead to different futures? A bounded benchmark built from Wikipedia revision branches qualified at 32 bytes of context. Qualification establishes a usable test of that distinction, not yet that a particular model retains or uses it.
+
+**Why this matters.** A revision branch is where related versions share context and then diverge. Such cases let us test predictive distinctions directly instead of treating geometric spread as a proxy for information.
+
+**Background.** Start with [What state should a reasoner preserve?](./010-dynamic-quotient.md) for the conceptual prerequisite.
+
+**Publication context:** Historical research account first published September 29, 2026; reader guidance, evidence availability, and citations revised November 10, 2026. This revision adds no new experimental measurements. [How to read the evidence](../reference/reading-evidence.md).
+
 **Research period:** September 2026  
 **Historical anchors:** #178–#180, #316, #318, #323, #325
 
