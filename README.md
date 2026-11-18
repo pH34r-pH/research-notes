@@ -83,6 +83,12 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing editorial or technical 
 
 Licensed under Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
+
+### Reproduction and archival release
+
+Mature public narratives link to exact Experiment Compiler identities rather than copying experiment metadata. `experiments.tyharbin.com` is the live reproduction/inspection surface. When a finalized artifact is deliberately published for long-term citation, `pH34r-pH/compiled-experiments` preserves the exact reviewed bytes and release lineage; a human-reviewed GitHub Release can then be archived by Zenodo for a DOI.
+
+Research Notes remains the chronological/expository source. It may link the immutable DOI/release after publication, but does not rebuild the package or infer scientific status from archival metadata.
 ## Article reading and reproducible rendering
 
 See [Reading the research evidence](reference/reading-evidence.md) for review status, dates, qualifications, and replay boundaries, and [Article dependencies](docs/article-dependencies.md) for the conceptual reading map.
