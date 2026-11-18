@@ -66,6 +66,15 @@ class PublicationValidationTest(unittest.TestCase):
             self.assertIn("index.md", first["contextChecked"])
             self.assertEqual(len(first["sourceDigest"]["value"]), 64)
 
+    def test_scoped_agent_maps_are_not_publication_inputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            (root / "articles/AGENTS.md").write_text("# Article maintenance map\n", encoding="utf-8")
+            (root / "reference/AGENTS.md").write_text("# Reference maintenance map\n", encoding="utf-8")
+            result = validate(root)
+            self.assertEqual(result["articleCount"], 1)
+            self.assertNotIn("articles/AGENTS.md", result["coverage"])
+
     def test_articles_fail_closed_on_missing_figures_and_unlabeled_cells(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.repository(directory)
