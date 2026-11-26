@@ -40,15 +40,23 @@ This page connects mathematical results used in the research notes to their publ
 
 ## FRM-000133 — normalization spectrum
 
-**Statement.** In finite-dimensional real inner-product spaces, the derivative of normalization has one radial zero mode and equal inverse-radius gain on tangent modes. Its kernel, range, rank, and singular values can therefore be characterized exactly.
+**Statement.** At a nonzero vector `x` in a finite-dimensional real inner-product space, the derivative of `x / ||x||` has one radial zero mode and equal gain `1 / ||x||` in all tangent directions. Its kernel, range, rank, and singular values can therefore be characterized exactly.
 
 **Research use.** This turns the qualitative radial/tangent picture into an exact spectral statement and clarifies what one-step normalization can and cannot selectively contract.
 
 **Boundary.** A spectrum for one local derivative does not determine the spectrum or behavior of a finite-horizon recurrent Jacobian product.
 
+**Runtime applicability is unmeasured.** A normalization implementation can
+return a constant direction below an epsilon cutoff, giving zero local
+tangential gain on that branch. Masked rows can bypass normalization entirely.
+The pinned applicability record includes a synthetic example and the
+denominators needed to interpret future branch counts. Historical applicability
+remains unknown until the observations are tied to an exact operator revision,
+dtype, cutoff and mask policy, and eligible population. [Applicability record](https://github.com/pH34r-pH/theorem-library/blob/b3b1d28c060566702922fc1bab9a9001d21b94a2/docs/applicability/frm-000133.json)
+
 **Used in:** [007](../../notebooks/007_derive_before_training.ipynb) and [008](../../notebooks/008_frozen_mechanism_tests.ipynb)
 
-**Proof:** [NormalizationSpectrum.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean)
+**Proof.** [TheoremLibrary.Geometry.Sphere.normalization_singularValues](https://github.com/pH34r-pH/theorem-library/blob/950b48d502015daa1c648b5ce7a3b72eee367995/TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean#L90-L96)
 
 ## FRM-000149 — composition and gradient boundaries
 
