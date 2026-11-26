@@ -1,10 +1,12 @@
 import copy
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
 
-from validate_publication import ValidationError, validate, _validate_article_relations
+from claim_evidence import RECORD, load_claims, review_impact
+from validate_publication import ValidationError, validate, _validate_article_relations, markdown_targets
 
 
 NOTEBOOK = {
@@ -17,6 +19,76 @@ NOTEBOOK = {
 
 
 class PublicationValidationTest(unittest.TestCase):
+    def _pilot_claims(self, root: Path) -> dict:
+        published = Path(__file__).resolve().parents[1]
+        document = json.loads((published / RECORD).read_text(encoding="utf-8"))
+        for path in [RECORD, *(row["passage"]["path"] for row in document["claims"])]:
+            target = root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(published / path, target)
+        return document
+
+    def test_pilot_claims_are_counted_in_publication_validation(self):
+        receipt = validate(Path(__file__).resolve().parents[1])
+        self.assertIn(RECORD, receipt["coverage"])
+        self.assertEqual(receipt["claimEvidence"]["validatedClaims"], 2)
+        self.assertEqual(receipt["claimEvidence"]["annotatedArticles"], 1)
+        self.assertEqual(receipt["claimEvidence"]["unannotatedArticles"], receipt["articleCount"] - 1)
+
+    def test_claim_contract_rejects_missing_premise_moving_proof_and_unlinked_experiment(self):
+        for case, error in (
+            ("premise", "nonzero-input premise"), ("proof", "URL pinned"),
+            ("experiment-link", "passage must link"), ("supersession", "unknown superseded claim"),
+        ):
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                document = self._pilot_claims(root)
+                muon, formal = document["claims"]
+                if case == "premise":
+                    formal["assumptions"].remove("nonzero-input")
+                elif case == "proof":
+                    evidence = formal["evidence"]
+                    evidence["url"] = evidence["url"].replace(evidence["revision"], "main")
+                elif case == "experiment-link":
+                    page = root / muon["passage"]["path"]
+                    source = page.read_text(encoding="utf-8")
+                    page.write_text(source.replace(muon["evidence"]["readerUrl"], "https://example.org/"),
+                                    encoding="utf-8")
+                else:
+                    muon["supersedes"] = ["unknown-claim"]
+                (root / RECORD).write_text(json.dumps(document), encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, error):
+                    load_claims(root, markdown_targets)
+
+    def test_synthetic_successor_keeps_history_and_reports_only_affected_passage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            document = self._pilot_claims(root)
+            original = document["claims"][0]
+            successor = copy.deepcopy(original)
+            successor["id"] = "synthetic-muon-follow-up"
+            successor["supersedes"] = [original["id"]]
+            successor["passage"]["anchor"] = "synthetic-muon-follow-up"
+            new_revision = "a" * 40
+            successor["evidence"]["revision"] = new_revision
+            successor["evidence"]["url"] = successor["evidence"]["url"].replace(
+                original["evidence"]["revision"], new_revision,
+            )
+            page = root / successor["passage"]["path"]
+            historical = page.read_text(encoding="utf-8")
+            with page.open("a", encoding="utf-8") as handle:
+                handle.write("\n(synthetic-muon-follow-up)=\n## Synthetic successor\n\n"
+                             f"[Evidence]({successor['evidence']['url']})\n"
+                             f"[Package]({successor['evidence']['readerUrl']})\n"
+                             "[Claim record](../reference/claim-evidence.json)\n")
+            document["claims"].append(successor)
+            (root / RECORD).write_text(json.dumps(document), encoding="utf-8")
+            claims = load_claims(root, markdown_targets)
+            self.assertEqual(claims[original["id"]], original)
+            self.assertTrue(page.read_text(encoding="utf-8").startswith(historical))
+            affected = review_impact(claims, original["evidence"]["finalizationId"], new_revision)
+            self.assertEqual([item["claimId"] for item in affected], [original["id"]])
+
     def test_article_relationships_and_preserved_notebook_identity(self):
         with tempfile.TemporaryDirectory() as directory:
             root = self.repository(directory)

@@ -15,6 +15,8 @@ import re
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
 
+from claim_evidence import RECORD as CLAIM_RECORD, load_claims, review_impact
+
 SCHEMA = "research-notes-publication-validation/v2"
 SHA = re.compile(r"^[0-9a-f]{40}$")
 MARKDOWN_LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
@@ -413,11 +415,17 @@ def validate(root: Path) -> dict:
     article_count, article_links, code_cell_count, articles_by_sequence = _validate_articles(root)
     links_checked += article_links
     links_checked += _validate_dispositions(root, notebooks, articles_by_sequence)
+    claims = _validated_claims(root)
+    bound_articles = {row["passage"]["path"] for row in claims.values()
+                      if row["passage"]["path"].startswith("articles/")}
 
     return {
         "schema": SCHEMA,
         "coverage": ["articles/*.{md,bib,svg}", "notebooks/*.ipynb", "reference/**/*.md",
+                     *([CLAIM_RECORD] if claims else []),
                      *BUILD_INPUTS, *CONTEXT_FILES],
+        "claimEvidence": {"validatedClaims": len(claims), "annotatedArticles": len(bound_articles),
+                          "unannotatedArticles": article_count - len(bound_articles)},
         "contextChecked": list(CONTEXT_FILES),
         "sourceDigest": {"algorithm": "sha256-path-content-v1", "value": digest_paths(root, paths)},
         "fileCount": len(paths),
@@ -428,6 +436,13 @@ def validate(root: Path) -> dict:
     }
 
 
+def _validated_claims(root: Path) -> dict[str, dict]:
+    try:
+        return load_claims(root, markdown_targets)
+    except (OSError, UnicodeError, ValueError) as exc:
+        raise ValidationError(f"invalid claim evidence: {exc}") from exc
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
@@ -435,8 +450,19 @@ def main() -> None:
     parser.add_argument("--source-sha", default=os.environ.get("GITHUB_SHA"))
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID"))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT"))
+    parser.add_argument("--affected-evidence", help="Formal or finalized experiment ID to review")
+    parser.add_argument("--proposed-identity", help="Exact upstream commit or artifact SHA-256")
     args = parser.parse_args()
+    if (args.affected_evidence is None) != (args.proposed_identity is None):
+        parser.error("--affected-evidence and --proposed-identity must be supplied together")
     result = validate(args.root.resolve())
+    if args.affected_evidence is not None:
+        try:
+            result["editorialImpact"] = review_impact(
+                _validated_claims(args.root.resolve()), args.affected_evidence, args.proposed_identity,
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
     if args.receipt:
         if not args.source_sha or not SHA.fullmatch(args.source_sha):
             parser.error("--source-sha must be an exact lowercase 40-character commit SHA")

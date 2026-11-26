@@ -1,0 +1,66 @@
+{
+  "schema": "research-notes-claim-evidence/v1",
+  "claims": [
+    {
+      "id": "historical-muon-optimizer-comparison",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/005-unit-hypersphere-anomaly.md",
+        "anchor": "005-later-muon-package"
+      },
+      "status": "mixed-inconclusive",
+      "evidence": {
+        "kind": "compiled-experiment",
+        "repository": "pH34r-pH/experiment-compiler",
+        "revision": "a471d390a81193324098abb1fc85324c7f0f894c",
+        "url": "https://github.com/pH34r-pH/experiment-compiler/blob/a471d390a81193324098abb1fc85324c7f0f894c/docs/real-study-walkthrough.md",
+        "requestId": "muon-multiseed-comparison-r01",
+        "attemptId": "87409154e60d",
+        "planSha256": "fec4f9d2270a40deebe580e376dfbf23ddb799059b4b67cadef211fa4d9c833a",
+        "attemptSha256": "0fb8db51740f3f48e2bbcf20b4cbb0cbbe6ac9dc2b931439ba71617c3fb94b89",
+        "resultSha256": "f0f50040638411905a6501b968feb6c939d9d5a7d460d017374fad27479be137",
+        "protocolSha256": "24c533b84de672e6327c17cf65bc82fac6cf956d41155d4111ad1b9a029af66d",
+        "decisionSha256": "ae3a46d2026584a615c5a3d125622afa0eaabe86706a413db73ac66e5479e15b",
+        "reviewSha256": "67f73f77b2dc8e9d63f0e89df7839473b0985295d13707d1d8438c36c8084ed2",
+        "finalizationId": "muon-unit-hypersphere-depth3-multiseed-v1-final-87409154",
+        "finalizationSha256": "28d2d6c6dba2ff2370b9536c4428f40dd23de4ea42a26c98f3e8225b4dd9a8c4",
+        "readerUrl": "https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/",
+        "comparison": "source-authored-paired-document-bootstrap"
+      },
+      "assumptions": ["frozen-historical-adamw-reference", "matched-initial-state"],
+      "observations": {
+        "primary": {"endpoint": "paired-trapezoidal-learning-curve-area", "favored": "historical-adamw"},
+        "secondary": {"endpoint": "final-byte-normalized-nll", "favored": "muon"},
+        "sourceDocuments": 8,
+        "seeds": [17, 31, 47],
+        "intervalUnit": "source-document-after-within-document-seed-averaging"
+      },
+      "limitations": ["historical-reference-arm", "train-and-evaluation-representation-fingerprints-differ"],
+      "supersedes": []
+    },
+    {
+      "id": "normalization-spectrum-local-derivative",
+      "kind": "formal",
+      "passage": {
+        "path": "reference/formal-methods/checkpoints.md",
+        "anchor": "frm-000133-normalization-spectrum"
+      },
+      "status": "proved-under-assumptions",
+      "evidence": {
+        "kind": "lean",
+        "repository": "pH34r-pH/theorem-library",
+        "revision": "950b48d502015daa1c648b5ce7a3b72eee367995",
+        "url": "https://github.com/pH34r-pH/theorem-library/blob/950b48d502015daa1c648b5ce7a3b72eee367995/TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean#L90-L96",
+        "formalId": "FRM-000133",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_singularValues",
+        "applicabilityRevision": "b3b1d28c060566702922fc1bab9a9001d21b94a2",
+        "applicabilityUrl": "https://github.com/pH34r-pH/theorem-library/blob/b3b1d28c060566702922fc1bab9a9001d21b94a2/docs/applicability/frm-000133.json"
+      },
+      "assumptions": ["nonzero-input", "finite-dimensional-real-inner-product-space"],
+      "scope": "one-local-derivative",
+      "runtimeApplicability": "unmeasured",
+      "limitations": ["epsilon-cutoff-and-mask-require-runtime-evidence", "finite-horizon-jacobian-product"],
+      "supersedes": []
+    }
+  ]
+}
