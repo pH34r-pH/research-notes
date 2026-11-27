@@ -100,7 +100,7 @@ Each step tells us what the next one still needs to establish.
 
 ## Research context
 
-Normalized Transformer states and hyperspherical optimization already appear in work such as [**nGPT: Normalized Transformer with Representation Learning on the Hypersphere**](https://arxiv.org/abs/2410.01131) (Loshchilov, Hsieh, Sun, and Ginsburg, 2024; revised 2025). That literature provided constructions to compare against and helped locate the mathematical questions in this project.
+Normalized Transformer states and hyperspherical optimization already appear in work such as [**nGPT: Normalized Transformer with Representation Learning on the Hypersphere**](https://arxiv.org/abs/2410.01131v2) (Loshchilov, Hsieh, Sun, and Ginsburg, 2024; revised 2025). That literature provided constructions to compare against and helped locate the mathematical questions in this project.
 
 My immediate question concerned the mechanism behind the measurements I already had: which effects follow from normalization itself, and which depend on this trained representation? Existing work supplies part of the first answer; the formal calculation makes the local constraint explicit, leaving the task-dependent premises for measurement.
 

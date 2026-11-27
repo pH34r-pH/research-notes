@@ -79,7 +79,7 @@ Each case supplies a condition to check before training. The architecture has to
 
 ## Research context
 
-[Poincaré Embeddings for Learning Hierarchical Representations](https://arxiv.org/abs/1705.08039) (Nickel and Kiela, 2017) connects hyperbolic representation learning with hierarchy. [The Geometry of Algorithms with Orthogonality Constraints](https://arxiv.org/abs/physics/9806030) (Edelman, Arias, and Smith, 1998) develops algorithms on Grassmann and Stiefel manifolds. [Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges](https://arxiv.org/abs/2104.13478) (Bronstein, Bruna, Cohen, and Veličković, 2021) organizes model design around geometric structure and symmetry.
+[Poincaré Embeddings for Learning Hierarchical Representations](https://arxiv.org/abs/1705.08039v2) (Nickel and Kiela, 2017) connects hyperbolic representation learning with hierarchy. [The Geometry of Algorithms with Orthogonality Constraints](https://arxiv.org/abs/physics/9806030v1) (Edelman, Arias, and Smith, 1998) develops algorithms on Grassmann and Stiefel manifolds. [Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges](https://arxiv.org/abs/2104.13478v2) (Bronstein, Bruna, Cohen, and Veličković, 2021) organizes model design around geometric structure and symmetry.
 
 These are established foundations. This article contributes a task-specific design argument about which invariances to require; it does not claim to originate those geometries or demonstrate a new trained-model improvement.
 

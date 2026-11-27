@@ -97,6 +97,16 @@ class PublicationValidationTest(unittest.TestCase):
         self.assertEqual([row["claimId"] for row in affected], ["normalization-spectrum-local-derivative"])
         self.assertEqual(affected[0]["retainedIdentity"], formal["sourceSha256"])
 
+    def test_impact_reports_when_the_pinned_evaluator_changes(self):
+        published = Path(__file__).resolve().parents[1]
+        claims = load_claims(published, markdown_targets)
+        claim = claims["historical-muon-optimizer-comparison"]
+        evaluator = claim["evidence"]
+        self.assertEqual(review_impact(claims, evaluator["evaluatorUrl"], evaluator["evaluatorSha256"]), [])
+        affected = review_impact(claims, evaluator["evaluatorUrl"], "1" * 64)
+        self.assertEqual([row["passage"] for row in affected], [claim["passage"]])
+        self.assertEqual(affected[0]["retainedIdentity"], evaluator["evaluatorSha256"])
+
     def test_synthetic_successor_keeps_history_and_reports_only_affected_passage(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -108,15 +118,17 @@ class PublicationValidationTest(unittest.TestCase):
             successor["passage"]["anchor"] = "synthetic-muon-follow-up"
             new_revision = "a" * 40
             successor["evidence"]["revision"] = new_revision
-            successor["evidence"]["url"] = successor["evidence"]["url"].replace(
-                original["evidence"]["revision"], new_revision,
-            )
+            for field in ("url", "evaluatorUrl"):
+                successor["evidence"][field] = successor["evidence"][field].replace(
+                    original["evidence"]["revision"], new_revision,
+                )
             page = root / successor["passage"]["path"]
             historical = page.read_text(encoding="utf-8")
             with page.open("a", encoding="utf-8") as handle:
                 handle.write("\n(synthetic-muon-follow-up)=\n## Synthetic successor\n\n"
                              f"[Evidence]({successor['evidence']['url']})\n"
                              f"[Package]({successor['evidence']['readerUrl']})\n"
+                             f"[Evaluator]({successor['evidence']['evaluatorUrl']})\n"
                              "[Claim record](../reference/claim-evidence.json)\n")
             document["claims"].append(successor)
             (root / RECORD).write_text(json.dumps(document), encoding="utf-8")

@@ -66,6 +66,8 @@ def audit_experiment(repository: Path, evidence: dict) -> dict:
     }
     for field, path in members.items():
         check_digest(git_bytes(repository, revision, f"{prefix}/{path}"), evidence[field], field)
+    evaluator = source_path(evidence["evaluatorUrl"], revision)
+    check_digest(git_bytes(repository, revision, evaluator), evidence["evaluatorSha256"], "evaluator")
     recipe = json.loads(git_bytes(repository, revision, f"{prefix}/experiment.json"))
     runner = json.loads(git_bytes(repository, revision, f"{prefix}/{attempt}/runner-receipt.json"))
     walkthrough = git_bytes(repository, revision, source_path(evidence["url"], revision))
@@ -75,7 +77,8 @@ def audit_experiment(repository: Path, evidence: dict) -> dict:
         raise ValueError("pinned runner receipt names a different attempt or plan")
     if f"`{evidence['requestId']}`".encode() not in walkthrough:
         raise ValueError("pinned walkthrough does not identify the requested experiment")
-    return {"verifiedFiles": len(members), "finalizationSha256": evidence["finalizationSha256"],
+    return {"verifiedFiles": len(members) + 1, "evaluatorSha256": evidence["evaluatorSha256"],
+            "finalizationSha256": evidence["finalizationSha256"],
             "attemptId": runner["attemptId"]}
 
 

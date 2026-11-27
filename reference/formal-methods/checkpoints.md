@@ -12,7 +12,7 @@ This page connects mathematical results used in the research notes to their publ
 
 **Used in:** [007 — Derive before training](../../notebooks/007_derive_before_training.ipynb), [008 — What does the sphere actually do?](../../notebooks/008_frozen_mechanism_tests.ipynb)
 
-**Proof:** [Anisotropy.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/Anisotropy.lean) · [Normalization.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/Normalization.lean) · [NormDerivative.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormDerivative.lean)
+**Proof:** [Anisotropy.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/Anisotropy.lean) · [Normalization.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/Normalization.lean) · [NormDerivative.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/NormDerivative.lean)
 
 ## LIB-SPH-003 / FRM-000021 — scale-invariant loss geometry
 
@@ -24,7 +24,7 @@ This page connects mathematical results used in the research notes to their publ
 
 **Used in:** [007 — Derive before training](../../notebooks/007_derive_before_training.ipynb), with later mechanism context in [008](../../notebooks/008_frozen_mechanism_tests.ipynb)
 
-**Proof:** [ScaleInvariantLoss.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean) · [NormalizationGradient.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
+**Proof:** [ScaleInvariantLoss.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean) · [NormalizationGradient.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
 
 ## LIB-SPH-001/005 / FRM-000023 — positive-scale quotient and radial-memory boundary
 
@@ -36,7 +36,7 @@ This page connects mathematical results used in the research notes to their publ
 
 **Used in:** [008 — What does the sphere actually do?](../../notebooks/008_frozen_mechanism_tests.ipynb)
 
-**Proof:** [RadialMemory.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/RadialMemory.lean)
+**Proof:** [RadialMemory.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/RadialMemory.lean)
 
 (frm-000133-normalization-spectrum)=
 ## FRM-000133 — normalization spectrum
@@ -71,7 +71,7 @@ dtype, cutoff and mask policy, and eligible population. [Applicability record](h
 
 **Used in:** [008 — What does the sphere actually do?](../../notebooks/008_frozen_mechanism_tests.ipynb)
 
-**Proof:** [NormalizationComposition.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean) · [NormalizationGradient.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
+**Proof:** [NormalizationComposition.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean) · [NormalizationGradient.lean](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
 
 ## Following a checkpoint
 

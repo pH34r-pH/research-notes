@@ -87,7 +87,7 @@ assertion.
 
 Use the publication validator to identify passages affected by a proposed
 change in evidence. Supply the formal theorem ID, finalized experiment ID,
-or pinned source URL and the proposed full commit or SHA-256 digest.
+or pinned source or evaluator URL and the proposed full commit or SHA-256 digest.
 
 ```sh
 python scripts/validate_publication.py \
@@ -118,9 +118,18 @@ python scripts/check_public_sources.py --receipt validation/public-source-readba
 
 The report checks the public experiment catalog and its article backlink,
 the pinned proof and current applicability record, the pinned source documents,
-and DOI identities at Crossref and the publisher. It lists the affected passages or articles
-when evidence changes, access fails, or the registry reports an update.
-A check with no update reported reflects the registry response at that time.
+and DOI identities at Crossref and the publisher. It also inventories external
+links in canonical articles and reference pages and reports where each URL is cited. Use
+versioned arXiv URLs and full Git commit IDs for source files. The checker flags
+new arXiv revisions and withdrawal notices for review. NeurIPS PDF links are
+checked against the proceedings entry, and the returned PDF's SHA-256 is
+recorded. Inline DOI links are checked against the Crossref record and the DOI
+resolver's registered publisher destination. Publisher access can still depend
+on the reader's subscription or browser.
+
+The job fails when evidence changes, a bound source cannot be confirmed, or a
+registry reports an update. A check with no update reported reflects the
+registry response at that time.
 Retraction coverage depends on what the registry receives. Review any
 finding against the cited source and preserve the prior claim record.
 [Crossref retraction metadata](https://www.crossref.org/documentation/retrieve-metadata/retraction-watch/)

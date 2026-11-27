@@ -25,6 +25,8 @@
         "finalizationId": "muon-unit-hypersphere-depth3-multiseed-v1-final-87409154",
         "finalizationSha256": "28d2d6c6dba2ff2370b9536c4428f40dd23de4ea42a26c98f3e8225b4dd9a8c4",
         "readerUrl": "https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/",
+        "evaluatorUrl": "https://github.com/pH34r-pH/experiment-compiler/blob/a471d390a81193324098abb1fc85324c7f0f894c/examples/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/experiment/runner.py",
+        "evaluatorSha256": "926a68f669466d81dce7d0d49f46c17ce5674816b68afb8e6f71c1f673f4b0ce",
         "comparison": "source-authored-paired-document-bootstrap"
       },
       "assumptions": ["frozen-historical-adamw-reference", "matched-initial-state"],

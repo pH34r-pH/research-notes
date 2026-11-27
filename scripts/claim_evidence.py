@@ -14,7 +14,7 @@ COMMIT = re.compile(r"[0-9a-f]{40}")
 DIGEST = re.compile(r"[0-9a-f]{64}")
 PINNED_GITHUB = re.compile(r"https://github\.com/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/blob/([0-9a-f]{40})/.+")
 PACKAGE_DIGESTS = ("planSha256", "attemptSha256", "resultSha256", "protocolSha256",
-                   "decisionSha256", "reviewSha256", "finalizationSha256")
+                   "decisionSha256", "reviewSha256", "finalizationSha256", "evaluatorSha256")
 DOCUMENT_STATUSES = {
     "assumption": {"design-premise", "historical-premise"},
     "conclusion": {"documented"},
@@ -105,7 +105,10 @@ def _experiment_links(claim: dict, evidence: dict) -> set[str]:
         raise ValueError("empirical reader link disagrees with the finalization ID")
     if not isinstance(claim.get("observations"), dict) or not claim["observations"]:
         raise ValueError("empirical claim needs a source observation record")
-    return {reader_url}
+    evaluator_url = evidence.get("evaluatorUrl")
+    if not _pinned(evaluator_url, evidence["repository"], evidence["revision"]) or evaluator_url == evidence["url"]:
+        raise ValueError("empirical claim requires an evaluator pinned to the exact Compiler revision")
+    return {reader_url, evaluator_url}
 
 
 def _document_links(claim: dict, evidence: dict) -> set[str]:
@@ -188,10 +191,14 @@ def review_impact(claims: dict[str, dict], evidence_id: str, proposed: str) -> l
     affected = []
     for claim_id, claim in claims.items():
         evidence = claim["evidence"]
-        if evidence_id not in (evidence.get("formalId"), evidence.get("finalizationId"), evidence["url"]):
+        evaluator_url = evidence.get("evaluatorUrl")
+        if evidence_id not in (evidence.get("formalId"), evidence.get("finalizationId"), evidence["url"],
+                               evaluator_url):
             continue
-        current = (evidence.get("finalizationSha256", evidence.get("sourceSha256"))
-                   if len(proposed) == 64 else evidence["revision"])
+        current = evidence["revision"]
+        if len(proposed) == 64:
+            current = (evidence["evaluatorSha256"] if evidence_id == evaluator_url
+                       else evidence.get("finalizationSha256", evidence.get("sourceSha256")))
         if current != proposed:
             affected.append({"claimId": claim_id, "passage": claim["passage"], "retainedIdentity": current,
                              "reason": "upstream evidence identity changed"})
