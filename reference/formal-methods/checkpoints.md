@@ -38,6 +38,7 @@ This page connects mathematical results used in the research notes to their publ
 
 **Proof:** [RadialMemory.lean](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/RadialMemory.lean)
 
+(frm-000133-normalization-spectrum)=
 ## FRM-000133 — normalization spectrum
 
 **Statement.** At a nonzero vector `x` in a finite-dimensional real inner-product space, the derivative of `x / ||x||` has one radial zero mode and equal gain `1 / ||x||` in all tangent directions. Its kernel, range, rank, and singular values can therefore be characterized exactly.
@@ -57,6 +58,8 @@ dtype, cutoff and mask policy, and eligible population. [Applicability record](h
 **Used in:** [007](../../notebooks/007_derive_before_training.ipynb) and [008](../../notebooks/008_frozen_mechanism_tests.ipynb)
 
 **Proof.** [TheoremLibrary.Geometry.Sphere.normalization_singularValues](https://github.com/pH34r-pH/theorem-library/blob/950b48d502015daa1c648b5ce7a3b72eee367995/TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean#L90-L96)
+
+[Claim evidence record](../claim-evidence.json)
 
 ## FRM-000149 — composition and gradient boundaries
 

@@ -69,6 +69,40 @@ When a mathematical result materially supports the narrative, use a compact chec
 
 Use the stable formal/library identifier where one exists, but do **not** reproduce private theorem-ledger lifecycle state in this repository.
 
+### Machine-readable claim evidence
+
+Give a passage a stable MyST anchor and add a correspondingly named claim in
+[the evidence record](../reference/claim-evidence.json). Link both the record
+and the exact evidence from that section. Record its assumptions, status and
+limits. For a correction, retain the earlier entry and point to its ID from
+the successor's `supersedes` field.
+
+Use the publication validator to identify passages affected by a proposed
+change in evidence. Supply the formal theorem or finalized experiment ID
+and the proposed full commit or artifact digest.
+
+```sh
+python scripts/validate_publication.py \
+  --affected-evidence FRM-000133 --proposed-identity <commit>
+```
+
+The report names the passage and its retained identity. The editorial review
+determines whether the wording, premises or interpretation need to change.
+
+For the Muon and normalization pilot, verify the producer records before
+changing a binding. Use local upstream clones containing the pinned Git
+objects:
+
+```sh
+python scripts/audit_claim_sources.py \
+  --compiler ../experiment-compiler --theorem-library ../theorem-library
+```
+
+The audit checks the archived Compiler files and recipe and verifies the Lean
+source digest against the named applicability record. It reads Git objects
+without running the archived experiment. The publication validator checks
+the local bindings and does not monitor retractions or release availability.
+
 ### Epistemic markers
 
 Use these where they improve clarity rather than mechanically decorating every paragraph:

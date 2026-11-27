@@ -116,7 +116,11 @@ The retained-radius control weakened my initial explanation. Adding magnitude ba
 
 A later three-seed comparison tested Muon on `unit_hypersphere_depth3`, using **frozen historical AdamW** results as the reference. Learning-curve area favored AdamW; final NLL favored Muon. The reviewed outcome was **mixed/inconclusive**, with the two measures favoring different optimizers.
 
-[Inspect the finalized Muon multi-seed package](https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/). That package tests optimizer behavior on this model condition. The #164 comparison above tests the choice of recurrent topology.
+The reported intervals come from resampling eight source documents after averaging the three seed differences within each document. The initial states matched, and the recorded training and evaluation representation fingerprints differed from the historical controls. That mismatch leaves the causal optimizer comparison unresolved.
+
+[Claim evidence record](../reference/claim-evidence.json)
+
+[Inspect the finalized Muon multi-seed package](https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/) and [its pinned reproducibility walkthrough](https://github.com/pH34r-pH/experiment-compiler/blob/a471d390a81193324098abb1fc85324c7f0f894c/docs/real-study-walkthrough.md). That package tests optimizer behavior on this model condition. The #164 comparison above tests the choice of recurrent topology.
 
 (005-unit-hypersphere-anomaly-sources)=
 ## Sources and chronology
