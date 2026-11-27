@@ -421,14 +421,21 @@ def validate(root: Path) -> dict:
     claims = _validated_claims(root)
     bound_articles = {row["passage"]["path"] for row in claims.values()
                       if row["passage"]["path"].startswith("articles/")}
+    missing_claims = sorted(path.relative_to(root).as_posix() for path in (root / "articles").glob("*.md")
+                            if path.relative_to(root).as_posix() not in bound_articles)
+    if missing_claims:
+        raise ValidationError(f"missing article claim records: {', '.join(missing_claims)}")
 
     return {
         "schema": SCHEMA,
         "coverage": ["articles/*.{md,bib,svg}", "notebooks/*.ipynb", "reference/**/*.md",
-                     *([CLAIM_RECORD] if claims else []),
+                     CLAIM_RECORD,
                      *BUILD_INPUTS, *CONTEXT_FILES],
         "claimEvidence": {"validatedClaims": len(claims), "annotatedArticles": len(bound_articles),
-                          "unannotatedArticles": article_count - len(bound_articles)},
+                          "unannotatedArticles": 0,
+                          "unverifiedEmpiricalClaims": sum(
+                              row["status"] == "empirical-evidence-unverified" for row in claims.values()
+                          )},
         "contextChecked": list(CONTEXT_FILES),
         "sourceDigest": {"algorithm": "sha256-path-content-v1", "value": digest_paths(root, paths)},
         "fileCount": len(paths),

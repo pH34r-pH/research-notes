@@ -12,6 +12,7 @@ from check_public_sources import (
     Finding,
     check_entry,
     check_sources,
+    checked_document,
     checked_doi,
     checked_experiment,
     checked_formal,
@@ -130,6 +131,18 @@ class PublicSourceReadbackTests(unittest.TestCase):
         self.assertEqual(formal["passage"], self.formal["passage"])
         cited = next(row for row in report["bibliography"] if row["id"] == "pimentel2020information")
         self.assertIn("articles/accessible-does-not-imply-used.md", cited["citedBy"])
+
+    def test_pinned_document_digest_distinguishes_changed_source_from_unverified_empirics(self):
+        record = copy.deepcopy(self.claims["unit-recurrence-frozen-endpoint"])
+        document = b"synthetic preserved account"
+        record["evidence"]["sourceSha256"] = hashlib.sha256(document).hexdigest()
+        self.sources[raw_github(record["evidence"]["url"])] = document
+        with patch("check_public_sources.load_claims", return_value={record["id"]: record}):
+            report = check_sources(ROOT, self.read)
+        self.assertEqual(report["claims"][0]["status"], "checked")
+        self.assertEqual(report["claims"][0]["claimStatus"], "empirical-evidence-unverified")
+        changed = check_entry(record["id"], checked_document, record, lambda _: b"changed fixture")
+        self.assertEqual(changed["status"], "source-changed")
 
     def test_missing_and_transient_http_statuses_remain_distinct(self):
         url = "https://aclanthology.org/fixture/"

@@ -45,6 +45,7 @@ There is also an unresolved compatibility issue. The treatment and historical co
 
 This is exactly the kind of result I want the package to be able to preserve. The plan, attempt, selected observations, and source interpretation can all be inspected, including the parts that limit the conclusion. A package doesn't need to produce a positive result to be useful.
 
+(package-verification-boundary)=
 ## Reproduction is another question
 
 The public artifact can be rebuilt and verified without running the scientific workload. That checks the retained package; it isn't an independent reproduction of the experiment. To reproduce it, someone would need the appropriate inputs and runtime, an acceptable comparison, and an independently observed run, followed by evaluation under the protocol.
@@ -52,3 +53,5 @@ The public artifact can be rebuilt and verified without running the scientific w
 The compiler doesn't decide whether the question is worth asking or whether the conclusion is correct. What it can do is make the evidence for each stage easier to find and check, including when the result is incomplete or inconclusive.
 
 **Sources:** [Experiment Compiler](https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/README.md); [real-study walkthrough](https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/docs/real-study-walkthrough.md); [public experiment record](https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/).
+
+[Pinned source](https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/docs/real-study-walkthrough.md) and [claim evidence record](../reference/claim-evidence.json).

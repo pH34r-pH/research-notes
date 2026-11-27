@@ -15,6 +15,16 @@ DIGEST = re.compile(r"[0-9a-f]{64}")
 PINNED_GITHUB = re.compile(r"https://github\.com/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/blob/([0-9a-f]{40})/.+")
 PACKAGE_DIGESTS = ("planSha256", "attemptSha256", "resultSha256", "protocolSha256",
                    "decisionSha256", "reviewSha256", "finalizationSha256")
+DOCUMENT_STATUSES = {
+    "assumption": {"design-premise", "historical-premise"},
+    "conclusion": {"documented"},
+    "correction": {"empirical-evidence-unverified"},
+    "counterexample": {"illustrative"},
+    "formal": {"documented"},
+    "hypothesis": {"open"},
+    "limitation": {"documented"},
+    "observation": {"empirical-evidence-unverified"},
+}
 
 
 def _unique_object(pairs: list[tuple[str, object]]) -> dict:
@@ -58,7 +68,7 @@ def _pinned(value: object, repository: object, revision: object) -> bool:
 def _formal_links(claim: dict, evidence: dict) -> set[str]:
     formal_id = evidence.get("formalId")
     if (
-        evidence.get("kind") != "lean" or evidence["repository"] != "pH34r-pH/theorem-library"
+        claim["kind"] != "formal" or evidence["repository"] != "pH34r-pH/theorem-library"
         or not isinstance(evidence.get("declaration"), str)
         or not _matches(DIGEST, evidence.get("sourceSha256"))
         or not _matches(re.compile(r"FRM-[0-9]{6}"), formal_id)
@@ -82,7 +92,7 @@ def _formal_links(claim: dict, evidence: dict) -> set[str]:
 
 def _experiment_links(claim: dict, evidence: dict) -> set[str]:
     if (
-        evidence.get("kind") != "compiled-experiment"
+        claim["kind"] != "observation"
         or evidence["repository"] != "pH34r-pH/experiment-compiler"
         or not all(_matches(DIGEST, evidence.get(field)) for field in PACKAGE_DIGESTS)
     ):
@@ -98,6 +108,18 @@ def _experiment_links(claim: dict, evidence: dict) -> set[str]:
     return {reader_url}
 
 
+def _document_links(claim: dict, evidence: dict) -> set[str]:
+    if claim["status"] not in DOCUMENT_STATUSES.get(claim["kind"], set()):
+        raise ValueError(f"{claim['id']} has an invalid status for a documented claim")
+    if not isinstance(claim.get("statement"), str) or not claim["statement"].strip():
+        raise ValueError(f"{claim['id']} needs a statement that identifies the claim")
+    if not _matches(DIGEST, evidence.get("sourceSha256")):
+        raise ValueError(f"{claim['id']} requires a pinned source document digest")
+    if claim["kind"] == "correction" and not claim.get("supersedes"):
+        raise ValueError(f"{claim['id']} must identify the earlier claim it corrects")
+    return set()
+
+
 def _validate_claim(root: Path, claim: dict, markdown_targets: Callable[[str], list[str]]) -> None:
     path, section = _section(root, claim.get("passage"))
     evidence = claim.get("evidence")
@@ -111,11 +133,13 @@ def _validate_claim(root: Path, claim: dict, markdown_targets: Callable[[str], l
             raise ValueError(f"{claim['id']} requires explicit {field}")
     if not _matches(SLUG, claim.get("status")):
         raise ValueError(f"{claim['id']} requires an evidence status")
-    validators = {"formal": _formal_links, "observation": _experiment_links}
-    kind = claim.get("kind")
-    if not isinstance(kind, str) or kind not in validators:
+    if not _matches(SLUG, claim.get("kind")):
         raise ValueError(f"{claim['id']} has an unknown evidence kind")
-    expected = validators[kind](claim, evidence) | {
+    validators = {"lean": _formal_links, "compiled-experiment": _experiment_links, "source-document": _document_links}
+    evidence_kind = evidence.get("kind")
+    if not isinstance(evidence_kind, str) or evidence_kind not in validators:
+        raise ValueError(f"{claim['id']} has an unknown evidence kind")
+    expected = validators[evidence_kind](claim, evidence) | {
         evidence["url"], posixpath.relpath(RECORD, posixpath.dirname(path)),
     }
     if not expected.issubset(markdown_targets(section)):
@@ -164,7 +188,7 @@ def review_impact(claims: dict[str, dict], evidence_id: str, proposed: str) -> l
     affected = []
     for claim_id, claim in claims.items():
         evidence = claim["evidence"]
-        if evidence_id not in (evidence.get("formalId"), evidence.get("finalizationId")):
+        if evidence_id not in (evidence.get("formalId"), evidence.get("finalizationId"), evidence["url"]):
             continue
         current = (evidence.get("finalizationSha256", evidence.get("sourceSha256"))
                    if len(proposed) == 64 else evidence["revision"])

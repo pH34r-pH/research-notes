@@ -55,6 +55,7 @@ Those cases require different changes. If the distinction has been erased, chang
 
 I froze the representation and compared the frozen native consumer with a separately trained affine-softmax probe. Keeping the representation fixed made the external readout a test of recoverability under a deliberately small consumer family.
 
+(frozen-state-probe-and-native-gains)=
 ## What the probe measured
 
 For a frozen hidden state $h$, the probe computes logits
@@ -86,6 +87,8 @@ On the frozen natural-source branch benchmark, a small external readout recovere
 | Frozen native consumer | 0.006446 nat | The model's original downstream consumer on the same bounded branch task |
 
 The tangent-coordinate analysis reached the same qualitative conclusion, so the probe did not depend on an obvious radial coordinate. Selectivity controls also passed. The result was classified as **ACCESSIBLE-BUT-UNDERUSED**.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/013_accessible_not_used.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Inspect the geometry
 

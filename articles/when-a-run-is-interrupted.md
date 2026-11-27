@@ -37,6 +37,7 @@ The identity problem applies to process IDs as well. IDs can be reused, so an ol
 
 The receipt binds the private journal by digest. A result ZIP can expose the journal digest and a sanitized cleanup summary while leaving host-specific operational details in the private attempt store. That makes it possible to connect the result to the cleanup record without putting every local detail into the distributable package.
 
+(interrupted-run-evidence-boundary)=
 ## What does that prove?
 
 These mechanisms improve the record of what the controller observed and what cleanup it could verify. They don't prove that the scientific workload completed, that its results passed the protocol's checks, or that the environment enforced every isolation boundary. In particular, the hermetic tests of this behavior don't by themselves establish physical worker-loss recovery or production-worker qualification.
@@ -44,3 +45,5 @@ These mechanisms improve the record of what the controller observed and what cle
 The goal is to retain enough information to tell what happened, and to leave the uncertain cases visibly uncertain. An incomplete attempt is still part of the history of the experiment; it just shouldn't be promoted into a result that nobody observed.
 
 **Sources:** [Lifecycle and runner documentation](https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/docs/wiki/Lifecycle-and-Runner.md); [Experiment Compiler overview](https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/README.md).
+
+[Pinned source](https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/docs/wiki/Lifecycle-and-Runner.md) and [claim evidence record](../reference/claim-evidence.json).

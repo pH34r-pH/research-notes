@@ -65,6 +65,7 @@ The direction-only model finished far ahead. That made the unit constraint worth
 Toy normalization: projecting a vector onto the unit circle preserves its direction and removes its scale.
 ```
 
+(unit-recurrence-frozen-endpoint)=
 ## Frozen endpoint
 
 After 128 training updates, validation negative log-likelihood (NLL) per original byte was approximately:
@@ -82,6 +83,8 @@ There was also a complication in the trajectory. The unit model learned more slo
 That gives us two observations to explain together: a large endpoint advantage, and a worse learning trajectory. A useful account of the unit constraint has to accommodate both.
 
 > **Sticky note — AULC:** area under the learning curve summarizes loss across training. A model can have a better final checkpoint while accumulating worse loss over the trajectory.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/005_unit_hypersphere_anomaly.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

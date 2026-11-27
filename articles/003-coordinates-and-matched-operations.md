@@ -46,6 +46,7 @@ A coordinate-only control let me measure how much each change contributed.
 Toy complex values can be re-expressed in polar coordinates. Changing the operation is a separate choice.
 ```
 
+(polar-native-versus-coordinate-control)=
 ## Result
 
 Both changes improved loss. The coordinate-only representation helped, and the polar-native processing path improved it further.
@@ -53,6 +54,8 @@ Both changes improved loss. The coordinate-only representation helped, and the p
 Relative to spectral Cartesian processing, the polar-native model improved loss by about **0.5825 nat per original byte**. Relative to the coordinate-only control, which contained the same underlying information, it improved loss by about **0.3923 nat per original byte**. All three experimental seeds cleared the predefined materiality threshold.
 
 The second comparison is the one that matters for the mechanism. Re-expressing the state accounts for part of the improvement; changing the operations accounts for an additional part. I could now investigate the polar-native block itself.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/003_coordinates_and_matched_operations.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

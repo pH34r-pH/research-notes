@@ -45,6 +45,7 @@ The question became: **when can a reasoner safely treat two states as equivalent
 A toy quotient groups states by parity; adding two preserves the equivalence classes.
 ```
 
+(dynamic-quotient-future-equivalence)=
 ## From static to dynamic sufficiency
 
 A compressed recurrent state needs to satisfy two requirements. It must preserve the distinctions required by the task, and its updates must continue to respect those distinctions.
@@ -54,6 +55,8 @@ Consider two states that look equivalent now. If updating both keeps them equiva
 > **Sticky note — quotient:** group objects by an equivalence relation, then treat each group as one object for the purpose being studied. Defining the relation specifies which distinctions we are prepared to discard.
 
 This gave me a target for the representation: a **dynamic or predictive quotient**, retaining enough state to preserve the distinctions required for relevant future behavior. Keeping every detail can be expensive and can leave irrelevant variables available as shortcuts. Compression becomes useful when we can specify why the discarded differences will remain irrelevant.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/010_dynamic_quotient.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Research context
 

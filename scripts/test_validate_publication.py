@@ -26,18 +26,39 @@ class PublicationValidationTest(unittest.TestCase):
     def _pilot_claims(self, root: Path) -> dict:
         published = Path(__file__).resolve().parents[1]
         document = json.loads((published / RECORD).read_text(encoding="utf-8"))
-        for path in [RECORD, *(row["passage"]["path"] for row in document["claims"])]:
+        document["claims"] = document["claims"][:2]
+        for path in {row["passage"]["path"] for row in document["claims"]}:
             target = root / path
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(published / path, target)
+        (root / RECORD).write_text(json.dumps(document), encoding="utf-8")
         return document
 
-    def test_pilot_claims_are_counted_in_publication_validation(self):
+    def test_all_articles_are_covered_and_reported_evidence_is_marked(self):
         receipt = validate(Path(__file__).resolve().parents[1])
         self.assertIn(RECORD, receipt["coverage"])
-        self.assertEqual(receipt["claimEvidence"]["validatedClaims"], 2)
-        self.assertEqual(receipt["claimEvidence"]["annotatedArticles"], 1)
-        self.assertEqual(receipt["claimEvidence"]["unannotatedArticles"], receipt["articleCount"] - 1)
+        self.assertGreaterEqual(receipt["claimEvidence"]["validatedClaims"], receipt["articleCount"])
+        self.assertEqual(receipt["claimEvidence"]["annotatedArticles"], receipt["articleCount"])
+        self.assertEqual(receipt["claimEvidence"]["unannotatedArticles"], 0)
+        self.assertGreater(receipt["claimEvidence"]["unverifiedEmpiricalClaims"], 0)
+
+    def test_coverage_and_empirical_status_cannot_be_silently_removed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.repository(directory)
+            record = root / RECORD
+            document = json.loads(record.read_text(encoding="utf-8"))
+            article = root / "articles/sample.md"
+            original = article.read_text(encoding="utf-8")
+            article.write_text(original.replace("[Claim evidence record](../reference/claim-evidence.json).", ""),
+                               encoding="utf-8")
+            record.unlink()
+            with self.assertRaisesRegex(ValidationError, "missing article claim records: articles/sample.md"):
+                validate(root)
+            article.write_text(original, encoding="utf-8")
+            document["claims"][0].update({"kind": "observation", "status": "documented"})
+            record.write_text(json.dumps(document), encoding="utf-8")
+            with self.assertRaisesRegex(ValidationError, "invalid status for a documented claim"):
+                validate(root)
 
     def test_claim_contract_rejects_missing_premise_moving_proof_and_unlinked_experiment(self):
         for case, error in (
@@ -127,6 +148,26 @@ class PublicationValidationTest(unittest.TestCase):
             _validate_article_relations(root, [article])
             self.assertEqual(before, notebook.read_bytes())
 
+    def add_document_claim(self, root: Path, article_path: str) -> None:
+        slug = Path(article_path).stem
+        evidence = {
+            "kind": "source-document", "repository": "pH34r-pH/research-notes",
+            "revision": "b" * 40, "sourceSha256": "c" * 64,
+            "url": f"https://github.com/pH34r-pH/research-notes/blob/{'b' * 40}/{article_path}",
+        }
+        path = root / RECORD
+        document = (json.loads(path.read_text(encoding="utf-8")) if path.exists()
+                    else {"schema": "research-notes-claim-evidence/v1", "claims": []})
+        document["claims"].append({
+            "id": slug, "kind": "limitation", "status": "documented", "statement": "Fixture scope.",
+            "passage": {"path": article_path, "anchor": slug}, "evidence": evidence,
+            "assumptions": ["fixture"], "limitations": ["illustrative"], "supersedes": [],
+        })
+        path.write_text(json.dumps(document), encoding="utf-8")
+        with (root / article_path).open("a", encoding="utf-8") as handle:
+            handle.write(f"\n({slug})=\n## Scope\n\n[Source]({evidence['url']}) "
+                         "[Claim evidence record](../reference/claim-evidence.json).\n")
+
     def repository(self, directory: str) -> Path:
         root = Path(directory)
         (root / "notebooks").mkdir()
@@ -158,6 +199,7 @@ class PublicationValidationTest(unittest.TestCase):
         )
         (root / "index.md").write_text("[Start with the article](articles/sample.md)\n", encoding="utf-8")
         (root / "notebooks/001.ipynb").write_text(json.dumps(NOTEBOOK), encoding="utf-8")
+        self.add_document_claim(root, "articles/sample.md")
         return root
 
     def test_receipt_covers_consumer_inputs_and_is_deterministic(self):
@@ -254,6 +296,7 @@ class PublicationValidationTest(unittest.TestCase):
                 validate(root)
             with (root / "PUBLICATION-DISPOSITIONS.md").open("a", encoding="utf-8") as handle:
                 handle.write("| [Essay](articles/essay.md) | essay | Standalone article |\n")
+            self.add_document_claim(root, "articles/essay.md")
             self.assertEqual(validate(root)["articleCount"], 2)
 
 

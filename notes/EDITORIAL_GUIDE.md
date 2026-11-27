@@ -71,15 +71,23 @@ Use the stable formal/library identifier where one exists, but do **not** reprod
 
 ### Machine-readable claim evidence
 
-Give a passage a stable MyST anchor and add a correspondingly named claim in
-[the evidence record](../reference/claim-evidence.json). Link both the record
-and the exact evidence from that section. Record its assumptions, status and
-limits. For a correction, retain the earlier entry and point to its ID from
-the successor's `supersedes` field.
+Every canonical article needs a claim record. Give the passage a stable MyST
+anchor and link [the evidence record](../reference/claim-evidence.json) and the
+exact evidence from that section. State the claim, its assumptions and its limits.
+For a correction, retain the earlier entry and point to its ID from the
+successor's `supersedes` field.
+
+Use an exact Compiler binding when the run evidence is public. When the
+historical source is a preserved notebook or prose account, cite its exact
+revision and file SHA-256 and mark the observation
+`empirical-evidence-unverified`. Use `open` for an untested hypothesis and
+`illustrative` for a worked counterexample. A source document readback checks
+the cited bytes. The record's claim status describes the evidence for its
+assertion.
 
 Use the publication validator to identify passages affected by a proposed
-change in evidence. Supply the formal theorem or finalized experiment ID
-and the proposed full commit or artifact digest.
+change in evidence. Supply the formal theorem ID, finalized experiment ID,
+or pinned source URL and the proposed full commit or SHA-256 digest.
 
 ```sh
 python scripts/validate_publication.py \
@@ -89,18 +97,17 @@ python scripts/validate_publication.py \
 The report names the passage and its retained identity. The editorial review
 determines whether the wording, premises or interpretation need to change.
 
-For the Muon and normalization pilot, verify the producer records before
-changing a binding. Use local upstream clones containing the pinned Git
-objects:
+Verify the producer records before changing a binding. Use local clones
+containing the pinned Git objects:
 
 ```sh
 python scripts/audit_claim_sources.py \
   --compiler ../experiment-compiler --theorem-library ../theorem-library
 ```
 
-The audit checks the archived Compiler files and recipe and verifies the Lean
-source digest against the named applicability record. It reads Git objects
-without running the archived experiment.
+The audit checks the archived Compiler files and recipe, the Lean source
+against the named applicability record, and each pinned document digest.
+It reads Git objects without running the archived experiment.
 
 The separate public source job runs on pull requests and on `main`. To repeat
 the readback locally:
@@ -110,8 +117,8 @@ python scripts/check_public_sources.py --receipt validation/public-source-readba
 ```
 
 The report checks the public experiment catalog and its article backlink,
-the pinned proof and current applicability record, and DOI identities at
-Crossref and the publisher. It lists the affected passages or articles
+the pinned proof and current applicability record, the pinned source documents,
+and DOI identities at Crossref and the publisher. It lists the affected passages or articles
 when evidence changes, access fails, or the registry reports an update.
 A check with no update reported reflects the registry response at that time.
 Retraction coverage depends on what the registry receives. Review any

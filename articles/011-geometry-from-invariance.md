@@ -44,6 +44,7 @@ I started evaluating each part separately: what must its state preserve, which c
 At a fixed angle, changing either radius changes the inner product.
 ```
 
+(euclidean-dot-product-couples-radius)=
 ## A simple example: radius and direction
 
 Suppose direction represents semantic identity and radius represents a structural quantity such as argument depth. For a nonzero vector, write
@@ -63,6 +64,8 @@ The same angle produces a different score when either magnitude changes. If sema
 A product representation or explicit side channel makes independence part of the construction. If the quantities are intended to interact, a coupled or warped geometry may suit that requirement. Specifying the intended behavior gives us a way to choose between them.
 
 > **Sticky note — product geometry:** give two independently varying factors separate geometries. Their independence is then explicit in the construction.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/011_geometry_from_invariance.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## The same test applied elsewhere
 
