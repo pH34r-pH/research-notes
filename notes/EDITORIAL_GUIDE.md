@@ -100,8 +100,23 @@ python scripts/audit_claim_sources.py \
 
 The audit checks the archived Compiler files and recipe and verifies the Lean
 source digest against the named applicability record. It reads Git objects
-without running the archived experiment. The publication validator checks
-the local bindings and does not monitor retractions or release availability.
+without running the archived experiment.
+
+The separate public source job runs on pull requests and on `main`. To repeat
+the readback locally:
+
+```sh
+python scripts/check_public_sources.py --receipt validation/public-source-readback.json
+```
+
+The report checks the public experiment catalog and its article backlink,
+the pinned proof and current applicability record, and DOI identities at
+Crossref and the publisher. It lists the affected passages or articles
+when evidence changes, access fails, or the registry reports an update.
+A check with no update reported reflects the registry response at that time.
+Retraction coverage depends on what the registry receives. Review any
+finding against the cited source and preserve the prior claim record.
+[Crossref retraction metadata](https://www.crossref.org/documentation/retrieve-metadata/retraction-watch/)
 
 ### Epistemic markers
 
