@@ -139,6 +139,13 @@ def checked_formal(claim, read):
             "backlink": formal_backlink(current, claim["passage"], read)}
 
 
+def checked_document(claim, read):
+    evidence = claim["evidence"]
+    actual = hashlib.sha256(read(raw_github(evidence["url"]))).hexdigest()
+    require(actual == evidence["sourceSha256"], "pinned source document digest changed")
+    return {"sourceSha256": actual, "sourceUrl": evidence["url"]}
+
+
 def bibliography_rows(path):
     source = path.read_text(encoding="utf-8")
     entries = list(ENTRY.finditer(source))
@@ -187,9 +194,12 @@ def article_citations(root):
 
 def check_sources(root, read=fetch):
     claims = load_claims(root, markdown_targets)
-    evidence = [{**check_entry(key, checked_formal if claim["kind"] == "formal" else checked_experiment, claim, read),
-                 "passage": claim["passage"]}
-                for key, claim in claims.items()]
+    checks = {"lean": checked_formal, "compiled-experiment": checked_experiment, "source-document": checked_document}
+    evidence = [
+        {**check_entry(key, checks[claim["evidence"]["kind"]], claim, read),
+         "passage": claim["passage"], "claimStatus": claim["status"]}
+        for key, claim in claims.items()
+    ]
     articles = article_citations(root)
     citations = [{**check_entry(key, checked_doi, doi, publisher, read), "citedBy": articles.get(key, [])}
                  for bib in sorted((root / "articles").glob("*.bib")) for key, doi, publisher in bibliography_rows(bib)]

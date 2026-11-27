@@ -52,6 +52,7 @@ Longer training, a matched regularization control, and a common checkpoint-selec
 Schematic learning curves show why the best checkpoint and a fixed late checkpoint can rank models differently.
 ```
 
+(shared-recurrence-common-selection)=
 ## What changed
 
 First, I extended the **training trajectory**. The shared and retained-radius models reached much better losses earlier; the unit model's advantage appeared later. The frozen endpoint had compared models at different places in their learning curves.
@@ -75,6 +76,8 @@ The comparison had reversed. Once checkpoint selection followed the same rule, t
 The historical data also needed a statistical correction. Some rows I had counted as separate observations came from the same underlying source article. Several measurements from one source can be useful, but they do not supply the independence of several different sources.
 
 > **Sticky note — independent sampling unit:** the unit that contributes independent evidence to an analysis. Treating correlated measurements as independent makes the uncertainty look smaller than it is.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/006_endpoint_can_mislead.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

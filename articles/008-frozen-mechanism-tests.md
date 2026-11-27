@@ -44,6 +44,7 @@ If the frozen model contradicted a proposed mechanism, that would give me a reas
 A toy scalar contraction compounds across steps. In a recurrent model, the full calculation uses a sequence of Jacobians.
 ```
 
+(local-weakness-without-horizon-separation)=
 ## The mechanism campaign
 
 The tests returned:
@@ -63,6 +64,8 @@ Radial perturbations could still affect the output locally. Removing radial vari
 > **Sticky note — Jacobian:** a matrix describing how small changes at an input or internal state affect the output locally. Comparing directions reveals which perturbations have the strongest local effect.
 
 > **Sticky note — finite-horizon Jacobian:** the product of local Jacobians along a finite sequence of recurrent updates. It describes how a small perturbation propagates through that sequence.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/008_frozen_mechanism_tests.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

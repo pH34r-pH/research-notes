@@ -38,6 +38,7 @@ Suppose the consumer receives the original represented components separately. If
 > **Sticky note — control:** a comparison that isolates one possible explanation by keeping the other relevant conditions as similar as possible. [Reference →](../reference/glossary.md#control)
 
 
+(spectral-loss-across-stages)=
 ## Causal decomposition
 
 I gave models with matched downstream capacity the same source information in two forms: separate components, and the state produced by composing those components. This made the representation pipeline the main difference between the conditions.
@@ -45,6 +46,8 @@ I gave models with matched downstream capacity the same source information in tw
 Some of the performance deficit was present before composition. Composing the components added more loss, and a learned receiver recovered part of that addition. The original gap therefore contained several problems, with different places to intervene.
 
 The pre-composition deficit was particularly useful. It meant that changing composition alone would leave part of the problem in place. I needed to examine how the consumer operated on the spectral state: were its coordinates and operations making available information unnecessarily difficult to use?
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/002_locating_representation_loss.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

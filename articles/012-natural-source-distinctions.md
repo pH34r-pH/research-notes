@@ -52,6 +52,7 @@ The revision history also preserves the source of each case. I can identify the 
 
 This supports a specific question: given the shared or closely controlled context, can the representation distinguish the continuations that branch in the source? We can test that prediction instead of using geometric spread as a proxy for usefulness.
 
+(revision-branch-benchmark-qualified-at-32-bytes)=
 ## Building a benchmark that can fail
 
 The first check is whether a constant representation fails. If every input can map to the same state and still satisfy the criterion, the benchmark has no basis for claiming that input distinctions were preserved.
@@ -63,6 +64,8 @@ The grouping follows the earlier source-unit correction. Thousands of tokens fro
 > **Sticky note — experimental unit:** the independent unit contributing evidence to a comparison. Several measurements from one source can be useful while remaining correlated.
 
 The bounded benchmark qualified at a context length of **32 bytes**. I froze that task-distinction dataset for the next stage.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/012_natural_source_distinctions.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Research context
 

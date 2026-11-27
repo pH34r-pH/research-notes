@@ -62,6 +62,472 @@
       "runtimeApplicability": "unmeasured",
       "limitations": ["epsilon-cutoff-and-mask-require-runtime-evidence", "finite-horizon-jacobian-product"],
       "supersedes": []
+    },
+    {
+      "id": "early-spectral-negative-result",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/001-text-as-signal.md",
+        "anchor": "early-spectral-negative-result"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "The early spectral models performed worse despite retaining recoverable input information in the conditions reported.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/001_text_as_signal.ipynb",
+        "sourceSha256": "9c6eb0d0d0ac4ae93d01be6697042d1ecdffca0d23b2840fa828eaa431054833"
+      },
+      "assumptions": [
+        "early-spectral-model-comparison"
+      ],
+      "limitations": [
+        "public-notebook-is-a-reconstruction",
+        "original-run-package-unavailable",
+        "toy-fourier-example-is-illustrative"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "spectral-loss-across-stages",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/002-locating-representation-loss.md",
+        "anchor": "spectral-loss-across-stages"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "The matched comparison reported a deficit before composition, further loss after composition, and partial recovery with a learned receiver.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/002_locating_representation_loss.ipynb",
+        "sourceSha256": "23ce847e6becc664e48706e315619016b71d6a1340ae6282909f4cdf2795276e"
+      },
+      "assumptions": [
+        "same-source-information",
+        "matched-downstream-capacity"
+      ],
+      "limitations": [
+        "original-run-package-unavailable",
+        "stage-control-is-diagnostic"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "polar-native-versus-coordinate-control",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/003-coordinates-and-matched-operations.md",
+        "anchor": "polar-native-versus-coordinate-control"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "Polar-native operations improved reported loss by about 0.3923 nat per original byte over the coordinate-only control, across three seeds that met the materiality threshold.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/003_coordinates_and_matched_operations.ipynb",
+        "sourceSha256": "376779c5aac90ec37ec81dd25ddb80582f92087387474ee81cd0ceede7b4f084"
+      },
+      "assumptions": [
+        "same-information-in-coordinate-only-control",
+        "predefined-materiality-threshold"
+      ],
+      "limitations": [
+        "original-run-package-unavailable",
+        "limited-to-compared-spectral-models"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "hermitian-attention-ablation",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/004-isolating-phase-attention.md",
+        "anchor": "hermitian-attention-ablation"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "Phase-aware Hermitian attention retained the reported gain in the ablation. Phase-preserving residuals alone failed the criteria, and explicit log-radius handling matched its manual control.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/004_isolating_phase_attention.ipynb",
+        "sourceSha256": "9e2897ecdeb133a2bf349b3eaa6440c684e97bd0d41902d89ebdee825e007c3c"
+      },
+      "assumptions": [
+        "coordinate-only-baseline",
+        "matched-manual-radius-control"
+      ],
+      "limitations": [
+        "original-run-package-unavailable",
+        "bounded-ablation"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "unit-recurrence-frozen-endpoint",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/005-unit-hypersphere-anomaly.md",
+        "anchor": "unit-recurrence-frozen-endpoint"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "At 128 updates the unit model reported 3.6584 nats per original byte against 5.1569 for shared recurrence, with a worse area under the learning curve.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/005_unit_hypersphere_anomaly.ipynb",
+        "sourceSha256": "3e18f07aa7b3404b69574cb9d26f1da6a195f634e5ef4d6c9d35fcaa46087a47"
+      },
+      "assumptions": [
+        "frozen-128-update-endpoint",
+        "validation-nll-per-original-byte"
+      ],
+      "limitations": [
+        "original-run-package-unavailable",
+        "later-muon-package-is-a-different-experiment",
+        "endpoint-does-not-establish-mechanism"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "shared-recurrence-common-selection",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/006-endpoint-can-mislead.md",
+        "anchor": "shared-recurrence-common-selection"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "Under the common frozen selection policy, the unit model reported 0.2445 nat per byte higher loss and about 3.44 times the mean training-plus-selection dense-operation budget of shared recurrence.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/006_endpoint_can_mislead.ipynb",
+        "sourceSha256": "d91c9123994a9785e5da87c7fcdcd6b702e06668540d8ea612e3a2ca0003c28a"
+      },
+      "assumptions": [
+        "common-frozen-checkpoint-selection",
+        "selection-cost-in-budget"
+      ],
+      "limitations": [
+        "original-run-package-unavailable",
+        "reported-interval-construction-unavailable",
+        "bounded-architecture-comparison"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "checkpoint-original-row-independence",
+      "kind": "assumption",
+      "passage": {
+        "path": "articles/006-endpoint-can-mislead.md",
+        "anchor": "shared-recurrence-common-selection"
+      },
+      "status": "historical-premise",
+      "statement": "The earlier statistical analysis treated rows from the same underlying source article as independent observations.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/006_endpoint_can_mislead.ipynb",
+        "sourceSha256": "d91c9123994a9785e5da87c7fcdcd6b702e06668540d8ea612e3a2ca0003c28a"
+      },
+      "assumptions": [
+        "one-observation-per-row-in-original-account"
+      ],
+      "limitations": [
+        "reconstructed-from-the-later-correction"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "checkpoint-source-independence-correction",
+      "kind": "correction",
+      "passage": {
+        "path": "articles/006-endpoint-can-mislead.md",
+        "anchor": "shared-recurrence-common-selection"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "The later analysis identified repeated rows from the same source article and corrected the independent unit to the underlying source.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/006_endpoint_can_mislead.ipynb",
+        "sourceSha256": "d91c9123994a9785e5da87c7fcdcd6b702e06668540d8ea612e3a2ca0003c28a"
+      },
+      "assumptions": [
+        "group-related-rows-by-underlying-source"
+      ],
+      "limitations": [
+        "exact-source-membership-and-interval-construction-unavailable"
+      ],
+      "supersedes": [
+        "checkpoint-original-row-independence"
+      ]
+    },
+    {
+      "id": "normalization-radial-and-tangent-action",
+      "kind": "formal",
+      "passage": {
+        "path": "articles/007-derive-before-training.md",
+        "anchor": "normalization-radial-and-tangent-action"
+      },
+      "status": "documented",
+      "statement": "At a nonzero input, the local derivative of exact normalization annihilates radial perturbations and scales tangent perturbations by inverse norm.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/theorem-library",
+        "revision": "2c90ec3d482a64a5bce5787f48c5828429c50305",
+        "url": "https://github.com/pH34r-pH/theorem-library/blob/2c90ec3d482a64a5bce5787f48c5828429c50305/TheoremLibrary/Geometry/Sphere/Normalization.lean",
+        "sourceSha256": "8a46141ed9ed37ea978738d58f7960f27b9758502cb044bb0101768c263ea854"
+      },
+      "assumptions": [
+        "nonzero-input",
+        "tangent-perpendicular-to-input"
+      ],
+      "limitations": [
+        "local-derivative",
+        "runtime-branch-frequency-unmeasured"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "local-weakness-without-horizon-separation",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/008-frozen-mechanism-tests.md",
+        "anchor": "local-weakness-without-horizon-separation"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "The campaign reported a weaker local radial response, output sensitivity to radial changes, and no clear spectral separation in the finite-horizon Jacobian products.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/008_frozen_mechanism_tests.ipynb",
+        "sourceSha256": "d6e8b9a4b330a99279b0e89975830c5625709623c5ae5a77b02e015d67868a70"
+      },
+      "assumptions": [
+        "distinct-local-and-finite-horizon-measurements"
+      ],
+      "limitations": [
+        "original-run-package-unavailable",
+        "local-derivative-does-not-settle-horizon-behavior"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "ledger-tracks-dependencies-between-claims",
+      "kind": "conclusion",
+      "passage": {
+        "path": "articles/009-theorem-ledger-method.md",
+        "anchor": "ledger-tracks-dependencies-between-claims"
+      },
+      "status": "documented",
+      "statement": "The research ledger records dependencies so that a changed premise, proof, or observation can be traced to the arguments and experiments that use it.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/009_theorem_ledger_method.ipynb",
+        "sourceSha256": "5e1a8f5c2edb62d1bb8593d80002a2d5164f3ca4948dd0a7ed1397920f700077"
+      },
+      "assumptions": [
+        "claims-have-explicit-evidence-types"
+      ],
+      "limitations": [
+        "method-description",
+        "no-measurement-of-method-effectiveness"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "dynamic-quotient-future-equivalence",
+      "kind": "assumption",
+      "passage": {
+        "path": "articles/010-dynamic-quotient.md",
+        "anchor": "dynamic-quotient-future-equivalence"
+      },
+      "status": "design-premise",
+      "statement": "Two compressed states can be treated as equivalent only while their updates preserve the distinctions that matter for the selected future behavior.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/010_dynamic_quotient.ipynb",
+        "sourceSha256": "dfd38f335cf041f03459c39952b433e344278e5f2d8c131afd298b27a4725bb5"
+      },
+      "assumptions": [
+        "task-defines-relevant-futures"
+      ],
+      "limitations": [
+        "does-not-identify-the-equivalence-for-language",
+        "toy-quotient-is-illustrative"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "euclidean-dot-product-couples-radius",
+      "kind": "counterexample",
+      "passage": {
+        "path": "articles/011-geometry-from-invariance.md",
+        "anchor": "euclidean-dot-product-couples-radius"
+      },
+      "status": "illustrative",
+      "statement": "Two nonzero vectors with a fixed angle can have different ordinary inner products when either radius changes, so the ordinary score does not enforce radius-invariant semantic similarity.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/011_geometry_from_invariance.ipynb",
+        "sourceSha256": "76a89d9cbee8a1b0267d3d9a9f5c7decae7c2658152195bf1910f23c5598d9b4"
+      },
+      "assumptions": [
+        "ordinary-euclidean-inner-product",
+        "nonzero-fixed-angle-cosine"
+      ],
+      "limitations": [
+        "algebraic-example",
+        "no-empirical-claim-about-learned-semantics"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "revision-branch-benchmark-qualified-at-32-bytes",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/012-natural-source-distinctions.md",
+        "anchor": "revision-branch-benchmark-qualified-at-32-bytes"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "The public account reports qualification of the bounded revision-branch benchmark at 32 bytes, with negative controls and lineage-grouped cases.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/012_natural_source_distinctions.ipynb",
+        "sourceSha256": "e7be2b39a25e736e747c4e5e5ca367b5f682ccdce677d8111b7dcf6f88e48c76"
+      },
+      "assumptions": [
+        "held-out-branch-cases",
+        "group-by-page-and-revision-lineage"
+      ],
+      "limitations": [
+        "exact-data-split-and-evaluator-package-unavailable",
+        "bounded-benchmark"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "frozen-state-probe-and-native-gains",
+      "kind": "observation",
+      "passage": {
+        "path": "articles/accessible-does-not-imply-used.md",
+        "anchor": "frozen-state-probe-and-native-gains"
+      },
+      "status": "empirical-evidence-unverified",
+      "statement": "The recorded branch-task log-loss gains over a constant baseline were 0.737664 nat for the affine probe and 0.006446 nat for the frozen native consumer.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/013_accessible_not_used.ipynb",
+        "sourceSha256": "c4e0c210daadd721b73ea22b95185daf2c70d17334e438f7f9bb8b44d2a2739a"
+      },
+      "assumptions": [
+        "same-bounded-branch-task",
+        "constant-baseline",
+        "frozen-representation"
+      ],
+      "limitations": [
+        "exact-benchmark-replay-package-unavailable",
+        "confidence-level-and-splits-unavailable",
+        "causal-use-and-next-byte-gain-unmeasured"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "frozen-state-alternative-consumer-hypothesis",
+      "kind": "hypothesis",
+      "passage": {
+        "path": "articles/can-a-small-consumer-use-the-state.md",
+        "anchor": "frozen-state-alternative-consumer-hypothesis"
+      },
+      "status": "open",
+      "statement": "A small replacement consumer may improve full next-byte prediction when the state-producing model is frozen.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/research-notes",
+        "revision": "e2595640126941c1ad6bf0aee9f3234747ddf2d2",
+        "url": "https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/articles/can-a-small-consumer-use-the-state.md",
+        "sourceSha256": "51c46af28ac52f2599bdac3260e34e92cc30ed9a288d292ccb314b3508583ec7"
+      },
+      "assumptions": [
+        "frozen-producer",
+        "compare-on-the-same-held-out-data"
+      ],
+      "limitations": [
+        "no-result-reported",
+        "branch-probe-gain-is-a-different-endpoint"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "package-verification-boundary",
+      "kind": "limitation",
+      "passage": {
+        "path": "articles/packaging-an-experiment.md",
+        "anchor": "package-verification-boundary"
+      },
+      "status": "documented",
+      "statement": "Verifying or rebuilding an archived Compiler artifact checks its retained contents. Independent reproduction requires a separate observed run and evaluation.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/experiment-compiler",
+        "revision": "f47ac10a8f9b954911518e823bc6a35df06041e7",
+        "url": "https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/docs/real-study-walkthrough.md",
+        "sourceSha256": "92867759e299be4d3c9398d452d59662556ea695f9f24ea4fc0d2dd1ba101772"
+      },
+      "assumptions": [
+        "retained-public-package",
+        "independent-run-requires-inputs-and-runtime"
+      ],
+      "limitations": [
+        "package-integrity-does-not-establish-scientific-validity"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "interrupted-run-evidence-boundary",
+      "kind": "limitation",
+      "passage": {
+        "path": "articles/when-a-run-is-interrupted.md",
+        "anchor": "interrupted-run-evidence-boundary"
+      },
+      "status": "documented",
+      "statement": "The attempt and cleanup journals record what the controller observed, and the hermetic fixtures leave physical worker-loss recovery and production qualification open.",
+      "evidence": {
+        "kind": "source-document",
+        "repository": "pH34r-pH/experiment-compiler",
+        "revision": "f47ac10a8f9b954911518e823bc6a35df06041e7",
+        "url": "https://github.com/pH34r-pH/experiment-compiler/blob/f47ac10a8f9b954911518e823bc6a35df06041e7/docs/wiki/Lifecycle-and-Runner.md",
+        "sourceSha256": "7f7899c6468585551dbd7c7f8cc3c001b230b4cd0bff3f7cc79731b1cb6957d3"
+      },
+      "assumptions": [
+        "recorded-attempt-and-journal-identities"
+      ],
+      "limitations": [
+        "hermetic-fixture-scope",
+        "physical-worker-loss-unverified",
+        "no-scientific-result-inferred"
+      ],
+      "supersedes": []
     }
   ]
 }

@@ -1,4 +1,4 @@
-"""Verify the claim pilot against immutable objects in local upstream Git clones."""
+"""Verify claim sources against immutable objects in local Git clones."""
 
 from __future__ import annotations
 
@@ -79,6 +79,14 @@ def audit_experiment(repository: Path, evidence: dict) -> dict:
             "attemptId": runner["attemptId"]}
 
 
+def audit_document(repository: Path, evidence: dict) -> dict:
+    revision = evidence["revision"]
+    path = source_path(evidence["url"], revision)
+    contents = git_bytes(repository, revision, path)
+    check_digest(contents, evidence["sourceSha256"], path)
+    return {"sourceSha256": evidence["sourceSha256"]}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--compiler", type=Path, required=True)
@@ -89,12 +97,17 @@ def main() -> None:
         claims = load_claims(args.root, markdown_targets)
         if not claims:
             raise ValueError("no reviewed claim evidence to audit")
+        repositories = {"pH34r-pH/research-notes": args.root, "pH34r-pH/experiment-compiler": args.compiler,
+                        "pH34r-pH/theorem-library": args.theorem_library}
         report = {}
         for key, claim in claims.items():
-            if claim["kind"] == "formal":
-                report[key] = audit_formal(args.theorem_library, claim["evidence"])
+            evidence = claim["evidence"]
+            if evidence["kind"] == "lean":
+                report[key] = audit_formal(args.theorem_library, evidence)
+            elif evidence["kind"] == "compiled-experiment":
+                report[key] = audit_experiment(args.compiler, evidence)
             else:
-                report[key] = audit_experiment(args.compiler, claim["evidence"])
+                report[key] = audit_document(repositories[evidence["repository"]], evidence)
     except (OSError, ValueError, KeyError, TypeError, IndexError) as exc:
         parser.exit(1, f"claim source audit failed: {exc}\n")
     print(json.dumps({"sourceAudit": "verified", "claims": report}, sort_keys=True))

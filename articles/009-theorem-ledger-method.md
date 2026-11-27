@@ -55,6 +55,7 @@ Consider three statements from the sphere investigation:
 
 The first describes the map, the second describes a measured model, and the third proposes a task-dependent explanation. Connecting them requires an argument that establishes the missing premises. Recording their categories makes those premises visible.
 
+(ledger-tracks-dependencies-between-claims)=
 ## The ledger
 
 The ledger connects claims to their assumptions, evidence, consequences, and dependent experiments. If a premise changes, I can see which later claims need to be reconsidered.
@@ -64,6 +65,8 @@ A proof can sometimes eliminate a proposed experiment. A counterexample can rule
 The public [Theorem Library](https://github.com/pH34r-pH/theorem-library) contains the reusable formal results, including machine-checked Lean proofs where appropriate. The ledger tracks how those results affect the investigation and its next decisions.
 
 > **Sticky note — counterexample:** one valid case that violates a universal claim disproves that claim as stated. Finding it before implementation can remove an entire branch of architecture search.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/009_theorem_ledger_method.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

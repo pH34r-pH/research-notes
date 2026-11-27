@@ -28,6 +28,7 @@ For example, suppose a state has enough information to tell whether the next byt
 A frozen state feeds both the original consumer and a candidate readout, which are compared on the same held-out task.
 ```
 
+(frozen-state-alternative-consumer-hypothesis)=
 ## Hold the state fixed
 
 The first thing I want to do is keep the state-producing model frozen and compare its original consumer with small alternative readouts. If I change the state and the consumer at the same time, then an improvement could be due to either change, or an interaction between them. Holding the representation fixed gives the consumer a more direct test.
@@ -37,6 +38,8 @@ A natural starting point is an affine readout: multiply the existing state by a 
 If the new readout improves held-out predictions, that would show that this consumer can use the frozen state more effectively under the test. It wouldn't by itself show that the original consumer was using the same signal, or tell us which part of the state caused the improvement. Those would need additional interventions.
 
 On the other hand, if the readout doesn't improve predictions, that doesn't mean there is no useful information in the state. The branch distinction may not be sufficient to improve the full byte distribution, the readout may be too limited, or the test may not have enough evidence to separate those possibilities. A negative result would have to be interpreted within the consumer family and evaluation procedure that were actually tested.
+
+[Pinned source](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/articles/can-a-small-consumer-use-the-state.md) and [claim evidence record](../reference/claim-evidence.json).
 
 ## What am I measuring?
 

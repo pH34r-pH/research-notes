@@ -43,6 +43,7 @@ There are two questions here. First, does the representation preserve the inform
 Toy signal: the waveform and frequency coordinates describe the same values.
 ```
 
+(early-spectral-negative-result)=
 ## The first important negative result
 
 The spectral models performed worse, even though I could recover much of the original information from their representation. That gave me a problem to locate.
@@ -50,6 +51,8 @@ The spectral models performed worse, even though I could recover much of the ori
 Consider the path from text to prediction. The representation could lose a useful distinction when it is first constructed; combining several represented states could destroy a distinction that was initially present; or the final model could struggle to use information that remains available. An end-to-end loss measures the outcome of that whole path, so it cannot tell us which explanation is responsible.
 
 The next experiment took the path apart. I needed to find where the information became difficult to use before deciding what to change.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/001_text_as_signal.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

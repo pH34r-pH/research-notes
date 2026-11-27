@@ -48,6 +48,7 @@ I started deriving the mechanisms first. If an explanation requires normalizatio
 At a nonzero input, the derivative of normalization removes radial change and rescales tangent change.
 ```
 
+(normalization-radial-and-tangent-action)=
 ## Radial and tangent directions
 
 The matrix `I - uuᵀ` projects away the component parallel to `u`. That gives us two local cases.
@@ -57,6 +58,8 @@ Change only the magnitude of `x`, and the normalized direction stays fixed to fi
 > **Sticky note — tangent direction:** at a point on a sphere, a tangent direction is perpendicular to the radius. It describes local movement along the surface.
 
 This establishes exactly how normalization acts on small perturbations. We still have to identify what those perturbations carry in the model: a geometric direction acquires a task-specific meaning through the representation and data.
+
+[Pinned source](https://github.com/pH34r-pH/theorem-library/blob/2c90ec3d482a64a5bce5787f48c5828429c50305/TheoremLibrary/Geometry/Sphere/Normalization.lean) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 

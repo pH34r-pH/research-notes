@@ -44,6 +44,7 @@ I used ablations: remove or replace one component, rerun the matched comparison,
 The cosine of the relative phase gives normalized real-Hermitian similarity.
 ```
 
+(hermitian-attention-ablation)=
 ## What survived
 
 Phase/Hermitian attention retained the approximately **0.3923 nat per original byte** improvement over the coordinate-only control.
@@ -53,6 +54,8 @@ The phase-preserving residual connection alone failed to clear the predefined st
 That left a much smaller construction: an otherwise mostly Cartesian block using normalized real-Hermitian similarity to compare attention queries and keys. Relative phase entered the attention score directly; the rest of the polar-native machinery could be removed.
 
 > **Sticky note — Hermitian similarity:** a Hermitian inner product conjugates one complex vector before comparing it with the other, so relative phase contributes to the result. Here, I take its real component and normalize by the vector magnitudes to obtain the attention similarity score.
+
+[Preserved account](https://github.com/pH34r-pH/research-notes/blob/e2595640126941c1ad6bf0aee9f3234747ddf2d2/notebooks/004_isolating_phase_attention.ipynb) and [claim evidence record](../reference/claim-evidence.json).
 
 ## Try a small example
 
