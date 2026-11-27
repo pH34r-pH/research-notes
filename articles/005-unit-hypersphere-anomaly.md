@@ -123,6 +123,8 @@ The reported intervals come from resampling eight source documents after averagi
 
 [Claim evidence record](../reference/claim-evidence.json)
 
+[Pinned evaluator and bootstrap implementation](https://github.com/pH34r-pH/experiment-compiler/blob/a471d390a81193324098abb1fc85324c7f0f894c/examples/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/experiment/runner.py)
+
 [Inspect the finalized Muon multi-seed package](https://experiments.tyharbin.com/experiments/muon-unit-hypersphere-depth3-multiseed-v1-final-87409154/) and [its pinned reproducibility walkthrough](https://github.com/pH34r-pH/experiment-compiler/blob/a471d390a81193324098abb1fc85324c7f0f894c/docs/real-study-walkthrough.md). That package tests optimizer behavior on this model condition. The #164 comparison above tests the choice of recurrent topology.
 
 (005-unit-hypersphere-anomaly-sources)=

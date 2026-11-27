@@ -3,27 +3,28 @@
 Research Notes exposes one stable public source gate for Portfolio and Fleet:
 
 - workflow: `.github/workflows/publication-validation.yml`
-- job: `publication-integrity`
-- contract: `research-notes-publication-validation/v1`
+- jobs: `publication-integrity` and `public-source-readback`
+- contracts: `research-notes-publication-validation/v2` and `research-notes-public-source-readback/v1`
 - events: pull requests and pushes to `main`
 - authority: public GitHub-hosted runner with `contents: read`
 
-The validator checks the notebook JSON and publication metadata consumed by
-Portfolio, local links and referenced local files, and the Markdown reference
-tree. It covers `notebooks/*.ipynb` and `reference/**/*.md`; `README.md` and
-`CHRONOLOGY.md` are link-checked publication context. The path/content digest is
-computed over the covered notebook and reference files. The gate does not run
-notebook code, reproduce historical measurements, or review scientific claims.
+Publication integrity checks article and notebook metadata, local links, claim
+records, and the MyST build. Its receipt lists the inputs to the path/content
+digest. Public source readback checks the declared claim sources, bibliography,
+external article and reference links, and upstream backlinks. Source checks reflect the
+providers' responses at run time. Editorial interpretation and scientific
+reproduction require their own evidence.
 
 ## Exact-main selection rule
 
 Fleet may select only a full lowercase 40-character Research Notes commit that
 is on the observed public `main` history. For that exact SHA, require the newest
 `push` run of `publication-validation.yml` with `head_branch == main`, completed
-successfully, and a successful job named `publication-integrity`. Missing,
-pending, cancelled, failed, PR-only, stale-attempt, or different-SHA evidence
-fails closed. A manual Fleet retry must perform the same checks against the
-requested exact SHA.
+successfully, and a successful job named `publication-integrity`. Fleet requires
+success for the whole workflow, so a failing `public-source-readback` also
+rejects the candidate. Missing, pending, cancelled, failed, PR-only,
+stale-attempt, or different-SHA evidence fails closed. A manual Fleet retry
+must perform the same checks against the requested exact SHA.
 
 The successful run uploads
 `research-notes-validation-<sha>-<run-id>-<attempt>`. Its JSON records the exact

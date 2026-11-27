@@ -72,7 +72,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Check public evidence and cited DOI identities
+      - name: Check public evidence, citations, and article links
         run: python scripts/check_public_sources.py --receipt validation/public-source-readback.json
       - name: Retain source readback report
         if: always()

@@ -19,7 +19,7 @@ where `u = x / ||x||`.
 This gives an exact radial/tangent distinction: infinitesimal changes in magnitude disappear under normalization, while tangent changes survive with gain `1 / ||x||`.
 
 > ✓ **Formal checkpoint — LIB-SPH-002 / FRM-000020**  
-> [Plain-language checkpoint →](checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy) · [Lean source →](https://github.com/pH34r-pH/theorem-library/blob/main/TheoremLibrary/Geometry/Sphere/Anisotropy.lean)
+> [Plain-language checkpoint →](checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy) · [Lean source →](https://github.com/pH34r-pH/theorem-library/blob/0d8b81f81d5fd75fecdd8bd125288e55b8b992c8/TheoremLibrary/Geometry/Sphere/Anisotropy.lean)
 
 The boundary is just as important as the result. This theorem says how normalization acts on perturbations; it doesn't say that radial variation is useless, that tangent variation represents semantics, or that normalization will improve a trained model. Those require empirical evidence.
 
