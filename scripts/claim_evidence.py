@@ -60,9 +60,10 @@ def _formal_links(claim: dict, evidence: dict) -> set[str]:
     if (
         evidence.get("kind") != "lean" or evidence["repository"] != "pH34r-pH/theorem-library"
         or not isinstance(evidence.get("declaration"), str)
+        or not _matches(DIGEST, evidence.get("sourceSha256"))
         or not _matches(re.compile(r"FRM-[0-9]{6}"), formal_id)
     ):
-        raise ValueError("formal claim needs a Lean declaration")
+        raise ValueError("formal claim needs a Lean declaration and source digest")
     applicability = evidence.get("applicabilityUrl")
     if not _pinned(applicability, evidence["repository"], evidence.get("applicabilityRevision")):
         raise ValueError("theorem applicability link must use an exact public revision")
@@ -165,7 +166,8 @@ def review_impact(claims: dict[str, dict], evidence_id: str, proposed: str) -> l
         evidence = claim["evidence"]
         if evidence_id not in (evidence.get("formalId"), evidence.get("finalizationId")):
             continue
-        current = evidence.get("finalizationSha256", evidence["revision"]) if len(proposed) == 64 else evidence["revision"]
+        current = (evidence.get("finalizationSha256", evidence.get("sourceSha256"))
+                   if len(proposed) == 64 else evidence["revision"])
         if current != proposed:
             affected.append({"claimId": claim_id, "passage": claim["passage"], "retainedIdentity": current,
                              "reason": "upstream evidence identity changed"})

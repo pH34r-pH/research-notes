@@ -89,6 +89,20 @@ python scripts/validate_publication.py \
 The report names the passage and its retained identity. The editorial review
 determines whether the wording, premises or interpretation need to change.
 
+For the Muon and normalization pilot, verify the producer records before
+changing a binding. Use local upstream clones containing the pinned Git
+objects:
+
+```sh
+python scripts/audit_claim_sources.py \
+  --compiler ../experiment-compiler --theorem-library ../theorem-library
+```
+
+The audit checks the archived Compiler files and recipe and verifies the Lean
+source digest against the named applicability record. It reads Git objects
+without running the archived experiment. The publication validator checks
+the local bindings and does not monitor retractions or release availability.
+
 ### Epistemic markers
 
 Use these where they improve clarity rather than mechanically decorating every paragraph:

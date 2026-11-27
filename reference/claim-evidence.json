@@ -53,6 +53,7 @@
         "url": "https://github.com/pH34r-pH/theorem-library/blob/950b48d502015daa1c648b5ce7a3b72eee367995/TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean#L90-L96",
         "formalId": "FRM-000133",
         "declaration": "TheoremLibrary.Geometry.Sphere.normalization_singularValues",
+        "sourceSha256": "6adf0f298053891f491833e20925bf58ef66da376dec4bf70c60ac127507d026",
         "applicabilityRevision": "b3b1d28c060566702922fc1bab9a9001d21b94a2",
         "applicabilityUrl": "https://github.com/pH34r-pH/theorem-library/blob/b3b1d28c060566702922fc1bab9a9001d21b94a2/docs/applicability/frm-000133.json"
       },

@@ -6,8 +6,12 @@ import unittest
 from pathlib import Path
 
 from claim_evidence import RECORD, load_claims, review_impact
-from validate_publication import ValidationError, validate, _validate_article_relations, markdown_targets
-
+from validate_publication import (
+    ValidationError,
+    _validate_article_relations,
+    markdown_targets,
+    validate,
+)
 
 NOTEBOOK = {
     "nbformat": 4,
@@ -38,6 +42,7 @@ class PublicationValidationTest(unittest.TestCase):
     def test_claim_contract_rejects_missing_premise_moving_proof_and_unlinked_experiment(self):
         for case, error in (
             ("premise", "nonzero-input premise"), ("proof", "URL pinned"),
+            ("proof-digest", "Lean declaration"),
             ("experiment-link", "passage must link"), ("supersession", "unknown superseded claim"),
         ):
             with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
@@ -49,6 +54,8 @@ class PublicationValidationTest(unittest.TestCase):
                 elif case == "proof":
                     evidence = formal["evidence"]
                     evidence["url"] = evidence["url"].replace(evidence["revision"], "main")
+                elif case == "proof-digest":
+                    formal["evidence"].pop("sourceSha256")
                 elif case == "experiment-link":
                     page = root / muon["passage"]["path"]
                     source = page.read_text(encoding="utf-8")
@@ -59,6 +66,15 @@ class PublicationValidationTest(unittest.TestCase):
                 (root / RECORD).write_text(json.dumps(document), encoding="utf-8")
                 with self.assertRaisesRegex(ValueError, error):
                     load_claims(root, markdown_targets)
+
+    def test_impact_compares_proof_digest_to_proof_digest(self):
+        published = Path(__file__).resolve().parents[1]
+        claims = load_claims(published, markdown_targets)
+        formal = claims["normalization-spectrum-local-derivative"]["evidence"]
+        self.assertEqual(review_impact(claims, formal["formalId"], formal["sourceSha256"]), [])
+        affected = review_impact(claims, formal["formalId"], "1" * 64)
+        self.assertEqual([row["claimId"] for row in affected], ["normalization-spectrum-local-derivative"])
+        self.assertEqual(affected[0]["retainedIdentity"], formal["sourceSha256"])
 
     def test_synthetic_successor_keeps_history_and_reports_only_affected_passage(self):
         with tempfile.TemporaryDirectory() as directory:
