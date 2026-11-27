@@ -131,9 +131,12 @@ def _validate_article_cells(relative: str, body: str) -> int:
     return len(cells)
 
 
+def citation_keys(body: str) -> set[str]:
+    return set(re.findall(r"(?<![\w])@([A-Za-z][A-Za-z0-9_:-]*)", body))
+
+
 def _validate_article_citations(relative: str, body: str, bibliography: set[str]) -> None:
-    cited = set(re.findall(r"(?<![\w])@([A-Za-z][A-Za-z0-9_:-]*)", body))
-    missing = sorted(cited - bibliography)
+    missing = sorted(citation_keys(body) - bibliography)
     if missing:
         raise ValidationError(f"{relative}: missing bibliography key(s): {', '.join(missing)}")
 
